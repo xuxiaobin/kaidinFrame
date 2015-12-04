@@ -1,0 +1,37 @@
+﻿.paging {
+	margin-left:35px;
+	height:28px;
+	line-height:25px
+}
+.paging a {
+	margin-left:3px;
+	padding-top:4px;
+	padding-right:6px;
+	padding-bottom:4px;
+	padding-left:7px;
+	border:1px solid #fff;
+	background:#a0abc9;
+	font-size:11px;
+	color:#fff;
+	text-decoration:none;
+}
+.paging a:hover
+{
+	background:#8577d8
+}
+.paging strong
+{
+	margin-left:2px;
+	padding-top:4px;
+	padding-right:6px;
+	padding-bottom:4px;
+	padding-left:7px;
+	border:1px solid #fff;
+	background:#a0abc9;
+	font-size:11px;
+	color:#fff;
+}
+/*a:link{text-decoration:none;}
+a:visited{text-decoration:none;}
+a:active{text-decoration:none;}
+a:hover{text-decoration:none;}*/

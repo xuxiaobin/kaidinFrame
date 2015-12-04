@@ -1,0 +1,180 @@
+﻿body
+{
+	margin:0;
+	font-family:Verdana;
+	background-image:url(../image/skin/default/background.jpg);
+	background-attachment:fixed
+}
+.container
+{/*网页主体（全透明）*/
+	margin:0 auto;
+	width:1001px;
+}
+.autoShow
+{/*自动图片展示（透明度88%）*/
+	height:280px;
+	filter:alpha(opacity=80);
+	-moz-opacity:0.8;
+	-khtml-opacity:0.8;
+	opacity:0.8;
+	background-image:url(../image/skin/default/autoShow1.jpg)
+}
+.mainContent
+{/*网页中部*/
+	height:639px;
+	filter:alpha(opacity=90);
+	-moz-opacity:0.9;
+	-khtml-opacity:0.9;
+	opacity:0.9;
+	background-color:#dadeea;
+}
+.leftNavigationBar
+{/*网页中间导航*/
+	float:left;
+	margin-top:4px;
+	display:inline;
+	width:180px;
+	height:630px;
+	background-color:#a0abc9;
+}
+.content
+{
+	float:right;
+	margin-top:4px;
+	width:816px;
+	height:630px;
+	background-color:#a0abc9;
+}/*因为是固定宽度，采用左右浮动方法可有效避免ie 3像素bug*/
+.content .text
+{
+	margin:13px 10px 0px 15px;
+	line-height:18px;
+	background:#6557C1;
+}
+.foot
+{/*网页脚部*/
+	margin-top:41px;
+	height:53px;
+	padding-top:5px;
+	filter:alpha(opacity=80);
+	-moz-opacity:0.8;
+	-khtml-opacity:0.8;
+	opacity:0.8;
+	background:#a0abc9;
+}
+.foot .icoOfFoot
+{
+	float:left;
+	margin-top:4px;
+	margin-left:260px;
+	display:inline;
+	width:65px;
+	height:48px;
+	background-repeat:no-repeat;
+	background-image:url(../image/skin/default/110.gif)
+}
+.foot .contentOfFoot
+{
+	float:left;
+	margin-top:8px;
+	margin-left:5px;
+	width:400px;
+	height:40px;
+	font-size:12px;
+	line-height:150%;
+	text-align:center;
+	/*background:#999;*/
+}
+.foot .contentOfFoot a
+{
+	text-decoration:none;
+	color:#000;
+}
+.foot .contentOfFoot a:hover
+{
+	color:#0692dd;
+}
+
+/*左边导航条*/
+.leftNavigationBar *
+{
+	margin:0;
+	padding:0;
+	list-style:none;
+	text-decoration:none;
+	color:#fff;
+	font:18px;
+	line-height:15px;
+}
+.leftNavigationBar table
+{
+	width:100%;
+	border-collapse:collapse;
+}
+.leftNavigationBar li
+{
+	position:relative;
+	_position:static;
+	float:left;
+	width:100%;
+}
+.leftNavigationBar .first
+{
+	margin-top:20px;
+}
+.leftNavigationBar .first li
+{
+	display:block;
+	padding:10px 0px 5px 20px;
+	height:28px;
+	line-height:15px;
+	cursor:pointer;
+	zoom:1;
+}
+.leftNavigationBar .first li:hover
+{/*第一级鼠标移动上去是现实的背景和字体颜色*/
+	padding:10px 0px 5px 28px;
+	width:155px;
+	z-index:2;
+	background:transparent;
+	background-color:#dadeea;
+	background-image:url(../image/skin/default/navigationBarHover.gif);
+}
+.leftNavigationBar .first li:hover a
+{
+	color:#000;
+}
+.leftNavigationBar  .first li:hover .second
+{
+	visibility:visible;
+	padding:1px;
+	border:1px solid #ccc;
+	border-width:1px 2px 2px 1px;
+	/*width:150px;*/
+	background:#a0abc9;
+}
+.leftNavigationBar .second
+{
+	position:absolute;
+	visibility:hidden;
+	width:199px;
+	right:-199px;
+	top:-1px;
+	color:#fff;
+}
+.leftNavigationBar .second li
+{
+	display:block;
+	padding:10px 0px 5px 20px;
+	height:28px;
+	line-height:15px;
+	cursor:pointer;
+	zoom:1;
+}
+.leftNavigationBar .second li:hover
+{/*第二级的效果*/
+	padding:12px 1px 1px 28px;
+	width:170px;
+	background:#dadeea;
+	background-image:url(../image/skin/default/navigationBarHover.gif);
+}

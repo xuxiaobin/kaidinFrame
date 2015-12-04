@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE project>
+<data>
+	<config>
+		<roundCorner>7</roundCorner>
+		<autoPlayTime>8</autoPlayTime>
+		<isHeightQuality>false</isHeightQuality>
+		<blendMode>normal</blendMode>
+		<windowOpen>_self</windowOpen>
+		
+		<isShowBtn>true</isShowBtn>
+		<btnSetMargin>auto 30 10 auto</btnSetMargin>
+		<btnDistance>23</btnDistance>
+		<btnAlpha>.65</btnAlpha>
+		<btnTextColor>0xffffff</btnTextColor>
+		<btnDefaultColor>0xffffff</btnDefaultColor>
+		<btnHoverColor>0xff0000</btnHoverColor>
+		<btnFocusColor>0x111111</btnFocusColor>
+		
+		<isShowTitle>false</isShowTitle>
+		<titleBgColor>0xffcc00</titleBgColor>
+		<titleFont>微软雅黑</titleFont>
+		<titleTextColor>0x000000</titleTextColor>
+		<titleBgAlpha>.65</titleBgAlpha>
+		<titleMoveDuration>1</titleMoveDuration>
+		
+		<changImageMode>click</changImageMode>
+		<scaleMode>noBorder</scaleMode>
+		<transform>auto</transform>
+		<transDuration>1</transDuration>
+		<isShowAbout>false</isShowAbout>
+	</config>
+	<channel>
+		<item>
+			<title>1111111</title>
+			<link></link>
+			<image>image/skin/default/autoShow1.jpg</image>
+			<time>2009-7-27 13:27:49</time>
+		</item>
+		<item>
+			<title>222222</title>
+			<link></link>
+			<image>image/skin/default/autoShow2.jpg</image>
+			<time>2009-7-27 13:28:21</time>
+		</item>
+		<item>
+			<title>33333</title>
+			<link></link>
+			<image>image/skin/default/autoShow3.jpg</image>
+			<time>2009-7-27 13:29:23</time>
+		</item>
+	</channel>
+</data>
