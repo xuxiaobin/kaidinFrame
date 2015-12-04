@@ -1,0 +1,37 @@
+package com.kaidin.gui.service.interfaces;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageLoadConfig;
+import com.kaidin.db.entity.EntityCfgRole;
+import com.kaidin.gui.common.constant.GuiConstType;
+
+public class IRoleManageServiceTest {
+	private static IRoleManageService roleManageService;
+	
+	@BeforeClass
+	public static void init() {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
+//		ctx = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
+		roleManageService = (IRoleManageService) ctx.getBean("roleManageService");
+	}
+	
+	@Test
+	public void testQueryRole() {
+		ModelAndView result = new ModelAndView("roleManage");
+		
+		PageLoadConfig pageConfig = new PageLoadConfig();
+		DataContainer<EntityCfgRole> dataContainer = roleManageService.queryRole(pageConfig);
+		result.addObject(GuiConstType.DATA_CONTAINER, dataContainer);
+		System.out.println(dataContainer);
+	}
+
+	@Test
+	public void testCreateRole() {
+	}
+}
