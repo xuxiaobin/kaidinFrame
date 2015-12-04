@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<parent>
+		<groupId>com.kaidin</groupId>
+		<artifactId>kaidin-parent</artifactId>
+		<version>1.1</version>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>common-util</artifactId>
+	<name>common-util</name>
+	<version>1.0</version>
+	<description>和业务逻辑无关的工具类，为方便某些场合使用</description>
+	<packaging>jar</packaging>
+	
+	<scm>
+		<developerConnection>徐小斌</developerConnection>
+	</scm>
+	
+	<dependencies>
+		<dependency>
+			<!-- 主要是用到了apache的org.apache.commons.net.ftp.FTPClient类 -->
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.2</version>
+		</dependency>
+		<dependency>
+			<!-- 主要是用到了apache的org.apache.commons.beanutils.PropertyUtils类 -->
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils-core</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<!--
+					<aggregate>true</aggregate>
+					<reportOutputDirectory>./src/main/java</reportOutputDirectory>
+					<outputDirectory>target/javadoc</outputDirectory>
+					<destDir>doc</destDir>
+					-->
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javajocs</id>
+						<phase>installl</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
