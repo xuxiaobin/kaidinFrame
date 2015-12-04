@@ -1,17 +1,24 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<parent>
+		<groupId>com.kaidin</groupId>
+		<artifactId>kaidin-parent</artifactId>
+		<version>1.1</version>
+	</parent>
+	
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>com.kaidin</groupId>
 	<artifactId>db-base-hibernate</artifactId>
+	<name>base-hibernate</name>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-
-	<name>base-hibernate</name>
-	<url>http://maven.apache.org</url>
-
+	
+	<scm>
+		<developerConnection>ĞìĞ¡±ó</developerConnection>
+	</scm>
+	
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.1.7.RELEASE</spring.version>
 	</properties>
 

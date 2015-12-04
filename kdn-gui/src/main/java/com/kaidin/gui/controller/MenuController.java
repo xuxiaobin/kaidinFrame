@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import com.kaidin.db.dao.interfaces.IEntityCfgMenuDao;
 import com.kaidin.db.entity.EntityCfgMenu;
 import com.kaidin.gui.common.constant.GuiConstType;
-import com.kaidin.gui.model.VoMenu;
+import com.kaidin.gui.model.BoMenu;
 
 @Controller
 public class MenuController {

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.kaidin.common.util.NumberUtil;
 import com.kaidin.common.util.query.DataContainer;
 import com.kaidin.common.util.query.PageLoadConfig;
-import com.kaidin.gui.model.VoDownloadFile;
+import com.kaidin.gui.model.BoDownloadFile;
 /**
  * 
  * @author xuxiaobin	kaidin@foxmail.com
@@ -24,14 +24,14 @@ public class FileService {
 	private static List<String> EXCLUDE_EXTNAME_LIST = new ArrayList<String>();
 	
 	
-	public static DataContainer<VoDownloadFile> getDirFiles(File dirFile, PageLoadConfig pageLoadCfg) {
-		DataContainer<VoDownloadFile> result = new DataContainer<VoDownloadFile>();
+	public static DataContainer<BoDownloadFile> getDirFiles(File dirFile, PageLoadConfig pageLoadCfg) {
+		DataContainer<BoDownloadFile> result = new DataContainer<BoDownloadFile>();
 		
-		List<VoDownloadFile> dataList = listDir(dirFile);
+		List<BoDownloadFile> dataList = listDir(dirFile);
 		if (null != pageLoadCfg) {
 			dataList = dataList.subList(pageLoadCfg.getOffset(), pageLoadCfg.getLimit());
 		}
-		for (VoDownloadFile file: dataList) {
+		for (BoDownloadFile file: dataList) {
 			logger.info(file.getName() + "\t" + file.getDownloadPath());
 		}
 		result.setDataList(dataList);
@@ -41,15 +41,15 @@ public class FileService {
 	
 	
 	// 显示目录的方法
-	private static ArrayList<VoDownloadFile> listDir(File dirFile) {
-		ArrayList<VoDownloadFile> result = new ArrayList<VoDownloadFile>();
+	private static ArrayList<BoDownloadFile> listDir(File dirFile) {
+		ArrayList<BoDownloadFile> result = new ArrayList<BoDownloadFile>();
 		
 		// 判断传入对象是否为一个文件夹对象
 		if (dirFile.isDirectory()) {
 			for(File tmp: dirFile.listFiles()) {
 				// 判断文件列表中的对象是否为文件夹对象，如果是则执行tree递归，直到把此文件夹中所有文件输出为止
 				if (tmp.isDirectory()) {
-					ArrayList<VoDownloadFile> tmpDirList = listDir(tmp);
+					ArrayList<BoDownloadFile> tmpDirList = listDir(tmp);
 					if (!tmpDirList.isEmpty()) {
 						result.addAll(tmpDirList);
 					}
@@ -58,7 +58,7 @@ public class FileService {
 						// 根据扩展名过滤
 						continue;
 					}
-					VoDownloadFile downloadFile = new VoDownloadFile();
+					BoDownloadFile downloadFile = new BoDownloadFile();
 					downloadFile.setName(tmp.getName());
 					downloadFile.setDownloadPath(tmp.getAbsolutePath());
 					downloadFile.setSize(getSize(tmp));
