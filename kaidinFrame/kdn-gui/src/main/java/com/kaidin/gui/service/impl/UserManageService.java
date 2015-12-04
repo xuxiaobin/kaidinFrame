@@ -2,8 +2,12 @@ package com.kaidin.gui.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,14 +20,34 @@ import com.kaidin.db.dao.interfaces.IEntityCfgUserDao;
 import com.kaidin.db.entity.EntityCfgUser;
 import com.kaidin.gui.common.constant.GuiConstType;
 import com.kaidin.gui.service.interfaces.IUserManageService;
-
+/**
+ * 用户管理服务类
+ * @author xuxiaobin	kaidin@foxmail.com
+ * 
+ */
 @Service
-public class UserManageService implements IUserManageService {
+public class UserManageService implements IUserManageService, HttpSessionListener {
 	private static final transient Logger logger = LoggerFactory.getLogger(UserManageService.class);
+	private static HashMap<String, HttpSession> SESSION_MAP = new HashMap<String, HttpSession>();
 	
 	@Resource(name = IEntityCfgUserDao.RESOURCE_NAME)
 	private IEntityCfgUserDao userDao;
 	
+	
+	/**
+	 * session创建的时候触发
+	 */
+	@Override
+	public void sessionCreated(HttpSessionEvent se) {
+	}
+
+	/**
+	 * session销毁的时候触发
+	 */
+	@Override
+	public void sessionDestroyed(HttpSessionEvent se) {
+		// TODO Auto-generated method stub
+	}
 	
 	/**
 	 * 根据登陆用户名和密码获取数据库表记录
@@ -93,6 +117,17 @@ public class UserManageService implements IUserManageService {
 		return false;
 	}
 	
+	/**
+	 * 从session中获得登陆的用户数
+	 * @return
+	 */
+	public int getLoinUserCount() {
+		int result = 0;
+		
+		
+		
+		return result;
+	}
 	
 	/**
 	 * 注册

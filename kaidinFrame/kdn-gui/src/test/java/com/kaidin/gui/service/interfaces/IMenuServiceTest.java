@@ -4,10 +4,9 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.kaidin.gui.model.VoMenu;
+import com.kaidin.gui.model.BoMenu;
+import com.kaidin.gui.util.ServiceUtil;
 
 public class IMenuServiceTest {
 	private static IMenuManageService menuManageService;
@@ -15,19 +14,16 @@ public class IMenuServiceTest {
 	
 	@BeforeClass
 	public static void init() {
-//		ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
-		menuManageService = (IMenuManageService) ctx.getBean("menuManageService");
-//		AnnotationTransactionAspect
+		menuManageService = (IMenuManageService) ServiceUtil.getService("menuManageService");
 	}
 	
 	@Test
 	public void testGetMenu() {
-		List<VoMenu> voList = menuManageService.getMenu();
+		List<BoMenu> voList = menuManageService.getMenu(1);
 		
 		if (null != voList && !voList.isEmpty()) {
 			System.out.println("voList.size:" + voList.size());
-			for (VoMenu vo: voList) {
+			for (BoMenu vo: voList) {
 				printMenu(vo, "");
 			}
 		} else {
@@ -35,14 +31,14 @@ public class IMenuServiceTest {
 		}
 	}
 	
-	private void printMenu(VoMenu vo, String formatStr) {
+	private void printMenu(BoMenu vo, String formatStr) {
 		if (null != vo) {
 			System.out.print(formatStr);
-			System.out.println(vo.getName() + "-->" + vo.getUrl());
+			System.out.println(vo.getName() + "-->" + vo.getHref());
 			
-			List<VoMenu> subMenuList = vo.getSubmenuList();
+			List<BoMenu> subMenuList = vo.getSubMenuList();
 			if (null != subMenuList && !subMenuList.isEmpty()) {
-				for (VoMenu subVo: subMenuList) {
+				for (BoMenu subVo: subMenuList) {
 					printMenu(subVo, formatStr + "\t");
 				}
 			}

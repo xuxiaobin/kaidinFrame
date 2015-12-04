@@ -1,6 +1,7 @@
 package com.kaidin.gui.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.kaidin.db.dao.interfaces.IEntityCfgMenuDao;
 import com.kaidin.db.entity.EntityCfgMenu;
 import com.kaidin.gui.common.constant.GuiConstType;
-import com.kaidin.gui.model.VoMenu;
+import com.kaidin.gui.model.BoMenu;
 import com.kaidin.gui.service.interfaces.IMenuManageService;
 
 @Service
@@ -28,63 +29,80 @@ public class MenuManageService implements IMenuManageService {
 	 * @return
 	 */
 	@Override
-	public List<VoMenu> getMenu() {
-		List<VoMenu> result = null;
+	public List<BoMenu> getMenu(long userId) {
+		List<BoMenu> result = null;
 		
 		try {
-			String hqlWhere = EntityCfgMenu.P_Level + "=:level"
-					+ " 	and " + EntityCfgMenu.P_Status + "=:status"
+			String hqlWhere = EntityCfgMenu.P_Status + "=:status"
 					+ " order by " + EntityCfgMenu.P_Sort;
 			List<EntityCfgMenu> menuList = menuDao.queryEntities(hqlWhere,
-					new String[]{"level", "status"},
-					new Object[]{GuiConstType.Menu.LEVEL_1, GuiConstType.ErrorCode.OK});
+					new String[]{"status"},
+					new Object[]{GuiConstType.ErrorCode.OK});
 			logger.error("sssssssssssssssssss:" + menuList.size());
-			if (null != menuList && !menuList.isEmpty()) {
-				result = new ArrayList<VoMenu>(menuList.size());
-				for (EntityCfgMenu menu: menuList) {
-					VoMenu vo = processSubMenu(menu);
-					result.add(vo);
-				}
-			}
+			result = convertMenu(menuList);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return result;
 	}
 	
 	/**
-	 * 数据库实体转换为前台页面菜单对象
-	 * 自动查询数据库实体的子菜单
-	 * @param menu
+	 * 将数据库实体转换为树形菜单
+	 * @param menuList
 	 * @return
 	 */
-	private VoMenu processSubMenu(EntityCfgMenu menu) {
-		VoMenu result = null;
+	private List<BoMenu> convertMenu(List<EntityCfgMenu> menuList) {
+		List<BoMenu> result = null;
 		
-		try {
-			if (null != menu) {
-				result = new VoMenu();
-				result.setName(menu.getName());
-				result.setUrl(menu.getUrl());
-				
-				String hqlWhere = EntityCfgMenu.P_ParentId + "=:parentId"
-						+ " 	and " + EntityCfgMenu.P_Status + "=:status"
-						+ " order by " + EntityCfgMenu.P_Sort;
-				List<EntityCfgMenu> menuList = menuDao.queryEntities(hqlWhere,
-						new String[]{"parentId", "status"},
-						new Object[]{menu.getId(), GuiConstType.ErrorCode.OK});
-				if (null != menuList && !menuList.isEmpty()) {
-					ArrayList<VoMenu> subMenuList = new ArrayList<VoMenu>(menuList.size());
-					for (EntityCfgMenu subMenu: menuList) {
-						VoMenu vo = processSubMenu(subMenu);
-						subMenuList.add(vo);
-					}
-					result.setSubmenuList(subMenuList);
+		if (null != menuList && !menuList.isEmpty()) {
+			result = new ArrayList<BoMenu>();
+			Iterator<EntityCfgMenu> menuIterator = menuList.iterator();
+			while (menuIterator.hasNext()) {
+				EntityCfgMenu menu = menuIterator.next();
+				if (GuiConstType.Menu.LEVEL_1 == menu.getLevel()) {
+					menuIterator.remove();	// 删除了省的下次遍历遇到
+					result.add(getMenuTree(menu, menuList));
 				}
 			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+		}
+		
+		return result;
+	}
+	
+	private BoMenu getMenuTree(EntityCfgMenu rootMenu, List<EntityCfgMenu> menuList) {
+		BoMenu result = null;
+		
+		if (null != rootMenu) {
+			result = new BoMenu(rootMenu);
+			if (null != menuList && !menuList.isEmpty()) {
+				long menuId = rootMenu.getId();
+				List<BoMenu> subMenuList = result.getSubMenuList();
+				
+				List<EntityCfgMenu> tempList = new ArrayList<EntityCfgMenu>(menuList.size());
+				tempList.addAll(menuList);
+				Iterator<EntityCfgMenu> menuIterator = tempList.iterator();
+				while (menuIterator.hasNext()) {
+					EntityCfgMenu menu = menuIterator.next();
+					if (menu.getParentId() == menuId) {
+						// 找到该菜单对应的子菜单了
+						menuIterator.remove();	// 删除了省的下次遍历遇到
+						// 获取子菜单的子菜单
+						BoMenu subMenu = getMenuTree(menu, tempList);
+						if (null != subMenu) {
+							if (null == subMenuList) {
+								subMenuList = new ArrayList<BoMenu>();
+							}
+							subMenuList.add(subMenu);
+						}
+					}
+				}
+				if (null != subMenuList) {
+					result.setSubMenuList(subMenuList);
+				}
+			}
 		}
 		
 		return result;

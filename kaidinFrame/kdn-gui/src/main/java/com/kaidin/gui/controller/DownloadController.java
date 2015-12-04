@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kaidin.common.util.query.DataContainer;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.gui.common.constant.GuiConstType;
-import com.kaidin.gui.model.VoDownloadFile;
+import com.kaidin.gui.model.BoDownloadFile;
 import com.kaidin.gui.service.FileService;
 
 @Controller
@@ -29,7 +29,7 @@ public class DownloadController {
 		PageLoadConfig pageLoadCfg = new PageLoadConfig();
 		pageLoadCfg.setOffset(1);
 		pageLoadCfg.setLimit(15);
-		DataContainer<VoDownloadFile> dataContainer = FileService.getDirFiles(dir, null);
+		DataContainer<BoDownloadFile> dataContainer = FileService.getDirFiles(dir, null);
 		result.addObject(GuiConstType.DATA_CONTAINER, dataContainer);
 		
 		return result;

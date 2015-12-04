@@ -2,23 +2,20 @@ package com.kaidin.gui.service.interfaces;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kaidin.common.util.query.DataContainer;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.db.entity.EntityCfgRole;
 import com.kaidin.gui.common.constant.GuiConstType;
+import com.kaidin.gui.util.ServiceUtil;
 
 public class IRoleManageServiceTest {
-	private static IRoleManageService roleManageService;
+	private static IRoleManageService roleManageService = null;
 	
 	@BeforeClass
 	public static void init() {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
-//		ctx = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
-		roleManageService = (IRoleManageService) ctx.getBean("roleManageService");
+		roleManageService = (IRoleManageService) ServiceUtil.getService("roleManageService");
 	}
 	
 	@Test
