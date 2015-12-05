@@ -6,7 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
-
+/**
+ * 转换工具
+ * @version 1.0
+ * @author kaidin@foxmail.com
+ * @date 2015-6-23下午01:51:48
+ */
 public class BeanConvert<T> {
 	private BeanConvertFilter<T> filter;
 	

@@ -1,75 +1,77 @@
-package com.kaidin.appframe.dao.spring.impl;
+package com.kaidin.appframe.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.hibernate.FlushMode;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.kaidin.appframe.config.AppframeConfig;
-import com.kaidin.appframe.dao.IBaseDao;
+import com.kaidin.appframe.dao.interfaces.IBaseDao;
+import com.kaidin.appframe.dao.interfaces.IDaoContext;
 import com.kaidin.appframe.entity.BaseEntity;
 import com.kaidin.appframe.exception.AppframeException;
 import com.kaidin.common.util.DataTypeUtil;
 import com.kaidin.common.util.query.DataContainer;
 import com.kaidin.common.util.query.PageLoadConfig;
 /**
- * 操作数据库的HibernateTemplate实现
+ * 操作数据库的ejb实现
  * @version 1.0
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-@Transactional
-public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport implements IBaseDao<T> {
+public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> implements IBaseDao<T> {
 	private static final transient Logger logger = LoggerFactory.getLogger(BaseDaoImpl.class);
-	private static final int MAX_QUERY_LIMIT;	// 最大的查询数据条数限制，默认10000
-	private final Class<T> entityClass;	// dao所对应的实体类
-	private final String entityClassName;	// 实体类名称，方便组装hql和打印日志使用
-	private HibernateTemplate hibernateTemplate;	// hibernate的模板，在setSessionFactory方法中从父类获取
+
+	// @PersistenceUnit
+	// private EntityManagerFactory emf;
+
+	// @PersistenceContext(type = PersistenceContextType.TRANSACTION)
+	private final EntityManager entityManager;
+
 	
-	
+//	// @PostConstruct
+//	protected void initialize() {
+//		if (null != entityManager) {
+//			entityManager = null;
+//		}
+//		if (ServiceFactory.isEjb()) {
+//			entityManager = emf.createEntityManager();
+//			entityManager.setFlushMode(FlushModeType.AUTO);
+//			entityManager.joinTransaction();
+//		}
+//	}
 	static {
-		MAX_QUERY_LIMIT = AppframeConfig.getMaxQueryLimit();
 		logger.debug("init MAX_QUERY_LIMIT:" + MAX_QUERY_LIMIT);
 	}
-	public BaseDaoImpl(Class<T> clazz) throws AppframeException {
-		entityClass = clazz;
-		entityClassName = clazz.getName();
+	public BaseDaoImpl(Class<T> clazz, IDaoContext aDaoContext) throws AppframeException {
+		super(clazz);
+		// if (!ServiceFactory.isEjb()) {
+		// if (null != entityManager) {
+		// 	entityManager = null;
+		// }
+		entityManager = aDaoContext.getEntityManager();
+		// }
+	}
+	public BaseDaoImpl(Class<T> clazz, IDaoContext aDaoContext, String jndiName) throws AppframeException {
+		super(clazz);
+		// if (!ServiceFactory.isEjb()) {
+		// if (null != entityManager) {
+		// entityManager = null;
+		// }
+		entityManager = aDaoContext.getEntityManager(jndiName);
+		// }
 	}
 
-	@Resource(name = "sessionFactory")
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	public void setSuperSessionFactory(SessionFactory sessionFactory) {
-		super.setSessionFactory(sessionFactory);
-		hibernateTemplate = getHibernateTemplate();
+
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 
-	
-	// ================ util =======================
-	private String getParamStr(String[] names, Object[] values) {
-		StringBuilder result = new StringBuilder();
-		
-		if (null != names && 0 < names.length) {
-			result.append(names[0]).append(":").append(values[0]);
-			for (int i = 1; i < names.length; i++) {
-				result.append(",").append(names[i]).append(":").append(values[i]);
-			}
-		}
-		
-		return result.toString();
-	}
 	
 	// ================ add =======================
 	public T save(T entity) throws AppframeException {
@@ -79,7 +81,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " saving entity, {}.", entity);
 			}
-			hibernateTemplate.persist(entity);
+			entityManager.persist(entity);
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " saveing successful, {}.", entity);
 			}
@@ -100,7 +102,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " deleting entity, {}.", entity);
 			}
-			hibernateTemplate.delete(entity);
+			entityManager.remove(entity);
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " deleting entity successful, {}.", entity);
 			}
@@ -120,7 +122,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			T entity = queryById(id);
 			if (null != entity) {
 				// 先查询出来再删除
-				hibernateTemplate.delete(entity);
+				entityManager.remove(entity);
 			}
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " deleting entity successful, id:[{}].", id);
@@ -133,7 +135,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	public int deleteEntities(String hqlWhere, final String[] names, final Object[] values) throws AppframeException {
+	public int deleteEntities(String hqlWhere, String[] names, Object[] values) throws AppframeException {
 		int result = 0;
 		
 		try {
@@ -141,19 +143,13 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " deleting entities, hqlWhere:[{}].", hqlWhere);
 			}
 			final String queryString = "delete from " + entityClassName + " where " + hqlWhere;
-			result = hibernateTemplate.execute(
-					new HibernateCallback<Integer>() {
-						public Integer doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(queryString);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.executeUpdate();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(queryString);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = query.executeUpdate();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " deleting entity successful, hqlWhere:[{}].", hqlWhere);
 			}
@@ -167,21 +163,15 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	public int deleteByFullHql(final String hql) throws AppframeException {
+	public int deleteByFullHql(String hql) throws AppframeException {
 		int result = 0;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " deleting entities, hql:[{}].", hql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<Integer>() {
-						public Integer doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(hql);
-							return query.executeUpdate();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(hql);
+			result = query.executeUpdate();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " deleting entity successful, hql:[{}].", hql);
 			}
@@ -204,10 +194,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			}
 			if (0 < entity.getId()) {
 				//默认是大于0的，小于等于0的认为是特殊的
-				hibernateTemplate.merge(entity);
+				entityManager.merge(entity);
 			} else {
-				hibernateTemplate.save(entity);
-//				save(entity);
+				save(entity);
 			}
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " update successful, {}.", entity);
@@ -220,26 +209,20 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	public int updateByFullHql(final String hql, final String[] names, final Object[] values) throws AppframeException {
+	public int updateByFullHql(String hql, String[] names, Object[] values) throws AppframeException {
 		int result = 0;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " updateing entities, hql:[{}].", hql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<Integer>() {
-						public Integer doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(hql);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.executeUpdate();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(hql);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = query.executeUpdate();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " updateing entities successful, resultSize:[{}]." + result);
 			}
@@ -253,26 +236,20 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	public int updateNativeSql(final String sql, final String[] names, final Object[] values) throws AppframeException {
+	public int updateNativeSql(String sql, String[] names, Object[] values) throws AppframeException {
 		int result = 0;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " updating entities, sql:[{}].", sql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<Integer>() {
-						public Integer doInHibernate(Session session) throws HibernateException {
-							Query query = session.createSQLQuery(sql);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.executeUpdate();
-						}
-					}
-			);
+			Query query = entityManager.createNativeQuery(sql);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = query.executeUpdate();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " updating entities successful, resultSize:[{}]." + result);
 			}
@@ -286,35 +263,27 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	public List<Integer> updateNativeSqls(final String sql, final String[] names, final List<Object[]> valuesList) throws AppframeException {
+	public List<Integer> updateNativeSqls(String sql, String[] names, List<Object[]> valuesList) throws AppframeException {
 		List<Integer> result = null;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " banth update, sql:[{}].", sql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List<Integer>>() {
-						public List<Integer> doInHibernate(Session session) throws HibernateException {
-							List<Integer> dataList = null;
-							FlushMode mode = session.getFlushMode();
-							session.setFlushMode(FlushMode.MANUAL);
-							Query query = session.createSQLQuery(sql);
-							if (null != names) {
-								dataList = new ArrayList<Integer>(valuesList.size());
-								for (Object[] values: valuesList) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
-									}
-									int count = query.executeUpdate();
-									dataList.add(count);
-								}
-							}
-							session.setFlushMode(mode);
-							return dataList;
-						}
+			Session session = (Session) entityManager.getDelegate();
+			FlushMode mode = session.getFlushMode();
+			session.setFlushMode(FlushMode.MANUAL);
+			Query query = entityManager.createNativeQuery(sql);
+			if (null != names) {
+				result = new ArrayList<Integer>(valuesList.size());
+				for (Object[] values: valuesList) {
+					for (int i = 0; i < names.length; i++) {
+						query.setParameter(names[i], values[i]);
 					}
-			);
+					result.add(query.executeUpdate());
+				}
+			}
+			session.setFlushMode(mode);
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " banth update successful, update size:[{}]." + valuesList.size());
 			}
@@ -330,7 +299,6 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	
 	// ================ query =======================
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public T getReference(long id) throws AppframeException {
 		T result = null;
 		
@@ -338,7 +306,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entity reference with id:[{}].", id);
 			}
-			result = hibernateTemplate.load(entityClass, id);
+			result = entityManager.getReference(entityClass, id);
 			if (logger.isDebugEnabled()) {
 				if (null != result) {
 					logger.debug(entityClassName + " query entity reference successful.");
@@ -356,7 +324,6 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public T queryById(long id) throws AppframeException {
 		T result = null;
 		
@@ -364,7 +331,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entity with id:[{}].", id);
 			}
-			result = hibernateTemplate.get(entityClass, id);
+			result = entityManager.find(entityClass, id);
 			if (logger.isDebugEnabled()) {
 				if (null != result) {
 					logger.debug(entityClassName + " query entity successful.");
@@ -382,9 +349,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public T queryEntity(final String hqlWhere) throws AppframeException {
+	public T queryEntity(String hqlWhere) throws AppframeException {
 		T result = null;
 		
 		try {
@@ -392,21 +358,15 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
 			}
 			final String queryString = "from " + entityClassName + " where " + hqlWhere;
-			List<T> list = hibernateTemplate.execute(
-					new HibernateCallback<List<T>>() {
-						public List<T> doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(queryString);
-							query.setMaxResults(1);
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(queryString);
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			List<T> list = query.getResultList();
 			if (list.isEmpty()) {
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " entity not found, hqlWhere:[{}]", hqlWhere);
 				}
 			} else {
-				result = (T) list.get(0);
+				result = (T) query.getSingleResult();
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " query entity successful, hqlWhere:[{}]", hqlWhere);
 				}
@@ -421,9 +381,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public T queryEntity(String hqlWhere, final String[] names, final Object[] values) throws AppframeException {
+	public T queryEntity(String hqlWhere, String[] names, Object[] values) throws AppframeException {
 		T result = null;
 		
 		try {
@@ -431,21 +390,14 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entity, hqlWhere:[{}]", hqlWhere);
 			}
 			final String queryString = "from " + entityClassName + " where " + hqlWhere;
-			List<T> list = hibernateTemplate.execute(
-					new HibernateCallback<List<T>>() {
-						public List<T> doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(queryString);
-							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.list();
-						}
-					}
-			);
-			
+			Query query = entityManager.createQuery(queryString);
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			List<T> list = query.getResultList();
 			if (list.isEmpty()) {
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " entity not found, hqlWhere:[{}]", hqlWhere);
@@ -466,7 +418,6 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
 	public List<T> queryEntities() throws AppframeException {
 		List<T> result = null;
@@ -476,15 +427,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying all entities");
 			}
 			final String queryString = "from " + entityClassName;
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List<T>>() {
-						public List<T> doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(queryString);
-							query.setMaxResults(MAX_QUERY_LIMIT);
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(queryString);
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying all entities successful, result size:[{}]." + result.size());
 			}
@@ -498,7 +443,6 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
 	public List<T> queryEntities(String hqlWhere) throws AppframeException {
 		List<T> result = null;
@@ -508,15 +452,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying all entities, hqlWhere:[{}]", hqlWhere);
 			}
 			final String queryString = "from " + entityClassName + " where " + hqlWhere;
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List<T>>() {
-						public List<T> doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(queryString);
-							query.setMaxResults(MAX_QUERY_LIMIT);
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(queryString);
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -530,9 +468,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public List<T> queryEntities(String hqlWhere, final int rowIndex, final int rowNum) throws AppframeException {
+	public List<T> queryEntities(String hqlWhere, int rowIndex, int rowNum) throws AppframeException {
 		List<T> result = null;
 		
 		try {
@@ -540,16 +477,12 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
 			}
 			final String queryString = "from " + entityClassName + " where " + hqlWhere;
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List<T>>() {
-						public List<T> doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(queryString);
-							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(queryString);
+
+			query.setFirstResult(0 < --rowIndex ? rowIndex: 0);	// 数据库从0开始计数，应用从1开始计数
+			query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -563,9 +496,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public List<T> queryEntities(String hqlWhere, final String[] names, final Object[] values) throws AppframeException {
+	public List<T> queryEntities(String hqlWhere, String[] names, Object[] values) throws AppframeException {
 		List<T> result = null;
 		
 		try {
@@ -573,20 +505,14 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
 			}
 			final String queryString = "from " + entityClassName + " where " + hqlWhere;
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List<T>>() {
-						public List<T> doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(queryString);
-							query.setMaxResults(MAX_QUERY_LIMIT);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(queryString);
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -600,9 +526,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public List<T> queryEntities(final String hqlWhere, final String[] names, final Object[] values, final int rowIndex, final int rowNum) throws AppframeException {
+	public List<T> queryEntities(String hqlWhere, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException {
 		List<T> result = null;
 		
 		try {
@@ -610,21 +535,15 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
 			}
 			final String queryString = "from " + entityClassName + " where " + hqlWhere;
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List<T>>() {
-						public List<T> doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(queryString);
-							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(queryString);
+			query.setFirstResult(0 < --rowIndex ? rowIndex: 0);	// 数据库从0开始计数，应用从1开始计数
+			query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -637,16 +556,16 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 		return result;
 	}
 
-	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public DataContainer<T> queryEntities(final PageLoadConfig pageLoadCfg) throws AppframeException {
+	@Override
+	public DataContainer<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying all entities");
 			}
+			
 			int totalCount = countByFullHql("select count(*) from " + entityClassName, null, null);
 			result.setTotalCount(totalCount);
 			if (0 < totalCount) {
@@ -654,17 +573,11 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				if (null != pageLoadCfg) {
 					where += pageLoadCfg.toSortSql();
 				}
+				
 				final String queryString = "from " + entityClassName + where;
-				List<T> dataList = hibernateTemplate.execute(
-						new HibernateCallback<List<T>>() {
-							public List<T> doInHibernate(Session session) throws HibernateException {
-								Query query = session.createQuery(queryString);
-								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								return query.list();
-							}
-						}
-				);
+				Query query = entityManager.createQuery(queryString);
+				query.setMaxResults(MAX_QUERY_LIMIT);
+				List<T> dataList = query.getResultList();
 				result.setDataList(dataList);
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " querying all entities successful, result size:[{}]." + dataList.size());
@@ -679,10 +592,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 		return result;
 	}
 	
-	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public DataContainer<T> queryEntities(String hqlWhere, final PageLoadConfig pageLoadCfg) throws AppframeException {
+	@Override
+	public DataContainer<T> queryEntities(String hqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
 		
 		try {
@@ -697,16 +609,10 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 					where += pageLoadCfg.toSortSql();
 				}
 				final String queryString = "from " + entityClassName + where;
-				List<T> dataList = hibernateTemplate.execute(
-						new HibernateCallback<List<T>>() {
-							public List<T> doInHibernate(Session session) throws HibernateException {
-								Query query = session.createQuery(queryString);
-								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								return query.list();
-							}
-						}
-				);
+				Query query = entityManager.createQuery(queryString);
+				query.setMaxResults(MAX_QUERY_LIMIT);
+				
+				List<T> dataList = query.getResultList();
 				result.setDataList(dataList);
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " querying entities successful, result size:[{}]." + dataList.size());
@@ -721,10 +627,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 		return result;
 	}
 	
-	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public DataContainer<T> queryEntities(String hqlWhere, final String[] names, final Object[] values, final PageLoadConfig pageLoadCfg) throws AppframeException {
+	@Override
+	public DataContainer<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
 		
 		try {
@@ -739,21 +644,14 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 					where += pageLoadCfg.toSortSql();
 				}
 				final String queryString = "from " + entityClassName + where;
-				List<T> dataList = hibernateTemplate.execute(
-						new HibernateCallback<List<T>>() {
-							public List<T> doInHibernate(Session session) throws HibernateException {
-								Query query = session.createQuery(queryString);
-								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
-									}
-								}
-								return query.list();
-							}
-						}
-				);
+				Query query = entityManager.createQuery(queryString);
+				query.setMaxResults(MAX_QUERY_LIMIT);
+				if (null != names) {
+					for (int i = 0; i < names.length; i++) {
+						query.setParameter(names[i], values[i]);
+					}
+				}
+				List<T> dataList = query.getResultList();
 				result.setDataList(dataList);
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " querying entities successful, result size:[{}]." + dataList.size());
@@ -771,33 +669,21 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	
 	// ################################################################
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	@SuppressWarnings("unchecked")
-	public int countByFullHql(final String hql, final String[] names, final Object[] values) throws AppframeException {
+	public int countByFullHql(String hql, String[] names, Object[] values) throws AppframeException {
 		int result = 0;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " count, hql:[{}]", hql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<Integer>() {
-						public Integer doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(hql);
-							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							List<Long> dataList = query.list();
-							if (null == dataList || dataList.isEmpty()) {
-								return 0;
-							}
-							return DataTypeUtil.getAsInteger(dataList.get(0));
-						}
-					}
-			);
+			Query query = entityManager.createQuery(hql);
+			query.setMaxResults(1);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = DataTypeUtil.getAsInteger(query.getSingleResult());
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " count successful, count:[{}]", result);
 			}
@@ -811,33 +697,21 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	@SuppressWarnings("unchecked")
-	public int countNativeSql(final String sql, final String[] names, final Object[] values) throws AppframeException {
+	public int countNativeSql(String sql, String[] names, Object[] values) throws AppframeException {
 		int result = 0;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " count, sql:[{}]", sql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<Integer>() {
-						public Integer doInHibernate(Session session) throws HibernateException {
-							Query query = session.createSQLQuery(sql);
-							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							List<Long> dataList = query.list();
-							if (null == dataList || dataList.isEmpty()) {
-								return 0;
-							}
-							return DataTypeUtil.getAsInteger(dataList.get(0));
-						}
-					}
-			);
+			Query query = entityManager.createNativeQuery(sql);
+			query.setMaxResults(1);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = DataTypeUtil.getAsInteger(query.getSingleResult());
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " count successful, count:[{}]", result);
 			}
@@ -849,29 +723,28 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 		
 		return result;
 	}
+
+	
 	
 	/**
 	 * 因为对hql无约束， 可能返回结果的类型不是安全的
 	 */
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("rawtypes")
-	public List queryByFullHql(final String hql) throws AppframeException {
+	public List queryByFullHql(String hql) throws AppframeException {
 		List result = null;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities, hql:[{}]", hql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List>() {
-						public List doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(hql);
-							query.setMaxResults(MAX_QUERY_LIMIT);
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(hql);
+			/*
+			 * createQuery("select c as c, c.name as name from Customer c")
+			 * .setResultTransformer(Transformers.aliasToBean(YourClass.class));
+			 */
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -888,25 +761,19 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	 * 因为对hql无约束， 可能返回结果的类型不是安全的
 	 */
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("rawtypes")
-	public List queryByFullHql(final String hql, final int rowIndex, final int rowNum) throws AppframeException {
+	public List queryByFullHql(String hql, int rowIndex, int rowNum) throws AppframeException {
 		List result = null;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities, hql:[{}]", hql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List>() {
-						public List doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(hql);
-							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(hql);
+			query.setFirstResult(0 < --rowIndex ? rowIndex: 0);	// 数据库从0开始计数，应用从1开始计数
+			query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -920,29 +787,22 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("rawtypes")
-	public List queryByFullHql(final String hql, final String[] names, final Object[] values) throws AppframeException {
+	public List queryByFullHql(String hql, String[] names, Object[] values) throws AppframeException {
 		List result = null;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities, hql:[{}]", hql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List>() {
-						public List doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(hql);
-							query.setMaxResults(MAX_QUERY_LIMIT);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(hql);
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -959,30 +819,23 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	 * 因为对hql无约束， 可能返回结果的类型不是安全的
 	 */
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("rawtypes")
-	public List queryByFullHql(final String hql, final String[] names, final Object[] values, final int rowIndex, final int rowNum) throws AppframeException {
+	public List queryByFullHql(String hql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException {
 		List result = null;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities, hql:[{}]", hql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List>() {
-						public List doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(hql);
-							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(hql);
+			query.setFirstResult(0 < --rowIndex ? rowIndex: 0);	// 数据库从0开始计数，应用从1开始计数
+			query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -996,30 +849,24 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("rawtypes")
-	public List queryNativeSql(final String sql, final String[] names, final Object[] values, final int rowIndex, final int rowNum) throws AppframeException {
+	public List queryNativeSql(String sql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException {
 		List result = null;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities, sql:[{}]", sql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List>() {
-						public List doInHibernate(Session session) throws HibernateException {
-							Query query = session.createSQLQuery(sql);
-							query.setFirstResult(0 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createNativeQuery(sql);
+			query.setFirstResult(0 < --rowIndex ? rowIndex: 0);	// 数据库从0开始计数，应用从1开始计数
+			query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -1033,30 +880,23 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public List queryByFullHqlNoLimit(final String hql, final String[] names, final Object[] values, final int rowIndex, final int rowNum) throws AppframeException {
+	public List queryByFullHqlNoLimit(String hql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException {
 		List<T> result = null;
 		
 		try {
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities, hql:[{}]", hql);
 			}
-			result = hibernateTemplate.execute(
-					new HibernateCallback<List>() {
-						public List doInHibernate(Session session) throws HibernateException {
-							Query query = session.createQuery(hql);
-							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
-							return query.list();
-						}
-					}
-			);
+			Query query = entityManager.createQuery(hql);
+			query.setFirstResult(0 < --rowIndex ? rowIndex: 0);	// 数据库从0开始计数，应用从1开始计数
+			query.setMaxResults(rowNum);
+			if (null != names) {
+				for (int i = 0; i < names.length; i++) {
+					query.setParameter(names[i], values[i]);
+				}
+			}
+			result = query.getResultList();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
@@ -1070,9 +910,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public DataContainer queryByFullHql(String hql, final PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryByFullHql(String hql, PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1086,17 +925,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				if (null != pageLoadCfg) {
 					hql += " " + pageLoadCfg.toSortSql();
 				}
-				final String queryString = hql;
-				List dataList = hibernateTemplate.execute(
-						new HibernateCallback<List>() {
-							public List doInHibernate(Session session) throws HibernateException {
-								Query query = session.createQuery(queryString);
-								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								return query.list();
-							}
-						}
-				);
+				Query query = entityManager.createNativeQuery(hql);
+				query.setMaxResults(MAX_QUERY_LIMIT);
+				List dataList = query.getResultList();
 				result.setDataList(dataList);
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " querying entities successful, result size:[{}]." + dataList.size());
@@ -1112,9 +943,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public DataContainer queryByFullHql(String hql, final String[] names, final Object[] values, final PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryByFullHql(String hql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1128,22 +958,14 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				if (null != pageLoadCfg) {
 					hql += " " + pageLoadCfg.toSortSql();
 				}
-				final String queryString = hql;
-				List dataList = hibernateTemplate.execute(
-						new HibernateCallback<List>() {
-							public List doInHibernate(Session session) throws HibernateException {
-								Query query = session.createQuery(queryString);
-								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
-									}
-								}
-								return query.list();
-							}
-						}
-				);
+				Query query = entityManager.createNativeQuery(hql);
+				query.setMaxResults(MAX_QUERY_LIMIT);
+				if (null != names) {
+					for (int i = 0; i < names.length; i++) {
+						query.setParameter(names[i], values[i]);
+					}
+				}
+				List dataList = query.getResultList();
 				result.setDataList(dataList);
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " querying entities successful, result size:[{}]." + dataList.size());
@@ -1159,9 +981,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public DataContainer queryNativeSql(final String sql, final String[] names, final Object[] values, final PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryNativeSql(String sql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1172,21 +993,14 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			int totalCount = countNativeSql(sqlCount, names, values);
 			result.setTotalCount(totalCount);
 			if (0 < totalCount) {
-				List dataList = hibernateTemplate.execute(
-						new HibernateCallback<List>() {
-							public List doInHibernate(Session session) throws HibernateException {
-								Query query = session.createSQLQuery(sql);
-								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
-									}
-								}
-								return query.list();
-							}
-						}
-				);
+				Query query = entityManager.createNativeQuery(sql);
+				query.setMaxResults(MAX_QUERY_LIMIT);
+				if (null != names) {
+					for (int i = 0; i < names.length; i++) {
+						query.setParameter(names[i], values[i]);
+					}
+				}
+				List dataList = query.getResultList();
 				result.setDataList(dataList);
 				if (logger.isDebugEnabled()) {
 					logger.debug(entityClassName + " querying entities successful, result size:[{}]." + dataList.size());
@@ -1209,7 +1023,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " flushing.");
 			}
-			hibernateTemplate.flush();
+			entityManager.flush();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " flushing successful.");
 			}
@@ -1226,7 +1040,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " clearing.");
 			}
-			hibernateTemplate.clear();
+			entityManager.clear();
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " clearing successful.");
 			}
@@ -1243,7 +1057,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " merge entity, {}.", entity);
 			}
-			hibernateTemplate.merge(entity);
+			entityManager.merge(entity);
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " merge entity successful, {}.", entity);
 			}

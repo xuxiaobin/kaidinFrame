@@ -9,13 +9,13 @@
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>db-base-hibernate</artifactId>
-	<name>base-hibernate</name>
+	<artifactId>appframe-eh</artifactId>
+	<name>appframe-eh</name>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	
 	<scm>
-		<developerConnection>ĞìĞ¡±ó</developerConnection>
+		<developerConnection>å¾å°æ–Œ</developerConnection>
 	</scm>
 	
 	<properties>
@@ -38,11 +38,6 @@
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

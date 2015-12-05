@@ -23,6 +23,7 @@
 		<module>common-util</module>
 		<module>db-base-hibernate</module>
 		<module>base-hibernate</module>
+		<module>appframe-sh</module>
 		<module>db-orm</module>
 		<module>kdn-gui</module>
 	</modules>
@@ -32,6 +33,11 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>common-util</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>appframe-sh</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -96,15 +102,15 @@
 	</build>
 	
 	<repositories>
-		<repository>
+		<!--<repository>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 			<id>localhost.localdomain</id>
 			<name>localhost.localdomain-releases</name>
-			<!--<url>http://172.16.37.133:8081/artifactory/iSA-libs-local</url> -->
+			<url>http://172.16.37.133:8081/artifactory/iSA-libs-local</url>
 			<url>http://172.16.37.133:8081/artifactory/repo</url>
-		</repository>
+		</repository> -->
 	    <repository>
             <id>maven-nuxeo</id>
             <name>Maven Nuxeo Repository</name>

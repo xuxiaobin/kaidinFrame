@@ -1,4 +1,6 @@
-package com.kaidin.appframe.dao;
+package com.kaidin.appframe.dao.impl;
+
+import com.kaidin.appframe.config.AppframeConfig;
 
 /**
  * 操作数据库类的父类
@@ -8,18 +10,21 @@ package com.kaidin.appframe.dao;
  * @date 2015-6-23下午01:51:48
  */
 public class CommonBaseDaoImpl<T> {
-	protected static final int MAX_QUERY_LIMIT = 10000;	// 最大的数据条数限制
+	protected static final int MAX_QUERY_LIMIT;	// 最大的数据条数限制
 	protected final Class<T> entityClass;	// 实体类
 	protected final String entityClassName;	// 实体类名称，方便打印日志使用
 	
 	
+	static {
+		MAX_QUERY_LIMIT = AppframeConfig.getMaxQueryLimit();
+	}
 	protected CommonBaseDaoImpl(Class<T> clazz) {
 		entityClass = clazz;
 		entityClassName = clazz.getName();
 	}
 	
 	// ================ util =======================
-	protected String getParamStr(String[] names, Object[] values) {
+	protected static String getParamStr(String[] names, Object[] values) {
 		StringBuilder result = new StringBuilder();
 		
 		if (null != names && 0 < names.length) {

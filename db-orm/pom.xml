@@ -50,7 +50,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.kaidin</groupId>
-			<artifactId>db-base-hibernate</artifactId>
+			<artifactId>appframe-sh</artifactId>
 			<version>1.0</version>
 		</dependency>
 	</dependencies>

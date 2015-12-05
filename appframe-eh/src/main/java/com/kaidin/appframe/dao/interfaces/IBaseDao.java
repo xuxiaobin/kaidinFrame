@@ -1,4 +1,4 @@
-package com.kaidin.appframe.dao;
+package com.kaidin.appframe.dao.interfaces;
 
 import java.util.List;
 
