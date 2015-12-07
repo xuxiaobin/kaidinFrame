@@ -1,5 +1,5 @@
 package com.kaidin.db.entity;
-// Generated 2015-10-21 10:39:48 by Hibernate Tools 3.3.0.GA
+// Generated 2015-12-7 17:00:26 by Hibernate Tools 3.3.0.GA
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,9 +24,11 @@ public class EntityRltUserRole extends BaseEntity
 	public static final String P_EntityCfgUser	= "entityCfgUser";
 	public static final String P_EntityCfgRole	= "entityCfgRole";
 
-   	private long id;
-   	private EntityCfgUser entityCfgUser;
-   	private EntityCfgRole entityCfgRole;
+	private long id;
+	// cfg_user.id
+	private EntityCfgUser entityCfgUser;
+	// cfg_role.id
+	private EntityCfgRole entityCfgRole;
 
 	// default constructor
 	public EntityRltUserRole() {

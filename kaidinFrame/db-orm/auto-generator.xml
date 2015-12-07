@@ -11,7 +11,7 @@
 	<property name="daoInterfacePackage" value="com.kaidin.db.dao.interfaces" description="生成dao接口的包名"/>
 	<property name="daoImplPackage" value="com.kaidin.db.dao.impl" description="生成dao实现的包名"/>
 	
-	<property name="templatePath" value="../db-base-hibernate/src/main/resources" description="生成实体的模板目录的路径"/>
+	<property name="templatePath" value="../appframe-sh/src/main/resources" description="生成实体的模板目录的路径"/>
 	<property name="templateDir" value="springTemplate" description="生成实体的模板目录，目前支持spring和ejb的两种模板"/>
 	<!-- 变量定义end -->
 

@@ -1,5 +1,5 @@
 package com.kaidin.db.entity;
-// Generated 2015-10-21 10:39:48 by Hibernate Tools 3.3.0.GA
+// Generated 2015-12-7 17:00:26 by Hibernate Tools 3.3.0.GA
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,9 +23,9 @@ public class EntityStudent extends BaseEntity
 	public static final String P_Name	= "name";
 	public static final String P_Psw	= "psw";
 
-   	private long id;
-   	private String name;
-   	private String psw;
+	private long id;
+	private String name;
+	private String psw;
 
 	// default constructor
 	public EntityStudent() {
