@@ -1,5 +1,5 @@
 package com.kaidin.db.entity;
-// Generated 2015-10-21 10:39:48 by Hibernate Tools 3.3.0.GA
+// Generated 2015-12-7 17:00:26 by Hibernate Tools 3.3.0.GA
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,11 +25,11 @@ public class EntityTAreainfo extends BaseEntity
 	public static final String P_ParentId	= "parentId";
 	public static final String P_Status	= "status";
 
-   	private long id;
-   	private Integer level;
-   	private String name;
-   	private Integer parentId;
-   	private Integer status;
+	private long id;
+	private Integer level;
+	private String name;
+	private Integer parentId;
+	private Integer status;
 
 	// default constructor
 	public EntityTAreainfo() {

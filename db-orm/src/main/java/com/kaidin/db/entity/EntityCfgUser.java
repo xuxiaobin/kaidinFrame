@@ -1,5 +1,5 @@
 package com.kaidin.db.entity;
-// Generated 2015-10-21 10:39:48 by Hibernate Tools 3.3.0.GA
+// Generated 2015-12-7 17:00:26 by Hibernate Tools 3.3.0.GA
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,34 +41,34 @@ public class EntityCfgUser extends BaseEntity
 	public static final String P_Description	= "description";
 	public static final String P_EntityRltUserRoles	= "entityRltUserRoles";
 
-   	private long id;
+	private long id;
 	// 登陆用户名
-   	private String name;
+	private String name;
 	// 登陆密码
-   	private String password;
+	private String password;
 	// 别名
-   	private String alias;
+	private String alias;
 	// 性别
-   	private String gender;
+	private String gender;
 	// 邮箱地址
-   	private String mail;
+	private String mail;
 	// 生日
-   	private Date birthday;
+	private Date birthday;
 	// 电话
-   	private String telphone;
+	private String telphone;
 	// 地址
-   	private String address;
+	private String address;
 	// 最后登陆时间
-   	private Date lastLoginTime;
+	private Date lastLoginTime;
 	// 最后修改时间
-   	private Date passwordChangeTime;
+	private Date passwordChangeTime;
 	// 创建时间
-   	private Date createTime;
+	private Date createTime;
 	// 状态
-   	private short status;
+	private short status;
 	// 描述信息
-   	private String description;
-   	private Set<EntityRltUserRole> entityRltUserRoles= new HashSet<EntityRltUserRole>(0);
+	private String description;
+	private Set<EntityRltUserRole> entityRltUserRoles= new HashSet<EntityRltUserRole>(0);
 
 	// default constructor
 	public EntityCfgUser() {
