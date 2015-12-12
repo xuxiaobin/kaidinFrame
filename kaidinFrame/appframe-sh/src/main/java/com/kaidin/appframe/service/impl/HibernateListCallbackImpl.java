@@ -1,4 +1,4 @@
-package com.kaidin.appframe.dao.impl;
+package com.kaidin.appframe.service.impl;
 
 import java.sql.SQLException;
 
