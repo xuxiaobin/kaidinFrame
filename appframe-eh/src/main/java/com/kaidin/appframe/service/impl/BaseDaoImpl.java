@@ -1,4 +1,4 @@
-package com.kaidin.appframe.dao.impl;
+package com.kaidin.appframe.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.kaidin.appframe.dao.interfaces.IBaseDao;
-import com.kaidin.appframe.dao.interfaces.IDaoContext;
 import com.kaidin.appframe.entity.BaseEntity;
 import com.kaidin.appframe.exception.AppframeException;
+import com.kaidin.appframe.service.interfaces.IBaseDao;
+import com.kaidin.appframe.service.interfaces.IDaoContext;
 import com.kaidin.common.util.DataTypeUtil;
 import com.kaidin.common.util.query.DataContainer;
 import com.kaidin.common.util.query.PageLoadConfig;

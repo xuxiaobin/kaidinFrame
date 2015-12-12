@@ -1,4 +1,4 @@
-package com.kaidin.appframe.dao.interfaces;
+package com.kaidin.appframe.service.interfaces;
 
 import javax.persistence.EntityManager;
 
