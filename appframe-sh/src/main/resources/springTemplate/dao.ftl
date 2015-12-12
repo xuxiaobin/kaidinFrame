@@ -2,7 +2,7 @@ ${pojo.getPackageDeclaration()}
 // Generated ${date} by Hibernate Tools ${version}
 import org.springframework.stereotype.Repository;
 
-import com.kaidin.appframe.dao.BaseDaoImpl;
+import com.kaidin.appframe.service.impl.BaseDaoImpl;
 import com.kaidin.db.dao.interfaces.I${pojo.getDeclarationName()}Dao;
 import com.kaidin.db.entity.${pojo.getDeclarationName()};
 /**
