@@ -8,5 +8,6 @@ public class AppframeConstant {
 		public static final String MAX_RESULTS	= "maxResults";
 		public static final String DATA_SOURCE	= "dataSource";
 		public static final String RPT_DATA_SOURCE	= "rptDataSource";
+		public static final String IS_EJB3	= "rptDataSource";
 	}
 }
