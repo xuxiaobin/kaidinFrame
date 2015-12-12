@@ -7,7 +7,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 /**
  * 一般一个实体类对应一个表，该类所有实体类的基类
  * @version 1.0
- * @author kaidin@foxmail.com
+ * @author xuxiaobin	kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
 public abstract class BaseEntity implements Serializable {

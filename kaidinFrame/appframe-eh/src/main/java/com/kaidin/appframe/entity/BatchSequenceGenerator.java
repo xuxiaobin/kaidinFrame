@@ -12,10 +12,15 @@ import org.hibernate.id.SequenceGenerator;
 import org.hibernate.type.Type;
 
 import com.kaidin.common.util.PropertyUtil;
-
+/**
+ * 批量获取oracle数据库序列作id使用
+ * @version 1.1
+ * @author xuxiaobin	kaidin@foxmail.com
+ * @date 2015-6-23下午01:51:48
+ */
 public class BatchSequenceGenerator extends SequenceGenerator {
 	private int count = 0;
-	private Long position_id;
+	private Long positionId;
 	private boolean needBatch = false;
 	
 	
@@ -38,9 +43,9 @@ public class BatchSequenceGenerator extends SequenceGenerator {
 					count = 0;
 				}
 				if (count == 0) {
-					position_id = (Long) super.generate(session, object);
+					positionId = (Long) super.generate(session, object);
 				}
-				return new Long(position_id + (++count));
+				return new Long(positionId + (++count));
 			}
 		} else {
 			return super.generate(session, object);
