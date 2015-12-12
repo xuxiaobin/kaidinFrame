@@ -10,8 +10,8 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>db-orm</artifactId>
-	<name>entity</name>
-	<version>1.0</version>
+	<name>db-orm v${project.version}</name>
+	<version>1.1</version>
 	<description>数据映射的实体类文件，不包含业务逻辑方法</description>
 	<packaging>jar</packaging>
 	
@@ -51,11 +51,6 @@
 		<dependency>
 			<groupId>com.kaidin</groupId>
 			<artifactId>appframe-sh</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.kaidin</groupId>
-			<artifactId>db-orm</artifactId>
 		</dependency>
 	</dependencies>
 </project>

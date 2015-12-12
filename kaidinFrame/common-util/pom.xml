@@ -10,8 +10,8 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>common-util</artifactId>
-	<name>common-util</name>
-	<version>1.0</version>
+	<name>common-util v${project.version}</name>
+	<version>1.1</version>
 	<description>和业务逻辑无关的工具类，为方便某些场合使用</description>
 	<packaging>jar</packaging>
 	

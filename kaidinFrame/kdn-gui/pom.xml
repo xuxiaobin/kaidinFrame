@@ -10,8 +10,8 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>kdn-gui</artifactId>
-	<name>kdn-gui</name>
-	<version>1.0</version>
+	<name>kdn-gui v${project.version}</name>
+	<version>1.1</version>
 	
 	<packaging>war</packaging>
 
@@ -70,7 +70,6 @@
 		<dependency>
 			<groupId>com.kaidin</groupId>
 			<artifactId>db-orm</artifactId>
-			<version>1.0</version>
 		</dependency>
 	</dependencies>
 	

@@ -1,6 +1,6 @@
 ${pojo.getPackageDeclaration()}
 // Generated ${date} by Hibernate Tools ${version}
-import com.kaidin.appframe.dao.IBaseDao;
+import com.kaidin.appframe.service.interfaces.IBaseDao;
 import com.kaidin.db.entity.${pojo.getDeclarationName()};
 /**
  * Home object for domain model class ${pojo.getDeclarationName()}
