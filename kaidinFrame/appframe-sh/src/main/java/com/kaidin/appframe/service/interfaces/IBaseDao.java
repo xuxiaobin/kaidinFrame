@@ -20,12 +20,15 @@ public interface IBaseDao<T> {
 	// ================ delete =======================
 	public void delete(T entity) throws AppframeException;
 	public void deleteById(long id) throws AppframeException;
+	public int deleteEntities(String hqlWhere, String[] names, Object[] values) throws AppframeException;
 	public int deleteEntities(String hqlWhere, Map<String, Object> parameter) throws AppframeException;
 	public int deleteByFullHql(String hql) throws AppframeException;
 	
 	// ================ update =======================
 	public void update(T entity) throws AppframeException;
+	public int updateByFullHql(String hql, String[] names, Object[] values) throws AppframeException;
 	public int updateByFullHql(String hql, Map<String, Object> parameter) throws AppframeException;
+	public int updateNativeSql(String sql, String[] names, Object[] values) throws AppframeException;
 	public int updateNativeSql(String sql, Map<String, Object> parameter) throws AppframeException;
 	public List<Integer> updateNativeSqls(String sql, String[] names, List<Object[]> valuesList) throws AppframeException;
 	
@@ -34,18 +37,24 @@ public interface IBaseDao<T> {
 	public T queryById(long id) throws AppframeException;
 	
 	public T queryEntity(String hqlWhere) throws AppframeException;
+	public T queryEntity(String hqlWhere, String[] names, Object[] values) throws AppframeException;
 	public T queryEntity(String hqlWhere, Map<String, Object> parameter) throws AppframeException;
 	public List<T> queryEntities() throws AppframeException;
 	public List<T> queryEntities(String hqlWhere) throws AppframeException;
 	public List<T> queryEntities(String hqlWhere, int rowIndex, int rowNum) throws AppframeException;
+	public List<T> queryEntities(String hqlWhere, String[] names, Object[] values) throws AppframeException;
+	public List<T> queryEntities(String hqlWhere, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 	public List<T> queryEntities(String hqlWhere, Map<String, Object> parameter) throws AppframeException;
 	public List<T> queryEntities(String hqlWhere, Map<String, Object> parameter, int rowIndex, int rowNum) throws AppframeException;
 	
 	public DataContainer<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException;
 	public DataContainer<T> queryEntities(String hqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException;
+	public DataContainer<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException;
 	public DataContainer<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException;
 
+	public int countByFullHql(String hql, String[] names, Object[] values) throws AppframeException;
 	public int countByFullHql(String hql, Map<String, Object> parameter) throws AppframeException;
+	public int countNativeSql(String sql, String[] names, Object[] values) throws AppframeException;
 	public int countNativeSql(String sql, Map<String, Object> parameter) throws AppframeException;
 	
 	@SuppressWarnings("rawtypes")
@@ -53,21 +62,34 @@ public interface IBaseDao<T> {
 	@SuppressWarnings("rawtypes")
 	public List queryByFullHql(String hql, int rowIndex, int rowNum) throws AppframeException;
 	@SuppressWarnings("rawtypes")
+	public List queryByFullHql(String hql, String[] names, Object[] values) throws AppframeException;
+	@SuppressWarnings("rawtypes")
 	public List queryByFullHql(String hql, Map<String, Object> parameter) throws AppframeException;
+	@SuppressWarnings("rawtypes")
+	public List queryByFullHql(String hql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 	@SuppressWarnings("rawtypes")
 	public List queryByFullHql(String hql, Map<String, Object> parameter, int rowIndex, int rowNum) throws AppframeException;
 
 	@SuppressWarnings("rawtypes")
+	public List queryNativeSql(String sql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
+	@SuppressWarnings("rawtypes")
 	public List queryNativeSql(String sql, Map<String, Object> parameter, int rowIndex, int rowNum) throws AppframeException;
+	@SuppressWarnings("rawtypes")
+	public List queryByFullHqlNoLimit(String hql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 	@SuppressWarnings("rawtypes")
 	public List queryByFullHqlNoLimit(String hql, Map<String, Object> parameter, int rowIndex, int rowNum) throws AppframeException;
 	
 	@SuppressWarnings("rawtypes")
 	public DataContainer queryByFullHql(String hql, PageLoadConfig pageLoadCfg) throws AppframeException;
 	@SuppressWarnings("rawtypes")
+	public DataContainer queryByFullHql(String hql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException;
+	@SuppressWarnings("rawtypes")
 	public DataContainer queryByFullHql(String hql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException;
 	@SuppressWarnings("rawtypes")
+	public DataContainer queryNativeSql(String sql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException;
+	@SuppressWarnings("rawtypes")
 	public DataContainer queryNativeSql(String sql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException;
+	
 	// ================ other =======================
 	public void clear() throws AppframeException;
 	public void flush() throws AppframeException;
