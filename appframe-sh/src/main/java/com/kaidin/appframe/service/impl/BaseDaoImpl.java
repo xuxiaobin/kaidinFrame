@@ -2,6 +2,7 @@ package com.kaidin.appframe.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -56,16 +57,16 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 		hibernateTemplate = getHibernateTemplate();
 	}
 
-	
+
 	// ================ util =======================
-	private String getParamStr(String[] names, Object[] values) {
+	private String getParamStr(Map<String, Object> parameter) {
 		StringBuilder result = new StringBuilder();
 		
-		if (null != names && 0 < names.length) {
-			result.append(names[0]).append(":").append(values[0]);
-			for (int i = 1; i < names.length; i++) {
-				result.append(",").append(names[i]).append(":").append(values[i]);
+		if (null != parameter && !parameter.isEmpty()) {
+			for (String name: parameter.keySet()) {
+				result.append(name).append(':').append(parameter.get(name)).append(',');
 			}
+			result.deleteCharAt(result.length() - 1);
 		}
 		
 		return result.toString();
@@ -133,7 +134,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	public int deleteEntities(String hqlWhere, final String[] names, final Object[] values) throws AppframeException {
+	public int deleteEntities(String hqlWhere, final Map<String, Object> parameter) throws AppframeException {
 		int result = 0;
 		
 		try {
@@ -145,9 +146,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 					new HibernateCallback<Integer>() {
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.executeUpdate();
@@ -158,7 +159,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " deleting entity successful, hqlWhere:[{}].", hqlWhere);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " delete failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " delete failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -220,7 +221,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	public int updateByFullHql(final String hql, final String[] names, final Object[] values) throws AppframeException {
+	public int updateByFullHql(final String hql, final Map<String, Object> parameter) throws AppframeException {
 		int result = 0;
 		
 		try {
@@ -231,9 +232,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 					new HibernateCallback<Integer>() {
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.executeUpdate();
@@ -244,7 +245,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " updateing entities successful, resultSize:[{}]." + result);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " update failed, hql:[{}; param:{}].", hql, getParamStr(names, values));
+			logger.error(entityClassName + " update failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -253,7 +254,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	}
 	
 	@Override
-	public int updateNativeSql(final String sql, final String[] names, final Object[] values) throws AppframeException {
+	public int updateNativeSql(final String sql, final Map<String, Object> parameter) throws AppframeException {
 		int result = 0;
 		
 		try {
@@ -264,9 +265,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 					new HibernateCallback<Integer>() {
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createSQLQuery(sql);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.executeUpdate();
@@ -277,7 +278,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " updating entities successful, resultSize:[{}]." + result);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(names, values));
+			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -319,7 +320,14 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " banth update successful, update size:[{}]." + valuesList.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(names, valuesList.get(0)));
+			StringBuilder strBuilder = new StringBuilder();
+			if (null != names) {
+				strBuilder.append(names[0]).append(':').append(valuesList.get(0)[0]);
+				for (int i = 1; i < names.length; i++) {
+					strBuilder.append(',').append(names[i]).append(':').append(valuesList.get(0)[i]);
+				}
+			}
+			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, strBuilder.toString());
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -423,7 +431,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public T queryEntity(String hqlWhere, final String[] names, final Object[] values) throws AppframeException {
+	public T queryEntity(String hqlWhere, final Map<String, Object> parameter) throws AppframeException {
 		T result = null;
 		
 		try {
@@ -436,9 +444,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
 							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.list();
@@ -457,7 +465,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -565,7 +573,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public List<T> queryEntities(String hqlWhere, final String[] names, final Object[] values) throws AppframeException {
+	public List<T> queryEntities(String hqlWhere, final Map<String, Object> parameter) throws AppframeException {
 		List<T> result = null;
 		
 		try {
@@ -578,9 +586,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
 							query.setMaxResults(MAX_QUERY_LIMIT);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.list();
@@ -591,7 +599,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -602,7 +610,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public List<T> queryEntities(final String hqlWhere, final String[] names, final Object[] values, final int rowIndex, final int rowNum) throws AppframeException {
+	public List<T> queryEntities(final String hqlWhere, final Map<String, Object> parameter, final int rowIndex, final int rowNum) throws AppframeException {
 		List<T> result = null;
 		
 		try {
@@ -616,9 +624,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 							Query query = session.createQuery(queryString);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
 							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.list();
@@ -629,7 +637,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -647,7 +655,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 			if (logger.isDebugEnabled()) {
 				logger.debug(entityClassName + " querying all entities");
 			}
-			int totalCount = countByFullHql("select count(*) from " + entityClassName, null, null);
+			int totalCount = countByFullHql("select count(*) from " + entityClassName, null);
 			result.setTotalCount(totalCount);
 			if (0 < totalCount) {
 				String where = " ";
@@ -690,7 +698,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
 			}
 			String where = " where " + hqlWhere;
-			int totalCount = countByFullHql("select count(*) from " + entityClassName + where, null, null);
+			int totalCount = countByFullHql("select count(*) from " + entityClassName + where, null);
 			result.setTotalCount(totalCount);
 			if (0 < totalCount) {
 				if (null != pageLoadCfg) {
@@ -724,7 +732,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public DataContainer<T> queryEntities(String hqlWhere, final String[] names, final Object[] values, final PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer<T> queryEntities(String hqlWhere, final Map<String, Object> parameter, final PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
 		
 		try {
@@ -732,7 +740,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
 			}
 			String where = " where " + hqlWhere;
-			int totalCount = countByFullHql("select count(*) from " + entityClassName + where, names, values);
+			int totalCount = countByFullHql("select count(*) from " + entityClassName + where, parameter);
 			result.setTotalCount(totalCount);
 			if (0 < totalCount) {
 				if (null != pageLoadCfg) {
@@ -745,9 +753,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
 								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
+								if (null != parameter) {
+									for (String name: parameter.keySet()) {
+										query.setParameter(name, parameter.get(name));
 									}
 								}
 								return query.list();
@@ -760,7 +768,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -773,7 +781,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public int countByFullHql(final String hql, final String[] names, final Object[] values) throws AppframeException {
+	public int countByFullHql(final String hql, final Map<String, Object> parameter) throws AppframeException {
 		int result = 0;
 		
 		try {
@@ -785,9 +793,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							List<Long> dataList = query.list();
@@ -813,7 +821,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
-	public int countNativeSql(final String sql, final String[] names, final Object[] values) throws AppframeException {
+	public int countNativeSql(final String sql, final Map<String, Object> parameter) throws AppframeException {
 		int result = 0;
 		
 		try {
@@ -825,9 +833,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createSQLQuery(sql);
 							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							List<Long> dataList = query.list();
@@ -922,7 +930,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("rawtypes")
-	public List queryByFullHql(final String hql, final String[] names, final Object[] values) throws AppframeException {
+	public List queryByFullHql(final String hql, final Map<String, Object> parameter) throws AppframeException {
 		List result = null;
 		
 		try {
@@ -934,9 +942,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setMaxResults(MAX_QUERY_LIMIT);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.list();
@@ -947,7 +955,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -961,7 +969,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("rawtypes")
-	public List queryByFullHql(final String hql, final String[] names, final Object[] values, final int rowIndex, final int rowNum) throws AppframeException {
+	public List queryByFullHql(final String hql, final Map<String, Object> parameter, final int rowIndex, final int rowNum) throws AppframeException {
 		List result = null;
 		
 		try {
@@ -974,9 +982,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
 							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.list();
@@ -987,7 +995,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -998,7 +1006,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("rawtypes")
-	public List queryNativeSql(final String sql, final String[] names, final Object[] values, final int rowIndex, final int rowNum) throws AppframeException {
+	public List queryNativeSql(final String sql, final Map<String, Object> parameter, final int rowIndex, final int rowNum) throws AppframeException {
 		List result = null;
 		
 		try {
@@ -1011,9 +1019,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 							Query query = session.createSQLQuery(sql);
 							query.setFirstResult(0 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
 							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.list();
@@ -1024,7 +1032,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1035,7 +1043,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public List queryByFullHqlNoLimit(final String hql, final String[] names, final Object[] values, final int rowIndex, final int rowNum) throws AppframeException {
+	public List queryByFullHqlNoLimit(final String hql, final Map<String, Object> parameter, final int rowIndex, final int rowNum) throws AppframeException {
 		List<T> result = null;
 		
 		try {
@@ -1048,9 +1056,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
 							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
+							if (null != parameter) {
+								for (String name: parameter.keySet()) {
+									query.setParameter(name, parameter.get(name));
 								}
 							}
 							return query.list();
@@ -1061,7 +1069,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1080,7 +1088,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, hql:[{}]", hql);
 			}
 			String hqlCount = "select count(*) from (" + hql + ")";
-			int totalCount = countByFullHql(hqlCount, null, null);
+			int totalCount = countByFullHql(hqlCount, null);
 			result.setTotalCount(totalCount);
 			if (0 < totalCount) {
 				if (null != pageLoadCfg) {
@@ -1114,7 +1122,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public DataContainer queryByFullHql(String hql, final String[] names, final Object[] values, final PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryByFullHql(String hql, final Map<String, Object> parameter, final PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1122,7 +1130,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, hql:[{}]", hql);
 			}
 			String hqlCount = "select count(*) from (" + hql + ")";
-			int totalCount = countByFullHql(hqlCount, names, values);
+			int totalCount = countByFullHql(hqlCount, parameter);
 			result.setTotalCount(totalCount);
 			if (0 < totalCount) {
 				if (null != pageLoadCfg) {
@@ -1135,9 +1143,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
 								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
+								if (null != parameter) {
+									for (String name: parameter.keySet()) {
+										query.setParameter(name, parameter.get(name));
 									}
 								}
 								return query.list();
@@ -1161,7 +1169,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public DataContainer queryNativeSql(final String sql, final String[] names, final Object[] values, final PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryNativeSql(final String sql, final Map<String, Object> parameter, final PageLoadConfig pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1169,7 +1177,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " querying entities, sql:[{}]", sql);
 			}
 			String sqlCount = "select count(*) from (" + sql + ")";
-			int totalCount = countNativeSql(sqlCount, names, values);
+			int totalCount = countNativeSql(sqlCount, parameter);
 			result.setTotalCount(totalCount);
 			if (0 < totalCount) {
 				List dataList = hibernateTemplate.execute(
@@ -1178,9 +1186,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 								Query query = session.createSQLQuery(sql);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
 								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
+								if (null != parameter) {
+									for (String name: parameter.keySet()) {
+										query.setParameter(name, parameter.get(name));
 									}
 								}
 								return query.list();
@@ -1193,7 +1201,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
