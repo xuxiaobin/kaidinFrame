@@ -71,6 +71,19 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 		
 		return result.toString();
 	}
+	private String getParamStr(String[] names, Object[] values) {
+		StringBuilder result = new StringBuilder();
+		
+		if (null != names) {
+			result.append(names[0]).append(':').append(values[0]);
+			for (int i = 1; i < names.length; i++) {
+				result.append(',').append(names[i]).append(':').append(values[i]);
+			}
+			result.deleteCharAt(result.length() - 1);
+		}
+		
+		return result.toString();
+	}
 	
 	// ================ add =======================
 	public T save(T entity) throws AppframeException {
@@ -320,14 +333,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupp
 				logger.debug(entityClassName + " banth update successful, update size:[{}]." + valuesList.size());
 			}
 		} catch (Exception e) {
-			StringBuilder strBuilder = new StringBuilder();
-			if (null != names) {
-				strBuilder.append(names[0]).append(':').append(valuesList.get(0)[0]);
-				for (int i = 1; i < names.length; i++) {
-					strBuilder.append(',').append(names[i]).append(':').append(valuesList.get(0)[i]);
-				}
-			}
-			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, strBuilder.toString());
+			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(names, valuesList.get(0)));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
