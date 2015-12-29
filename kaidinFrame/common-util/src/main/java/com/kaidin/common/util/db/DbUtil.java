@@ -56,7 +56,7 @@ public class DbUtil {
 	 * @param rs
 	 * @throws SQLException 
 	 */
-	public static void close(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
+	public static void close(ResultSet rs, PreparedStatement ps, Connection conn) throws SQLException {
 		SQLException error = null;
 		
 		if (rs != null) {
