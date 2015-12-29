@@ -1,5 +1,7 @@
 package com.kaidin.appframe.service.impl;
 
+import java.util.Map;
+
 import com.kaidin.appframe.config.AppframeConfig;
 
 /**
@@ -24,7 +26,19 @@ public class CommonBaseDaoImpl<T> {
 	}
 	
 	// ================ util =======================
-	protected static String getParamStr(String[] names, Object[] values) {
+	protected String getParamStr(Map<String, Object> parameter) {
+		StringBuilder result = new StringBuilder();
+		
+		if (null != parameter && !parameter.isEmpty()) {
+			for (String name: parameter.keySet()) {
+				result.append(name).append(':').append(parameter.get(name)).append(',');
+			}
+			result.deleteCharAt(result.length() - 1);
+		}
+		
+		return result.toString();
+	}
+	protected String getParamStr(String[] names, Object[] values) {
 		StringBuilder result = new StringBuilder();
 		
 		if (null != names && 0 < names.length) {
