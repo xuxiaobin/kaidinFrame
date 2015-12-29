@@ -39,12 +39,12 @@ public class DbUtil {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static Connection getConnection(boolean autoCommit) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		Connection result = null;
 		
 		Class.forName(JDBC_DRIVER_CLASS_NAME).newInstance();
 		result = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-		result.setAutoCommit(false);
+		result.setAutoCommit(autoCommit);
 		
 		return result;
 	}
@@ -56,7 +56,7 @@ public class DbUtil {
 	 * @param rs
 	 * @throws SQLException 
 	 */
-	public static void close(ResultSet rs, PreparedStatement ps, Connection conn) throws SQLException {
+	public static void close(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
 		SQLException error = null;
 		
 		if (rs != null) {
