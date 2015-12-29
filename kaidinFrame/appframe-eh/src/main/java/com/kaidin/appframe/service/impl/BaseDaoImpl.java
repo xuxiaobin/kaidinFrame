@@ -2,6 +2,7 @@ package com.kaidin.appframe.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -161,6 +162,33 @@ public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> impl
 		
 		return result;
 	}
+	@Override
+	public int deleteEntities(String hqlWhere, Map<String, Object> parameter) throws AppframeException {
+		int result = 0;
+		
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " deleting entities, hqlWhere:[{}].", hqlWhere);
+			}
+			final String queryString = "delete from " + entityClassName + " where " + hqlWhere;
+			Query query = entityManager.createQuery(queryString);
+			if (null != parameter) {
+				for (String name: parameter.keySet()) {
+					query.setParameter(name, parameter.get(name));
+				}
+			}
+			result = query.executeUpdate();
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " deleting entity successful, hqlWhere:[{}].", hqlWhere);
+			}
+		} catch (Exception e) {
+			logger.error(entityClassName + " delete failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(e.getMessage(), e);
+			throw new AppframeException(e);
+		}
+		
+		return result;
+	}
 	
 	@Override
 	public int deleteByFullHql(String hql) throws AppframeException {
@@ -234,6 +262,32 @@ public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> impl
 		
 		return result;
 	}
+	@Override
+	public int updateByFullHql(String hql, Map<String, Object> parameter) throws AppframeException {
+		int result = 0;
+		
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " updateing entities, hql:[{}].", hql);
+			}
+			Query query = entityManager.createQuery(hql);
+			if (null != parameter) {
+				for (String name: parameter.keySet()) {
+					query.setParameter(name, parameter.get(name));
+				}
+			}
+			result = query.executeUpdate();
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " updateing entities successful, resultSize:[{}]." + result);
+			}
+		} catch (Exception e) {
+			logger.error(entityClassName + " update failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
+			logger.error(e.getMessage(), e);
+			throw new AppframeException(e);
+		}
+		
+		return result;
+	}
 	
 	@Override
 	public int updateNativeSql(String sql, String[] names, Object[] values) throws AppframeException {
@@ -255,6 +309,32 @@ public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> impl
 			}
 		} catch (Exception e) {
 			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(names, values));
+			logger.error(e.getMessage(), e);
+			throw new AppframeException(e);
+		}
+		
+		return result;
+	}
+	@Override
+	public int updateNativeSql(String sql, Map<String, Object> parameter) throws AppframeException {
+		int result = 0;
+		
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " updating entities, sql:[{}].", sql);
+			}
+			Query query = entityManager.createNativeQuery(sql);
+			if (null != parameter) {
+				for (String name: parameter.keySet()) {
+					query.setParameter(name, parameter.get(name));
+				}
+			}
+			result = query.executeUpdate();
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " updating entities successful, resultSize:[{}]." + result);
+			}
+		} catch (Exception e) {
+			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -416,6 +496,42 @@ public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> impl
 		
 		return result;
 	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public T queryEntity(String hqlWhere, Map<String, Object> parameter) throws AppframeException {
+		T result = null;
+		
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " querying entity, hqlWhere:[{}]", hqlWhere);
+			}
+			final String queryString = "from " + entityClassName + " where " + hqlWhere;
+			Query query = entityManager.createQuery(queryString);
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			if (null != parameter) {
+				for (String name: parameter.keySet()) {
+					query.setParameter(name, parameter.get(name));
+				}
+			}
+			List<T> list = query.getResultList();
+			if (list.isEmpty()) {
+				if (logger.isDebugEnabled()) {
+					logger.debug(entityClassName + " entity not found, hqlWhere:[{}]", hqlWhere);
+				}
+			} else {
+				result = list.get(0);
+				if (logger.isDebugEnabled()) {
+					logger.debug(entityClassName + " query entity successful, hqlWhere:[{}]", hqlWhere);
+				}
+			}
+		} catch (Exception e) {
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(e.getMessage(), e);
+			throw new AppframeException(e);
+		}
+		
+		return result;
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -524,6 +640,35 @@ public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> impl
 		
 		return result;
 	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<T> queryEntities(String hqlWhere, Map<String, Object> parameter) throws AppframeException {
+		List<T> result = null;
+		
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
+			}
+			final String queryString = "from " + entityClassName + " where " + hqlWhere;
+			Query query = entityManager.createQuery(queryString);
+			query.setMaxResults(MAX_QUERY_LIMIT);
+			if (null != parameter) {
+				for (String name: parameter.keySet()) {
+					query.setParameter(name, parameter.get(name));
+				}
+			}
+			result = query.getResultList();
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
+			}
+		} catch (Exception e) {
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(e.getMessage(), e);
+			throw new AppframeException(e);
+		}
+		
+		return result;
+	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
@@ -549,6 +694,36 @@ public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> impl
 			}
 		} catch (Exception e) {
 			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(e.getMessage(), e);
+			throw new AppframeException(e);
+		}
+		
+		return result;
+	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<T> queryEntities(String hqlWhere, Map<String, Object> parameter, int rowIndex, int rowNum) throws AppframeException {
+		List<T> result = null;
+		
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
+			}
+			final String queryString = "from " + entityClassName + " where " + hqlWhere;
+			Query query = entityManager.createQuery(queryString);
+			query.setFirstResult(0 < --rowIndex ? rowIndex: 0);	// 数据库从0开始计数，应用从1开始计数
+			query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+			if (null != parameter) {
+				for (String name: parameter.keySet()) {
+					query.setParameter(name, parameter.get(name));
+				}
+			}
+			result = query.getResultList();
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
+			}
+		} catch (Exception e) {
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -592,6 +767,44 @@ public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> impl
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public DataContainer<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
+		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug(entityClassName + " querying entities, hqlWhere:[{}]", hqlWhere);
+			}
+			String where = " where " + hqlWhere;
+			int totalCount = countByFullHql("select count(*) from " + entityClassName + where, parameter);
+			result.setTotalCount(totalCount);
+			if (0 < totalCount) {
+				if (null != pageLoadCfg) {
+					where += pageLoadCfg.toSortSql();
+				}
+				final String queryString = "from " + entityClassName + where;
+				Query query = entityManager.createQuery(queryString);
+				query.setMaxResults(MAX_QUERY_LIMIT);
+				if (null != parameter) {
+					for (String name: parameter.keySet()) {
+						query.setParameter(name, parameter.get(name));
+					}
+				}
+				List<T> dataList = query.getResultList();
+				result.setDataList(dataList);
+				if (logger.isDebugEnabled()) {
+					logger.debug(entityClassName + " querying entities successful, result size:[{}]." + dataList.size());
+				}
+			}
+		} catch (Exception e) {
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(e.getMessage(), e);
+			throw new AppframeException(e);
+		}
+		
+		return result;
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public DataContainer<T> queryEntities(String hqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException {
@@ -665,7 +878,6 @@ public class BaseDaoImpl<T extends BaseEntity> extends CommonBaseDaoImpl<T> impl
 		
 		return result;
 	}
-	
 	
 	// ################################################################
 	@Override
