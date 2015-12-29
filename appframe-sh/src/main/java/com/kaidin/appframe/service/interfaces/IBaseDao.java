@@ -16,7 +16,6 @@ public interface IBaseDao<T> {
 	// ================ add =======================
 	public T save(T entity) throws AppframeException;
 	
-	
 	// ================ delete =======================
 	public void delete(T entity) throws AppframeException;
 	public void deleteById(long id) throws AppframeException;
