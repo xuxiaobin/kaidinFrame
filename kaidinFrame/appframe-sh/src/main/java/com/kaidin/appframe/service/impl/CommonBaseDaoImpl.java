@@ -1,5 +1,7 @@
 package com.kaidin.appframe.service.impl;
 
+import java.util.Map;
+
 /**
  * 操作数据库类的父类
  * 因为子类复杂，实现方法很多，所以提取公共部分
@@ -19,6 +21,18 @@ public class CommonBaseDaoImpl<T> {
 	}
 	
 	// ================ util =======================
+	protected String getParamStr(Map<String, Object> parameter) {
+		StringBuilder result = new StringBuilder();
+		
+		if (null != parameter && !parameter.isEmpty()) {
+			for (String name: parameter.keySet()) {
+				result.append(name).append(':').append(parameter.get(name)).append(',');
+			}
+			result.deleteCharAt(result.length() - 1);
+		}
+		
+		return result.toString();
+	}
 	protected String getParamStr(String[] names, Object[] values) {
 		StringBuilder result = new StringBuilder();
 		

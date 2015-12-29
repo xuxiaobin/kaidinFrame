@@ -43,8 +43,8 @@ public interface IBaseDao<T> {
 	public List<T> queryEntities(String hqlWhere) throws AppframeException;
 	public List<T> queryEntities(String hqlWhere, int rowIndex, int rowNum) throws AppframeException;
 	public List<T> queryEntities(String hqlWhere, String[] names, Object[] values) throws AppframeException;
-	public List<T> queryEntities(String hqlWhere, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 	public List<T> queryEntities(String hqlWhere, Map<String, Object> parameter) throws AppframeException;
+	public List<T> queryEntities(String hqlWhere, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 	public List<T> queryEntities(String hqlWhere, Map<String, Object> parameter, int rowIndex, int rowNum) throws AppframeException;
 	
 	public DataContainer<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException;
