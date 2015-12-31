@@ -2,6 +2,8 @@ package com.kaidin.appframe.service.impl;
 
 import java.util.Map;
 
+import com.kaidin.appframe.config.AppframeConfig;
+
 /**
  * 操作数据库类的父类
  * 因为子类复杂，实现方法很多，所以提取公共部分
@@ -9,19 +11,23 @@ import java.util.Map;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class CommonBaseDaoImpl<T> {
-	protected static final int MAX_QUERY_LIMIT = 10000;	// 最大的数据条数限制
-	protected final Class<T> entityClass;	// 实体类
-	protected final String entityClassName;	// 实体类名称，方便打印日志使用
+public class BaseDaoSupport {
+	public final static int MAX_QUERY_LIMIT;	// 最大的数据条数限制
+//	public final Class<T> entityClass;	// 实体类
+//	public final String entityClassName;	// 实体类名称，方便打印日志使用
 	
 	
-	protected CommonBaseDaoImpl(Class<T> clazz) {
-		entityClass = clazz;
-		entityClassName = clazz.getName();
+	static {
+		MAX_QUERY_LIMIT = AppframeConfig.getMaxQueryLimit();
 	}
+//	
+//	protected BaseDaoSupport(Class<T> clazz) {
+//		entityClass = clazz;
+//		entityClassName = clazz.getName();
+//	}
 	
 	// ================ util =======================
-	protected String getParamStr(Map<String, Object> parameter) {
+	public static String getParamStr(Map<String, Object> parameter) {
 		StringBuilder result = new StringBuilder();
 		
 		if (null != parameter && !parameter.isEmpty()) {
@@ -33,7 +39,7 @@ public class CommonBaseDaoImpl<T> {
 		
 		return result.toString();
 	}
-	protected String getParamStr(String[] names, Object[] values) {
+	public static String getParamStr(String[] names, Object[] values) {
 		StringBuilder result = new StringBuilder();
 		
 		if (null != names && 0 < names.length) {
