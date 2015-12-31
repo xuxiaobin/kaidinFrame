@@ -19,7 +19,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kaidin.appframe.config.AppframeConfig;
 import com.kaidin.appframe.entity.BaseEntity;
 import com.kaidin.appframe.exception.AppframeException;
 import com.kaidin.appframe.service.interfaces.IBaseDao;
@@ -35,16 +34,11 @@ import com.kaidin.common.util.query.PageLoadConfig;
 @Transactional
 public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport implements IBaseDao<T> {
 	private static final transient Logger logger = LoggerFactory.getLogger(BaseDaoImpl.class);
-	private static final int MAX_QUERY_LIMIT;	// 最大的查询数据条数限制，默认10000
 	private final Class<T> entityClass;	// dao所对应的实体类
 	private final String entityClassName;	// 实体类名称，方便组装hql和打印日志使用
 	private HibernateTemplate hibernateTemplate;	// hibernate的模板，在setSessionFactory方法中从父类获取
 	
 	
-	static {
-		MAX_QUERY_LIMIT = AppframeConfig.getMaxQueryLimit();
-		logger.debug("init MAX_QUERY_LIMIT:" + MAX_QUERY_LIMIT);
-	}
 	public BaseDaoImpl(Class<T> clazz) throws AppframeException {
 		entityClass = clazz;
 		entityClassName = clazz.getName();
@@ -58,33 +52,6 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 	}
 
 
-	// ================ util =======================
-	private String getParamStr(Map<String, Object> parameter) {
-		StringBuilder result = new StringBuilder();
-		
-		if (null != parameter && !parameter.isEmpty()) {
-			for (String name: parameter.keySet()) {
-				result.append(name).append(':').append(parameter.get(name)).append(',');
-			}
-			result.deleteCharAt(result.length() - 1);
-		}
-		
-		return result.toString();
-	}
-	private String getParamStr(String[] names, Object[] values) {
-		StringBuilder result = new StringBuilder();
-		
-		if (null != names) {
-			result.append(names[0]).append(':').append(values[0]);
-			for (int i = 1; i < names.length; i++) {
-				result.append(',').append(names[i]).append(':').append(values[i]);
-			}
-			result.deleteCharAt(result.length() - 1);
-		}
-		
-		return result.toString();
-	}
-	
 	// ================ add =======================
 	@Override
 	public T save(T entity) throws AppframeException {
@@ -173,7 +140,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " deleting entity successful, hqlWhere:[{}].", hqlWhere);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " delete failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " delete failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -206,7 +173,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " deleting entity successful, hqlWhere:[{}].", hqlWhere);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " delete failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(entityClassName + " delete failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -292,7 +259,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " updateing entities successful, resultSize:[{}]." + result);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " update failed, hql:[{}; param:{}].", hql, getParamStr(names, values));
+			logger.error(entityClassName + " update failed, hql:[{}; param:{}].", hql, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -324,7 +291,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " updateing entities successful, resultSize:[{}]." + result);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " update failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
+			logger.error(entityClassName + " update failed, hql:[{}; param:{}].", hql, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -357,7 +324,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " updating entities successful, resultSize:[{}]." + result);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(names, values));
+			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -389,7 +356,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " updating entities successful, resultSize:[{}]." + result);
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(parameter));
+			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -431,7 +398,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " banth update successful, update size:[{}]." + valuesList.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, getParamStr(names, valuesList.get(0)));
+			logger.error(entityClassName + " update failed, sql:[{}; param:{}].", sql, BaseDaoSupport.getParamStr(names, valuesList.get(0)));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -569,7 +536,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -613,7 +580,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -636,7 +603,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<List<T>>() {
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
-							query.setMaxResults(MAX_QUERY_LIMIT);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
 							return query.list();
 						}
 					}
@@ -668,7 +635,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<List<T>>() {
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
-							query.setMaxResults(MAX_QUERY_LIMIT);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
 							return query.list();
 						}
 					}
@@ -701,7 +668,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							return query.list();
 						}
 					}
@@ -733,7 +700,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<List<T>>() {
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
-							query.setMaxResults(MAX_QUERY_LIMIT);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
 							if (null != names) {
 								for (int i = 0; i < names.length; i++) {
 									query.setParameter(names[i], values[i]);
@@ -747,7 +714,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -769,7 +736,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<List<T>>() {
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
-							query.setMaxResults(MAX_QUERY_LIMIT);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
 							if (null != parameter) {
 								for (String name: parameter.keySet()) {
 									query.setParameter(name, parameter.get(name));
@@ -783,7 +750,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -807,7 +774,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							if (null != names) {
 								for (int i = 0; i < names.length; i++) {
 									query.setParameter(names[i], values[i]);
@@ -821,7 +788,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -844,7 +811,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							if (null != parameter) {
 								for (String name: parameter.keySet()) {
 									query.setParameter(name, parameter.get(name));
@@ -858,7 +825,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -889,7 +856,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List<T> doInHibernate(Session session) throws HibernateException {
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								return query.list();
 							}
 						}
@@ -931,7 +898,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List<T> doInHibernate(Session session) throws HibernateException {
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								return query.list();
 							}
 						}
@@ -973,7 +940,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List<T> doInHibernate(Session session) throws HibernateException {
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								if (null != names) {
 									for (int i = 0; i < names.length; i++) {
 										query.setParameter(names[i], values[i]);
@@ -989,7 +956,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1019,7 +986,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List<T> doInHibernate(Session session) throws HibernateException {
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								if (null != parameter) {
 									for (String name: parameter.keySet()) {
 										query.setParameter(name, parameter.get(name));
@@ -1035,7 +1002,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, hqlWhere:[{}; param:{}].", hqlWhere, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1220,7 +1187,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<List>() {
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
-							query.setMaxResults(MAX_QUERY_LIMIT);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
 							return query.list();
 						}
 					}
@@ -1255,7 +1222,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							return query.list();
 						}
 					}
@@ -1286,7 +1253,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<List>() {
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
-							query.setMaxResults(MAX_QUERY_LIMIT);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
 							if (null != names) {
 								for (int i = 0; i < names.length; i++) {
 									query.setParameter(names[i], values[i]);
@@ -1300,7 +1267,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1321,7 +1288,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<List>() {
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
-							query.setMaxResults(MAX_QUERY_LIMIT);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
 							if (null != parameter) {
 								for (String name: parameter.keySet()) {
 									query.setParameter(name, parameter.get(name));
@@ -1335,7 +1302,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1361,7 +1328,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							if (null != names) {
 								for (int i = 0; i < names.length; i++) {
 									query.setParameter(names[i], values[i]);
@@ -1375,7 +1342,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1400,7 +1367,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							if (null != parameter) {
 								for (String name: parameter.keySet()) {
 									query.setParameter(name, parameter.get(name));
@@ -1414,7 +1381,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1437,7 +1404,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createSQLQuery(sql);
 							query.setFirstResult(0 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							if (null != names) {
 								for (int i = 0; i < names.length; i++) {
 									query.setParameter(names[i], values[i]);
@@ -1451,7 +1418,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1473,7 +1440,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createSQLQuery(sql);
 							query.setFirstResult(0 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							if (null != parameter) {
 								for (String name: parameter.keySet()) {
 									query.setParameter(name, parameter.get(name));
@@ -1487,7 +1454,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1510,7 +1477,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							if (null != names) {
 								for (int i = 0; i < names.length; i++) {
 									query.setParameter(names[i], values[i]);
@@ -1524,7 +1491,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1546,7 +1513,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
-							query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
+							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
 							if (null != parameter) {
 								for (String name: parameter.keySet()) {
 									query.setParameter(name, parameter.get(name));
@@ -1560,7 +1527,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				logger.debug(entityClassName + " querying entities successful, result size:[{}]." + result.size());
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, hql:[{}; param:{}].", hql, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1591,7 +1558,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List doInHibernate(Session session) throws HibernateException {
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								return query.list();
 							}
 						}
@@ -1633,7 +1600,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List doInHibernate(Session session) throws HibernateException {
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								if (null != names) {
 									for (int i = 0; i < names.length; i++) {
 										query.setParameter(names[i], values[i]);
@@ -1679,7 +1646,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List doInHibernate(Session session) throws HibernateException {
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								if (null != parameter) {
 									for (String name: parameter.keySet()) {
 										query.setParameter(name, parameter.get(name));
@@ -1722,7 +1689,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List doInHibernate(Session session) throws HibernateException {
 								Query query = session.createSQLQuery(sql);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								if (null != names) {
 									for (int i = 0; i < names.length; i++) {
 										query.setParameter(names[i], values[i]);
@@ -1738,7 +1705,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, getParamStr(names, values));
+			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, BaseDaoSupport.getParamStr(names, values));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
@@ -1764,7 +1731,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							public List doInHibernate(Session session) throws HibernateException {
 								Query query = session.createSQLQuery(sql);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
-								query.setMaxResults(MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
+								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
 								if (null != parameter) {
 									for (String name: parameter.keySet()) {
 										query.setParameter(name, parameter.get(name));
@@ -1780,7 +1747,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 				}
 			}
 		} catch (Exception e) {
-			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, getParamStr(parameter));
+			logger.error(entityClassName + " query failed, sql:[{}; param:{}].", sql, BaseDaoSupport.getParamStr(parameter));
 			logger.error(e.getMessage(), e);
 			throw new AppframeException(e);
 		}
