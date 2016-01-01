@@ -127,11 +127,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<Integer>() {
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.executeUpdate();
 						}
 					}
@@ -246,11 +242,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<Integer>() {
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.executeUpdate();
 						}
 					}
@@ -311,11 +303,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 					new HibernateCallback<Integer>() {
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createSQLQuery(sql);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.executeUpdate();
 						}
 					}
@@ -515,11 +503,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
 							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.list();
 						}
 					}
@@ -701,11 +685,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List<T> doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(queryString);
 							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.list();
 						}
 					}
@@ -775,11 +755,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							Query query = session.createQuery(queryString);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
 							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.list();
 						}
 					}
@@ -941,11 +917,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
 								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
-									}
-								}
+								BaseDaoSupport.setNamedValue(query, names, values);
 								return query.list();
 							}
 						}
@@ -1027,11 +999,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							List<Long> dataList = query.list();
 							if (null == dataList || dataList.isEmpty()) {
 								return 0;
@@ -1106,11 +1074,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public Integer doInHibernate(Session session) throws HibernateException {
 							Query query = session.createSQLQuery(sql);
 							query.setMaxResults(1);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							List<Long> dataList = query.list();
 							if (null == dataList || dataList.isEmpty()) {
 								return 0;
@@ -1254,11 +1218,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 						public List doInHibernate(Session session) throws HibernateException {
 							Query query = session.createQuery(hql);
 							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.list();
 						}
 					}
@@ -1329,11 +1289,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
 							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.list();
 						}
 					}
@@ -1405,11 +1361,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							Query query = session.createSQLQuery(sql);
 							query.setFirstResult(0 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
 							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.list();
 						}
 					}
@@ -1478,11 +1430,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							Query query = session.createQuery(hql);
 							query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
 							query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < rowNum ? BaseDaoSupport.MAX_QUERY_LIMIT: rowNum);
-							if (null != names) {
-								for (int i = 0; i < names.length; i++) {
-									query.setParameter(names[i], values[i]);
-								}
-							}
+							BaseDaoSupport.setNamedValue(query, names, values);
 							return query.list();
 						}
 					}
@@ -1601,11 +1549,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 								Query query = session.createQuery(queryString);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
 								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
-									}
-								}
+								BaseDaoSupport.setNamedValue(query, names, values);
 								return query.list();
 							}
 						}
@@ -1690,11 +1634,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 								Query query = session.createSQLQuery(sql);
 								query.setFirstResult(pageLoadCfg.getOffset() - 1);	// 数据库从0开始计数，应用从1开始计数
 								query.setMaxResults(BaseDaoSupport.MAX_QUERY_LIMIT < pageLoadCfg.getLimit() ? BaseDaoSupport.MAX_QUERY_LIMIT: pageLoadCfg.getLimit());
-								if (null != names) {
-									for (int i = 0; i < names.length; i++) {
-										query.setParameter(names[i], values[i]);
-									}
-								}
+								BaseDaoSupport.setNamedValue(query, names, values);
 								return query.list();
 							}
 						}
