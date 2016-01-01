@@ -2,6 +2,8 @@ package com.kaidin.appframe.service.impl;
 
 import java.util.Map;
 
+import org.hibernate.Query;
+
 import com.kaidin.appframe.config.AppframeConfig;
 
 /**
@@ -50,5 +52,19 @@ public class BaseDaoSupport {
 		}
 		
 		return result.toString();
+	}
+	
+	
+	public static void setNamedValue(Query query, String[] names, Object[] values) {
+		if (null != names) {
+			for (int i = 0; i < names.length; i++) {
+				query.setParameter(names[i], values[i]);
+			}
+		}
+	}
+	
+	public static void setRowsLimit(Query query, int rowIndex, int rowNum) {
+		query.setFirstResult(1 < rowIndex ? rowIndex - 1: 0);	// 数据库从0开始计数，应用从1开始计数
+		query.setMaxResults(MAX_QUERY_LIMIT < rowNum ? MAX_QUERY_LIMIT: rowNum);
 	}
 }
