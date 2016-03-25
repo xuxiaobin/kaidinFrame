@@ -25,11 +25,11 @@ public class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isBlank(String str) {
-		boolean isBlank = true;
+	public static boolean isNotBlank(String str) {
+		boolean isBlank = false;
 		
 		if (null != str && 0 < str.trim().length()) {
-			isBlank = false;
+			isBlank = true;
 		}
 		
 		return isBlank;
