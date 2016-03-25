@@ -2,7 +2,6 @@ package com.kaidin.common.util.query;
 
 import java.io.Serializable;
 import java.util.List;
-
 /**
  * 用于接口的返回值
  * @version	1.0
