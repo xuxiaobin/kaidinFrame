@@ -11,7 +11,6 @@ import java.io.OutputStream;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-
 /**
  * 图片验证码生成
  * @version 1.0

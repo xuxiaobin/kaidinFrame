@@ -2,7 +2,6 @@ package com.kaidin.common.util.query;
 
 import java.io.Serializable;
 import java.util.Map;
-
 /**
  * 页面查询传入的分页信息
  * @version 1.0
