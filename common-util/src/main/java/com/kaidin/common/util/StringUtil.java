@@ -85,20 +85,21 @@ public class StringUtil {
 					if (nextIndex < length) {
 						char nextChar = builder.charAt(nextIndex);
 						if ('a' <= nextChar && 'z' >= nextChar) {
+							length--;
 							if (0 == currentIndex) {
 								builder.deleteCharAt(currentIndex--);
-								length--;
 								continue;
 							}
 							nextChar -= 32;
 							builder.replace(currentIndex, ++nextIndex, String.valueOf(nextChar));
 						} else if ('_' == nextChar) {
 							builder.deleteCharAt(currentIndex--);
+							length--;
 						}
 					} else {
 						builder.deleteCharAt(currentIndex);
+						length--;
 					}
-					length--;
 				}
 			}
 			result = builder.toString();
