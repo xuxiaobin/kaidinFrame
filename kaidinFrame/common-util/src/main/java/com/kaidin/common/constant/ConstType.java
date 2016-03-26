@@ -1,7 +1,6 @@
 package com.kaidin.common.constant;
 
 import java.io.Serializable;
-
 /**
  * 本类中的属性全都是静态的常量
  * 提供一些常用的常量，方便引用
