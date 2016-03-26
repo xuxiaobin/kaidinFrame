@@ -46,13 +46,15 @@ public class StringUtil {
 		String result = null;
 		
 		if (null != str) {
+			int length = str.length();
 			StringBuilder builder = new StringBuilder(str);
-			for (int i = 0; i < builder.length(); i++) {
+			for (int i = 0; i < length; i++) {
 				char c = builder.charAt(i);
 				if ('A' <= c && 'Z' >= c) {
 					c += 32;
 					if (0 < i) {
 						builder.replace(i, ++i, "_" + c);
+						length++;
 					} else {
 						builder.replace(i, i + 1, String.valueOf(c));
 					}
@@ -74,16 +76,18 @@ public class StringUtil {
 		String result = null;
 		
 		if (null != str) {
+			int length = str.length();
 			StringBuilder builder = new StringBuilder(str);
-			for (int currentIndex = 0; currentIndex < builder.length(); currentIndex++) {
+			for (int currentIndex = 0; currentIndex < length; currentIndex++) {
 				char currentChar = builder.charAt(currentIndex);
 				if ('_' == currentChar) {
 					int nextIndex = currentIndex + 1;
-					if (nextIndex < builder.length()) {
+					if (nextIndex < length) {
 						char nextChar = builder.charAt(nextIndex);
 						if ('a' <= nextChar && 'z' >= nextChar) {
 							if (0 == currentIndex) {
 								builder.deleteCharAt(currentIndex--);
+								length--;
 								continue;
 							}
 							nextChar -= 32;
@@ -94,6 +98,7 @@ public class StringUtil {
 					} else {
 						builder.deleteCharAt(currentIndex);
 					}
+					length--;
 				}
 			}
 			result = builder.toString();
