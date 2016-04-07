@@ -3,7 +3,7 @@ package com.kaidin.common.util;
 import java.math.BigDecimal;
 import java.util.Date;
 /**
- * ip地址和整数之间互转工具
+ * 简单类型数据之间互转工具
  * @version 1.0
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
