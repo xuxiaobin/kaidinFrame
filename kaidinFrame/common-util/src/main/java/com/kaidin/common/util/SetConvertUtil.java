@@ -42,4 +42,47 @@ public class SetConvertUtil {
 		
 		return result;
 	}
+	
+	/**
+	 * 仿照oracle的decode方法
+	 * @param obj
+	 * @param defaultValue
+	 * @param expect1Obj
+	 * @param expect1Value
+	 * @param objArrray
+	 * @return
+	 */
+	public static Object decode(Object obj, Object defaultValue, Object expect1Obj, Object expect1Value, Object... objArrray) {
+		Object result = defaultValue;
+		
+		if (null == obj) {
+			if (null == expect1Obj) {
+				result = expect1Value;
+			} else {
+				for (int i = 0; i < objArrray.length; i++) {
+					if (null == objArrray[i++]) {
+						if (i < objArrray.length) {
+							result = objArrray[i];
+						}
+						break;
+					}
+				}
+			}
+		} else {
+			if (obj.equals(expect1Obj)) {
+				result = expect1Value;
+			} else {
+				for (int i = 0; i < objArrray.length; i++) {
+					if (obj.equals(objArrray[i++])) {
+						if (i < objArrray.length) {
+							result = objArrray[i];
+						}
+						break;
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
 }
