@@ -23,7 +23,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Byte getAsByte(Object obj, Byte defaultValue) {
+	public static Byte getAsByte(Object obj, byte defaultValue) {
 		return null == obj? defaultValue: getAsByte(obj);
 	}
 	
@@ -40,7 +40,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Short getAsShort(Object obj, Short defaultValue) {
+	public static Short getAsShort(Object obj, short defaultValue) {
 		return null == obj? defaultValue: getAsShort(obj);
 	}
 
@@ -57,7 +57,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Integer getAsInteger(Object obj, Integer defaultValue) {
+	public static Integer getAsInteger(Object obj, int defaultValue) {
 		return null == obj? defaultValue: getAsInteger(obj);
 	}
 
@@ -76,7 +76,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Long getAsLong(Object obj, Long defaultValue) {
+	public static Long getAsLong(Object obj, long defaultValue) {
 		return null == obj? defaultValue: getAsLong(obj);
 	}
 
@@ -96,7 +96,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Float getAsFloat(Object obj, Float defaultValue) {
+	public static Float getAsFloat(Object obj, float defaultValue) {
 		return null == obj? defaultValue: getAsFloat(obj);
 	}
 	
@@ -113,7 +113,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Double getAsDouble(Object obj, Double defaultValue) {
+	public static Double getAsDouble(Object obj, double defaultValue) {
 		return null == obj? defaultValue: getAsDouble(obj);
 	}
 	
@@ -154,7 +154,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Boolean getAsBoolean(Object obj, Boolean defaultValue) {
+	public static Boolean getAsBoolean(Object obj, boolean defaultValue) {
 		return null == obj? defaultValue: getAsBoolean(obj);
 	}
 
@@ -179,7 +179,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Character getAsCharacter(Object obj, Character defaultValue) {
+	public static Character getAsCharacter(Object obj, char defaultValue) {
 		return null == obj? defaultValue: getAsCharacter(obj);
 	}
 
