@@ -24,7 +24,7 @@ public class ConstType implements Serializable {
 	 * 时间相关
 	 */
 	public static class TIME {
-		public static final long MS_OF_SECOND	= 1000;
+		public static final long MS_OF_SECOND	= 1000L;
 		public static final long MS_OF_MINUTE	= 60 * MS_OF_SECOND;
 		public static final long MS_OF_HOUR		= 60 * MS_OF_MINUTE;
 		public static final long MS_OF_DAY		= 24 * MS_OF_HOUR;
