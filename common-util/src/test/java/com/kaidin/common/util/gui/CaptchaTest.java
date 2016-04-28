@@ -1,7 +1,10 @@
 package com.kaidin.common.util.gui;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import org.junit.Test;
 
 import com.kaidin.common.util.gui.Captcha;
 
@@ -11,13 +14,20 @@ import com.kaidin.common.util.gui.Captcha;
  * @date	2015-6-27下午06:16:46
  */
 public class CaptchaTest {
-	public static void main(String[] args) throws IOException {
-		char[] codeArray = Captcha.createCaptchaCode(4);
-		
-		codeArray = new char[]{'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M'};
+	
+	@Test
+	public void testCreateImage0() throws FileNotFoundException, IOException {
+		Captcha codeBuilder = new Captcha();
+		char[] codeArray = codeBuilder.createImage(new FileOutputStream("c:/code0.png"));
+		System.out.println(codeArray);
+	}
+	
+	@Test
+	public void testCreateImage1() throws FileNotFoundException, IOException {
+		char[] codeArray = new char[]{'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M'};
 		
 		Captcha codeBuilder = new Captcha();
-		codeBuilder.createImage(codeArray, new FileOutputStream("c:/code.png"));
+		codeBuilder.createImage(codeArray, new FileOutputStream("c:/test/code0.png"));
 		
 		System.out.println(codeArray);
 	}
