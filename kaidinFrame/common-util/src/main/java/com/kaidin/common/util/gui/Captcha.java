@@ -19,31 +19,19 @@ import javax.imageio.ImageIO;
  */
 public class Captcha {
 	private static final char[] CODE_SET = "3456789ABCEFGHJKLMNPQRSTUVWXY".toCharArray();
-	public static int MIN_CODE_COUNT = 4;	// 字符个数，最少4个（默认）
-	private static final int MIN_FONT_SIZE = 20;	// 最小的字体大小，像素
-	private static int FONT_SIZE = 32;	// 字符大小，（当做图片高度使用）
+	public static final int MIN_CODE_COUNT = 4;	// 字符个数，最少4个（默认）
+	public static final int MIN_FONT_SIZE = 32;	// 最小的字体大小，像素
 	private static final float CODE_WIDTH = 0.85F;	// 字符宽度百分比（完全按照字符间距会显得太大）
+	private String fontName = "Fixedsys";	// 字体名称，默认Fixedsys
+	private int fontStyle = Font.BOLD;	// 字体样式，默认加粗
+	private int fontSize = MIN_FONT_SIZE;	// 字体大小，默认32，（当做图片高度使用）
+	private float fontDegree = 0;	// 字体旋转的角度
+	private float diaphaneity = 0.8F;	// 透明度
+	private int codeCount = MIN_CODE_COUNT;
 	
-	
-//	/**
-//	 * 创建验证码对象
-//	 * @since 1.0.0
-//	 * @Date:2012-3-1 上午10:26:20
-//	 * @return CheckCode
-//	 */
-//	public Captcha createCheckCode() {
-//		Captcha captcha = new Captcha();
-//		
-//		char[] codeArray = createCaptchaCode();
-//		captcha.createImage(codeArray);
-//		
-//		captcha.setCheckCodeStr(String.valueOf(codeArray));
-//		
-//		return captcha;
-//	}
 
 	/**
-	 * 生成验证码字符数组，可以指定字符个数，最少4个字符
+	 * 生成随机验证码字符数组，可以指定字符个数，最少4个字符
 	 * @param codeCount
 	 * @return
 	 */
@@ -59,25 +47,38 @@ public class Captcha {
 
 		return result;
 	}
-	public static char[] createCaptchaCode() {
-		return createCaptchaCode(MIN_CODE_COUNT);
+	public char[] createCaptchaCode() {
+		return createCaptchaCode(codeCount);
 	}
 	
-	
-	public void createImage(char[] codeArray, OutputStream output) throws IOException {
-		if (null == codeArray) {
-			codeArray = createCaptchaCode();
+	/**
+	 * 根据字符数组创建验证码
+	 * @param codeArray
+	 * @param output
+	 * @throws IOException
+	 */
+	public char[] createImage(char[] codeArray, OutputStream output) throws IOException {
+		char[] result = null == codeArray? createCaptchaCode(): codeArray;
+		
+		if (null == result) {
+			// 生成随机字符
+			result = createCaptchaCode();
 		}
-		int imgWidth = Double.valueOf(FONT_SIZE * (codeArray.length * CODE_WIDTH + (1 - CODE_WIDTH))).intValue();
-		BufferedImage buffImg = new BufferedImage(imgWidth, FONT_SIZE, BufferedImage.TYPE_INT_RGB);
-		Graphics2D graphics = graphicsInit(buffImg);
+		int imgWidth = Double.valueOf(fontSize * (result.length * CODE_WIDTH + (1 - CODE_WIDTH))).intValue();
+		BufferedImage buffImg = new BufferedImage(imgWidth, fontSize, BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics = initGraphics(buffImg);
 		drawDisturbLine(buffImg);	// 画干扰线
 		drawCurve(buffImg);	// 添加干扰曲线
-		drawCode(graphics, codeArray);	// 画字符
+		drawCode(graphics, result);	// 画字符
 		buffImg = twistImage(buffImg);	// 扭曲图片
 //		drawCurve(graphics);	// 添加干扰曲线
 		
 		ImageIO.write(buffImg, "PNG", output);
+		
+		return result;
+	}
+	public char[] createImage(OutputStream output) throws IOException {
+		return createImage(null, output);
 	}
 	
 	/**
@@ -86,19 +87,19 @@ public class Captcha {
 	 * @Date:2012-3-1 上午10:17:52
 	 * @return Graphics2D
 	 */
-	private Graphics2D graphicsInit(BufferedImage buffImg) {
-		Graphics2D graphics;
+	private Graphics2D initGraphics(BufferedImage buffImg) {
+		Graphics2D result = buffImg.createGraphics();
 		
-		graphics = buffImg.createGraphics();
 //		graphics.setColor(Color.WHITE);
 //		buffImg = graphics.getDeviceConfiguration().createCompatibleImage(buffImg.getWidth(), buffImg.getHeight(), Transparency.TRANSLUCENT);
-		graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.8f));
+		result.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, diaphaneity));
 //		graphics.dispose();
 //		graphics = buffImg.createGraphics();
-		graphics.fillRect(0, 0, buffImg.getWidth(), FONT_SIZE);
+		result.fillRect(0, 0, buffImg.getWidth(), fontSize);
+		result.setFont(new Font(fontName, fontStyle, fontSize));
 //		graphics.drawRect(0, 0, IMG_WIDTH - 1, IMG_HEIGHT - 1);
 		
-		return graphics;
+		return result;
 	}
 	
 	/**
@@ -107,11 +108,11 @@ public class Captcha {
 	 * @param codeArray
 	 */
 	private void drawCode(Graphics2D graphics, char[] codeArray) {
-		int codeWidth = Double.valueOf(FONT_SIZE * CODE_WIDTH).intValue();	// 字符的宽度
+		int codeWidth = Double.valueOf(fontSize * CODE_WIDTH).intValue();	// 字符的宽度
 		int codeX = Double.valueOf(codeWidth * (1 - CODE_WIDTH)).intValue();	// 开始画的横坐标
-		int codeY = Double.valueOf(FONT_SIZE * CODE_WIDTH).intValue();	// 开始画的纵坐标
+		int codeY = Double.valueOf(fontSize * CODE_WIDTH).intValue();	// 开始画的纵坐标
 		System.out.println("(" + codeX + "," + codeY + ")");
-		graphics.setFont(new Font("Fixedsys", Font.BOLD, FONT_SIZE));
+		graphics.setFont(new Font(fontName, fontStyle, fontSize));
 		for (int index = 0; index < codeArray.length; index++) {
 //			graphics.drawString(String.valueOf(codeArray[i]), codeX, codeY);
 			// 每次画一个字符
@@ -135,7 +136,7 @@ public class Captcha {
 		Random random = new Random(System.currentTimeMillis());
 		for (int i = 0; i < MIN_CODE_COUNT * 3; i++) {
 			x1 = random.nextInt(buffImg.getWidth() - xOffset);
-			y1 = random.nextInt(FONT_SIZE - yOffset);
+			y1 = random.nextInt(fontSize - yOffset);
 			x2 = x1 + random.nextInt(xOffset);
 			y2 = y1 + random.nextInt(yOffset);
 			graphics.setColor(createColor());
@@ -158,7 +159,7 @@ public class Captcha {
 			double dx = 2 * Math.PI * x / buffImg.getWidth() + phase;	// 将y坐标映射到2PI上，加上相位
 			int offset = (int) (Math.sin(dx) * amplitude) + 9;	// 正弦函数乘以振幅
 			//画一小段竖线
-			if (0 < offset && offset < FONT_SIZE) {
+			if (0 < offset && offset < fontSize) {
 				graphics.drawLine(x, offset, x, offset + 2);
 			}
 		}
@@ -240,36 +241,62 @@ public class Captcha {
 		
 		return result;
 	}
-
+	
+	
+	public String getFontName() {
+		return fontName;
+	}
+	public void setFontName(String fontName) {
+		this.fontName = fontName;
+	}
+	public int getFontStyle() {
+		return fontStyle;
+	}
+	public void setFontStyle(int fontStyle) {
+		this.fontStyle = fontStyle;
+	}
 	/**
 	 * 获取字体大小
 	 * @return
 	 */
-	public static int getFontSize() {
-		return FONT_SIZE;
+	public int getFontSize() {
+		return fontSize;
 	}
 	/**
 	 * 设置字体大小
 	 * @param fontSize
 	 */
-	public static void setFontSize(int fontSize) {
+	public void setFontSize(int fontSize) {
 		if (MIN_FONT_SIZE < fontSize) {
-			FONT_SIZE = fontSize;
+			this.fontSize = fontSize;
 		}
 	}
-
+	public float getFontDegree() {
+		return fontDegree;
+	}
+	public void setFontDegree(float fontDegree) {
+		this.fontDegree = fontDegree;
+	}
+	public float getDiaphaneity() {
+		return diaphaneity;
+	}
+	public void setDiaphaneity(float diaphaneity) {
+		this.diaphaneity = diaphaneity;
+	}
 	/**
 	 * 获取当前设置的字符数量
 	 * @return
 	 */
-	public static int getCodeCount() {
-		return MIN_CODE_COUNT;
+	public int getCodeCount() {
+		return codeCount;
 	}
 	/**
 	 * 设置字符数量
 	 * @param codeCount
 	 */
-	public static void setCodeCount(int codeCount) {
-		MIN_CODE_COUNT = codeCount;
+	public void setCodeCount(int codeCount) {
+		if (MIN_CODE_COUNT < codeCount) {
+			this.codeCount = codeCount;
+		}
 	}
 }
