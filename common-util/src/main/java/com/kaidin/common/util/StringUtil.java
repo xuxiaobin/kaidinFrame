@@ -8,6 +8,33 @@ package com.kaidin.common.util;
  */
 public class StringUtil {
 	/**
+	 * 判断两个字符串是否相同，添加判空逻辑
+	 * @param str1
+	 * @param str2
+	 * @return
+	 */
+	public static boolean equals(String str1, String str2) {
+		return BaseUtil.equals(str1, str2);
+	}
+	/**
+	 * 忽略大小写之后判断两个字符串是否相同，添加判空逻辑
+	 * @param str1
+	 * @param str2
+	 * @return
+	 */
+	public static boolean equalsIgnoreCase(String str1, String str2) {
+		boolean result;
+		
+		if (null == str1) {
+			result = null == str2;
+		} else {
+			result = str1.equalsIgnoreCase(str2);
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * 将首字母大写
 	 * @param str
 	 * @return

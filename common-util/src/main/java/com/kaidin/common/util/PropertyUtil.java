@@ -110,13 +110,13 @@ public class PropertyUtil {
 			return;
 		}
 		String fieldTypeName = clazz.getName();
-		if (fieldTypeName.equals(Integer.class.getName()) || ConstType.BASE_TYPE.DATATYPE_int.equals(fieldTypeName)) {
+		if (fieldTypeName.equals(Integer.class.getName()) || ConstType.baseType.DATATYPE_int.equals(fieldTypeName)) {
 			PropertyUtils.setSimpleProperty(bean, name, Integer.valueOf(value));
-		} else if (fieldTypeName.equals(Long.class.getName()) || ConstType.BASE_TYPE.DATATYPE_long.equals(fieldTypeName)) {
+		} else if (fieldTypeName.equals(Long.class.getName()) || ConstType.baseType.DATATYPE_long.equals(fieldTypeName)) {
 			PropertyUtils.setSimpleProperty(bean, name, Long.valueOf(value));
-		} else if (fieldTypeName.equals(Float.class.getName()) || ConstType.BASE_TYPE.DATATYPE_float.equals(fieldTypeName)) {
+		} else if (fieldTypeName.equals(Float.class.getName()) || ConstType.baseType.DATATYPE_float.equals(fieldTypeName)) {
 			PropertyUtils.setSimpleProperty(bean, name, Float.valueOf(value));
-		} else if (fieldTypeName.equals(Double.class.getName()) || ConstType.BASE_TYPE.DATATYPE_double.equals(fieldTypeName)) {
+		} else if (fieldTypeName.equals(Double.class.getName()) || ConstType.baseType.DATATYPE_double.equals(fieldTypeName)) {
 			PropertyUtils.setSimpleProperty(bean, name, Double.valueOf(value));
 		} else {
 			PropertyUtils.setSimpleProperty(bean, name, value);

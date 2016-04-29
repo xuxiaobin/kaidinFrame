@@ -16,8 +16,8 @@ public class RegexUtil {
 	private static final Pattern CONTAIN_LETTER_PATTERN	= Pattern.compile("[a-zA-Z]");
 	private static final Pattern ALL_LETTERS_PATTERN	= Pattern.compile("^[A-Za-z]+$");
 	
-	private static final Pattern MAIL_ADDR_PATTERN		= Pattern.compile(ConstType.REGEX.MAIL_ADDR);
-	private static final Pattern IP_ADDR_PATTERN		= Pattern.compile(ConstType.REGEX.IP_ADDR);
+	private static final Pattern MAIL_ADDR_PATTERN		= Pattern.compile(ConstType.regex.MAIL_ADDR);
+	private static final Pattern IP_ADDR_PATTERN		= Pattern.compile(ConstType.regex.IP_ADDR);
 	
 	
     /**
@@ -114,7 +114,7 @@ public class RegexUtil {
 		boolean result = false;
 		
 		if (null != ipAddr && 7 <= ipAddr.length()) {
-			if (ConstType.IP.LOCALHOST.equalsIgnoreCase(ipAddr)) {
+			if (ConstType.ip.LOCALHOST.equalsIgnoreCase(ipAddr)) {
 				// localhost匹配
 				result = true;
 			} else {

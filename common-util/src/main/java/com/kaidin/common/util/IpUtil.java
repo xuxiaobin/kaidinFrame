@@ -72,7 +72,7 @@ public class IpUtil {
 	public static boolean isIpAddr(Long ipLong) {
 		boolean isMatch = false;
 		
-		if (null != ipLong && ConstType.IP.MIN_VALUE <= ipLong && ConstType.IP.MAX_VALUE >= ipLong) {
+		if (null != ipLong && ConstType.ip.MIN_VALUE <= ipLong && ConstType.ip.MAX_VALUE >= ipLong) {
 			isMatch = true;
 		}
 		

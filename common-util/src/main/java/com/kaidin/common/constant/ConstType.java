@@ -14,7 +14,7 @@ public class ConstType implements Serializable {
 	/**
 	 * 正则表达式
 	 */
-	public static class REGEX {
+	public static class regex {
 		public static final String MAIL_ADDR	= "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
 //		public static final String IP_ADDR		= "\\b((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])(\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])){3}\\b";
 		public static final String IP_ADDR		= "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])(\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])){3}$";
@@ -23,7 +23,7 @@ public class ConstType implements Serializable {
 	/**
 	 * 时间相关
 	 */
-	public static class TIME {
+	public static class time {
 		public static final long MS_OF_SECOND	= 1000L;
 		public static final long MS_OF_MINUTE	= 60 * MS_OF_SECOND;
 		public static final long MS_OF_HOUR		= 60 * MS_OF_MINUTE;
@@ -34,12 +34,12 @@ public class ConstType implements Serializable {
 	/**
 	 * IP地址相关
 	 */
-	public static class IP {
+	public static class ip {
 		public static final Long LOCALHOST_VALUE	= 2130706433L;	//本地ip地址127.0.0.1
 		public static final Long MAX_VALUE			= 4294967295L;	//最大的ip地址对应的数值
 		public static final Long MIN_VALUE			= 0L;	//最小的ip地址对应的数值
 		
-		public static final String ADDR_REGEX		= REGEX.IP_ADDR;	//ip地址的正则
+		public static final String ADDR_REGEX		= regex.IP_ADDR;	//ip地址的正则
 		public static final String LOCALHOST		= "localhost";
 		public static final String LOCALHOST_IP		= "127.0.0.1";
 	}
@@ -60,7 +60,7 @@ public class ConstType implements Serializable {
 	/**
 	 * 基本数据类型
 	 */
-	public static class BASE_TYPE {
+	public static class baseType {
 		public static final String DATATYPE_short	= "short";
 		public static final String DATATYPE_SHORT	= "Short";
 		public static final String DATATYPE_int	= "int";

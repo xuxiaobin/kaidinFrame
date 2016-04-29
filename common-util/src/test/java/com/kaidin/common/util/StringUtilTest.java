@@ -7,6 +7,23 @@ import org.junit.Test;
 public class StringUtilTest {
 
 	@Test
+	public void testEquals() {
+		assertTrue(StringUtil.equals(null, null));
+		assertFalse(StringUtil.equals(null, "12345"));
+		assertFalse(StringUtil.equals("12345abc", null));
+		assertTrue(StringUtil.equals("12345abc", 12345 + "abc"));
+		assertFalse(StringUtil.equals("12345abC", 12345 + "abc"));
+	}
+	@Test
+	public void testEqualsIgnoreCase() {
+		assertTrue(StringUtil.equalsIgnoreCase(null, null));
+		assertFalse(StringUtil.equalsIgnoreCase(null, "12345"));
+		assertFalse(StringUtil.equalsIgnoreCase("12345abc", null));
+		assertTrue(StringUtil.equalsIgnoreCase("12345abc", 12345 + "abc"));
+		assertTrue(StringUtil.equalsIgnoreCase("12345abC", 12345 + "abc"));
+	}
+	
+	@Test
 	public void testToUpperCaseAtFirst() {
 		assertEquals("Config.properties", StringUtil.toUpperCaseAtFirst("config.properties"));
 		assertEquals("12345", StringUtil.toUpperCaseAtFirst("12345"));
