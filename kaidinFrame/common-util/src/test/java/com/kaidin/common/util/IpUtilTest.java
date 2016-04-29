@@ -10,7 +10,7 @@ import com.kaidin.common.constant.ConstType;
 
 public class IpUtilTest {
 	public static void main(String[] args) {
-		for (long i = ConstType.IP.MIN_VALUE; i <= ConstType.IP.MAX_VALUE; i++) {
+		for (long i = ConstType.ip.MIN_VALUE; i <= ConstType.ip.MAX_VALUE; i++) {
 			if (!IpUtil.isIpAddr(IpUtil.getLongIp2String(i))) {
 				System.out.println(i);
 			}
@@ -32,14 +32,14 @@ public class IpUtilTest {
 	
 	@Test
 	public void testGetStringIp2Long() {
-		assertEquals(ConstType.IP.MIN_VALUE, IpUtil.getStringIp2Long("0.0.0.0"));
-		assertEquals(ConstType.IP.MAX_VALUE, IpUtil.getStringIp2Long("255.255.255.255"));
+		assertEquals(ConstType.ip.MIN_VALUE, IpUtil.getStringIp2Long("0.0.0.0"));
+		assertEquals(ConstType.ip.MAX_VALUE, IpUtil.getStringIp2Long("255.255.255.255"));
 	}
 
 	@Test
 	public void testGetLongIp2String() {
-		assertEquals("0.0.0.0", IpUtil.getLongIp2String(ConstType.IP.MIN_VALUE));
-		assertEquals("255.255.255.255", IpUtil.getLongIp2String(ConstType.IP.MAX_VALUE));
-		assertEquals("127.0.0.1", IpUtil.getLongIp2String(ConstType.IP.LOCALHOST_VALUE));
+		assertEquals("0.0.0.0", IpUtil.getLongIp2String(ConstType.ip.MIN_VALUE));
+		assertEquals("255.255.255.255", IpUtil.getLongIp2String(ConstType.ip.MAX_VALUE));
+		assertEquals("127.0.0.1", IpUtil.getLongIp2String(ConstType.ip.LOCALHOST_VALUE));
 	}
 }
