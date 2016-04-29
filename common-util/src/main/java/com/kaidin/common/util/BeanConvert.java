@@ -13,7 +13,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @date 2015-6-23下午01:51:48
  */
 public class BeanConvert<T> {
-	private BeanConvertFilter<T> filter;
+	private BeanConvertFilter<T> filter;	// 只针对返回列表有效，根据属性值舍弃一些对象
 	
 	
 	public BeanConvert() {
