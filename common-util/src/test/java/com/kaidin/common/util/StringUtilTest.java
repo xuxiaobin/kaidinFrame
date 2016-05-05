@@ -8,19 +8,19 @@ public class StringUtilTest {
 
 	@Test
 	public void testEquals() {
-		assertTrue(StringUtil.equals(null, null));
-		assertFalse(StringUtil.equals(null, "12345"));
-		assertFalse(StringUtil.equals("12345abc", null));
-		assertTrue(StringUtil.equals("12345abc", 12345 + "abc"));
-		assertFalse(StringUtil.equals("12345abC", 12345 + "abc"));
+		assertTrue(StringUtil.equalsWithNull(null, null));
+		assertFalse(StringUtil.equalsWithNull(null, "12345"));
+		assertFalse(StringUtil.equalsWithNull("12345abc", null));
+		assertTrue(StringUtil.equalsWithNull("12345abc", 12345 + "abc"));
+		assertFalse(StringUtil.equalsWithNull("12345abC", 12345 + "abc"));
 	}
 	@Test
 	public void testEqualsIgnoreCase() {
-		assertTrue(StringUtil.equalsIgnoreCase(null, null));
-		assertFalse(StringUtil.equalsIgnoreCase(null, "12345"));
-		assertFalse(StringUtil.equalsIgnoreCase("12345abc", null));
-		assertTrue(StringUtil.equalsIgnoreCase("12345abc", 12345 + "abc"));
-		assertTrue(StringUtil.equalsIgnoreCase("12345abC", 12345 + "abc"));
+		assertTrue(StringUtil.equalsIgnoreCaseWithNull(null, null));
+		assertFalse(StringUtil.equalsIgnoreCaseWithNull(null, "12345"));
+		assertFalse(StringUtil.equalsIgnoreCaseWithNull("12345abc", null));
+		assertTrue(StringUtil.equalsIgnoreCaseWithNull("12345abc", 12345 + "abc"));
+		assertTrue(StringUtil.equalsIgnoreCaseWithNull("12345abC", 12345 + "abc"));
 	}
 	
 	@Test

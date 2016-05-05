@@ -13,7 +13,7 @@ public class StringUtil {
 	 * @param str2
 	 * @return
 	 */
-	public static boolean equals(String str1, String str2) {
+	public static boolean equalsWithNull(String str1, String str2) {
 		return BaseUtil.equalsWithNull(str1, str2);
 	}
 	/**
@@ -22,7 +22,7 @@ public class StringUtil {
 	 * @param str2
 	 * @return
 	 */
-	public static boolean equalsIgnoreCase(String str1, String str2) {
+	public static boolean equalsIgnoreCaseWithNull(String str1, String str2) {
 		boolean result;
 		
 		if (null == str1) {
