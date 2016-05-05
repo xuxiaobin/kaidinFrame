@@ -8,10 +8,10 @@ public class BaseUtilTest {
 
 	@Test
 	public void testEquals() {
-		assertTrue(BaseUtil.equals(null, null));
-		assertFalse(BaseUtil.equals(null, "12345"));
-		assertFalse(BaseUtil.equals("12345abc", null));
-		assertTrue(BaseUtil.equals("12345abc", 12345 + "abc"));
-		assertFalse(BaseUtil.equals("12345abC", 12345 + "abc"));
+		assertTrue(BaseUtil.equalsWithNull(null, null));
+		assertFalse(BaseUtil.equalsWithNull(null, "12345"));
+		assertFalse(BaseUtil.equalsWithNull("12345abc", null));
+		assertTrue(BaseUtil.equalsWithNull("12345abc", 12345 + "abc"));
+		assertFalse(BaseUtil.equalsWithNull("12345abC", 12345 + "abc"));
 	}
 }
