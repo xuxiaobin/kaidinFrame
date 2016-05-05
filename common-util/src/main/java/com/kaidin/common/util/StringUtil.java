@@ -14,7 +14,7 @@ public class StringUtil {
 	 * @return
 	 */
 	public static boolean equals(String str1, String str2) {
-		return BaseUtil.equals(str1, str2);
+		return BaseUtil.equalsWithNull(str1, str2);
 	}
 	/**
 	 * 忽略大小写之后判断两个字符串是否相同，添加判空逻辑
