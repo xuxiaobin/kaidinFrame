@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @date 2015-6-23下午01:51:48
  */
 public class ConstType implements Serializable {
-	private static final long serialVersionUID = -3599123231405776466L;
+	private static final long serialVersionUID	= -3599123231405776466L;
 
 	/**
 	 * 正则表达式
@@ -47,7 +47,7 @@ public class ConstType implements Serializable {
 	/**
 	 * 字符集相关
 	 */
-	public static class CHARSET {
+	public static class charSet {
 		public static final String GBK			= "GBK";	// 中文超大字符集
 		public static final String ISO_8859_1	= "ISO-8859-1";	// ISO 拉丁字母表 No.1，也叫作 ISO-LATIN-1
 		public static final String US_ASCII		= "US-ASCII";	// 7位ASCII字符，也叫作ISO646-US、Unicode字符集的基本拉丁块
