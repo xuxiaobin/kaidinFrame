@@ -53,7 +53,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 		entityManager = aDaoContext.getEntityManager();
 		// }
 	}
-	public BaseDaoImpl(String jndiName, Class<T> clazz, IDaoContext aDaoContext) throws Exception {
+	public BaseDaoImpl(Class<T> clazz, IDaoContext aDaoContext, String jndiName) throws Exception {
 		persistentClass = clazz;
 		entityClassName = clazz.getName();
 		// if (!ServiceFactory.isEjb()) {

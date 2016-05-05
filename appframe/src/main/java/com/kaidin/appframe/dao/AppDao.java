@@ -9,6 +9,6 @@ public class AppDao<T extends BaseEntity> extends BaseDaoImpl<T> implements IBas
 	}
 
 	public AppDao(String jndiName, Class<T> clazz, IDaoContext aDaoContext) throws Exception {
-		super(jndiName, clazz, aDaoContext);
+		super(clazz, aDaoContext, jndiName);
 	}
 }

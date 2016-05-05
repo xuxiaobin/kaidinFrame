@@ -38,12 +38,18 @@ public interface IBaseDao<T> {
 	public List<T> queryEntities(String hqlWhere, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 	public List<T> queryAll() throws AppframeException;
 
+	@SuppressWarnings("rawtypes")
 	public List queryByFullHql(String hql) throws AppframeException;
-	public List queryByFullHql(String hql, String[] names, Object[] values) throws AppframeException;
+	@SuppressWarnings("rawtypes")
 	public List queryByFullHql(String hql, int rowIndex, int rowNum) throws AppframeException;
+	@SuppressWarnings("rawtypes")
+	public List queryByFullHql(String hql, String[] names, Object[] values) throws AppframeException;
+	@SuppressWarnings("rawtypes")
 	public List queryByFullHql(String hql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 
+	@SuppressWarnings("rawtypes")
 	public List queryNativeSql(String sql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
+	@SuppressWarnings("rawtypes")
 	public List queryByFullHqlNoLimit(String hql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 	
 	// ================ other =======================
