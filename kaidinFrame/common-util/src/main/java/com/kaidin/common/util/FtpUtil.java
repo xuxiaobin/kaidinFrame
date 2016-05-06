@@ -91,20 +91,13 @@ public class FtpUtil {
 	public boolean uploadFile(String remotePath, String remoteFileName, String localFileName) throws IOException {
 		boolean isSuccess = false;
 		
-		FileInputStream input = null;
-		try {
-			input = new FileInputStream(localFileName);
+		try (FileInputStream input = new FileInputStream(localFileName)) {
 			if (remotePath != null) {
 				ftpClient.changeWorkingDirectory(remotePath);
 			}
 			isSuccess = ftpClient.storeFile(remoteFileName, input);
 		} catch (IOException e) {
 			throw e;
-		} finally {
-			if (input != null) {
-				input.close();
-				input = null;
-			}
 		}
 		
 		return isSuccess;
@@ -121,9 +114,7 @@ public class FtpUtil {
 	public boolean downloadFile(String remotePath, String remoteFileName, String localFileName) throws IOException {
 		boolean isSuccess = false;
 		
-		FileOutputStream output = null;
-		try {
-			output = new FileOutputStream(localFileName);
+		try (FileOutputStream output = new FileOutputStream(localFileName)) {
 			ftpClient.changeWorkingDirectory(remotePath);
 			if (remotePath != null) {
 				if (!remotePath.endsWith(File.separator)) {
@@ -134,11 +125,6 @@ public class FtpUtil {
 			isSuccess = ftpClient.retrieveFile(remoteFileName, output);
 		} catch (IOException e) {
 			throw e;
-		} finally {
-			if (output != null) {
-				output.close();
-				output = null;
-			}
 		}
 		
 		return isSuccess;
