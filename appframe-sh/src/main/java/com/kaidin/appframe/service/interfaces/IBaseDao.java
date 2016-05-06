@@ -24,7 +24,7 @@ public interface IBaseDao<T> {
 	public int deleteByFullHql(String hql, Map<String, Object> parameter) throws AppframeException;
 	public int deleteByFullHql(String hql, String[] names, Object[] values) throws AppframeException;
 	
-	// ================ update =======================
+	// =================== update ==========================
 	public void update(T entity) throws AppframeException;
 	public int updateByFullHql(String hql, Map<String, Object> parameter) throws AppframeException;
 	public int updateByFullHql(String hql, String[] names, Object[] values) throws AppframeException;
