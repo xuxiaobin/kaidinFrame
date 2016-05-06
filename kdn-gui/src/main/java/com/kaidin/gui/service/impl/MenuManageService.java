@@ -3,6 +3,7 @@ package com.kaidin.gui.service.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -58,7 +59,7 @@ public class MenuManageService implements IMenuManageService {
 		List<BoMenu> result = null;
 		
 		if (null != menuList && !menuList.isEmpty()) {
-			result = new ArrayList<BoMenu>();
+			result = new ArrayList<>();
 			Iterator<EntityCfgMenu> menuIterator = menuList.iterator();
 			while (menuIterator.hasNext()) {
 				EntityCfgMenu menu = menuIterator.next();
@@ -81,7 +82,7 @@ public class MenuManageService implements IMenuManageService {
 				long menuId = rootMenu.getId();
 				List<BoMenu> subMenuList = result.getSubMenuList();
 				
-				List<EntityCfgMenu> tempList = new ArrayList<EntityCfgMenu>(menuList.size());
+				List<EntityCfgMenu> tempList = new ArrayList<>(menuList.size());
 				tempList.addAll(menuList);
 				Iterator<EntityCfgMenu> menuIterator = tempList.iterator();
 				while (menuIterator.hasNext()) {
@@ -93,7 +94,7 @@ public class MenuManageService implements IMenuManageService {
 						BoMenu subMenu = getMenuTree(menu, tempList);
 						if (null != subMenu) {
 							if (null == subMenuList) {
-								subMenuList = new ArrayList<BoMenu>();
+								subMenuList = new ArrayList<>();
 							}
 							subMenuList.add(subMenu);
 						}
