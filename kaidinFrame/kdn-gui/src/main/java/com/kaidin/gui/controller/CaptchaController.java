@@ -61,7 +61,8 @@ public class CaptchaController {
 	public void getCaptchaImage(HttpServletRequest request, HttpServletResponse response) {
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
 			// 生成随机验证码
-			char[] codeArray = Captcha.createCaptchaCode();
+			Captcha codeBuilder = new Captcha();
+			char[] codeArray = codeBuilder.createCaptchaCode();
 			String codeStr = String.valueOf(codeArray);
 			logger.debug("sessionCaptcha:" + codeStr);
 			// 将验证码保存到Session中
@@ -74,8 +75,7 @@ public class CaptchaController {
 			response.setHeader("Cache-Control", "no-cache");
 			response.setDateHeader("Expires", 0);
 			response.setContentType("image/jpeg");
-					
-			Captcha codeBuilder = new Captcha();
+			
 			codeBuilder.createImage(codeArray, outputStream);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

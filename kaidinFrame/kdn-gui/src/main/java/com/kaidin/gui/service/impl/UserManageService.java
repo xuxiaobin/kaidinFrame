@@ -28,7 +28,7 @@ import com.kaidin.gui.service.interfaces.IUserManageService;
 @Service
 public class UserManageService implements IUserManageService, HttpSessionListener {
 	private static final transient Logger logger = LoggerFactory.getLogger(UserManageService.class);
-	private static HashMap<String, HttpSession> SESSION_MAP = new HashMap<String, HttpSession>();
+	private static HashMap<String, HttpSession> SESSION_MAP = new HashMap<>();
 	
 	@Resource(name = IEntityCfgUserDao.RESOURCE_NAME)
 	private IEntityCfgUserDao userDao;
@@ -57,7 +57,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 	 */
 	@Override
 	public DataContainer<EntityCfgUser> login(String loginName, String loginPasswd) {
-		DataContainer<EntityCfgUser> result = new DataContainer<EntityCfgUser>();
+		DataContainer<EntityCfgUser> result = new DataContainer<>();
 		
 		try {
 			String hqlWhere = EntityCfgUser.P_Name + " =:loginName";
@@ -67,7 +67,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 					result.setErrorCode(GuiConstType.ErrorCode.USER_LOCKED);
 					result.setErrorMsg("用户错误登陆次数过多，已被锁定");
 				} else if (EncryptUtil.md5(loginPasswd).equals(user.getPassword())) {
-					ArrayList<EntityCfgUser> dataList = new ArrayList<EntityCfgUser>(1);
+					ArrayList<EntityCfgUser> dataList = new ArrayList<>(1);
 					dataList.add(user);
 					result.setDataList(dataList);
 					
@@ -172,7 +172,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 	 */
 	@Override
 	public DataContainer<EntityCfgUser> queryUser(PageLoadConfig pageConfig) {
-		DataContainer<EntityCfgUser> result = new DataContainer<EntityCfgUser>(pageConfig);
+		DataContainer<EntityCfgUser> result = new DataContainer<>(pageConfig);
 		
 		try {
 			String hqlWhere = EntityCfgUser.P_Status + "!=:status";

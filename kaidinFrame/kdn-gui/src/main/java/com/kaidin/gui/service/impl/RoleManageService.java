@@ -31,7 +31,7 @@ public class RoleManageService implements IRoleManageService {
 	 */
 	@Override
 	public DataContainer<EntityCfgRole> queryRole(PageLoadConfig pageConfig) {
-		DataContainer<EntityCfgRole> result = new DataContainer<EntityCfgRole>(pageConfig);
+		DataContainer<EntityCfgRole> result = new DataContainer<>(pageConfig);
 		
 		try {
 			String hqlWhere = EntityCfgRole.P_Status + "!=:statu";

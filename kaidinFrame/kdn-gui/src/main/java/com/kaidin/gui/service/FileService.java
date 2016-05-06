@@ -21,11 +21,11 @@ import com.kaidin.gui.model.BoDownloadFile;
 @Service
 public class FileService {
 	private static final transient Logger logger = LoggerFactory.getLogger(FileService.class);
-	private static List<String> EXCLUDE_EXTNAME_LIST = new ArrayList<String>();
+	private static List<String> EXCLUDE_EXTNAME_LIST = new ArrayList<>();
 	
 	
 	public static DataContainer<BoDownloadFile> getDirFiles(File dirFile, PageLoadConfig pageLoadCfg) {
-		DataContainer<BoDownloadFile> result = new DataContainer<BoDownloadFile>();
+		DataContainer<BoDownloadFile> result = new DataContainer<>();
 		
 		List<BoDownloadFile> dataList = listDir(dirFile);
 		if (null != pageLoadCfg) {
@@ -42,7 +42,7 @@ public class FileService {
 	
 	// 显示目录的方法
 	private static ArrayList<BoDownloadFile> listDir(File dirFile) {
-		ArrayList<BoDownloadFile> result = new ArrayList<BoDownloadFile>();
+		ArrayList<BoDownloadFile> result = new ArrayList<>();
 		
 		// 判断传入对象是否为一个文件夹对象
 		if (dirFile.isDirectory()) {
