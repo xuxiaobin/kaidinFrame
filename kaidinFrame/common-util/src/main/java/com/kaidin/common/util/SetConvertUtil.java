@@ -55,30 +55,15 @@ public class SetConvertUtil {
 	public static Object decode(Object obj, Object defaultValue, Object expect1Obj, Object expect1Value, Object... objArrray) {
 		Object result = defaultValue;
 		
-		if (null == obj) {
-			if (null == expect1Obj) {
-				result = expect1Value;
-			} else {
-				for (int i = 0; i < objArrray.length; i++) {
-					if (null == objArrray[i++]) {
-						if (i < objArrray.length) {
-							result = objArrray[i];
-						}
-						break;
-					}
-				}
-			}
+		if (BaseUtil.equalsWithNull(obj, expect1Obj)) {
+			result = expect1Value;
 		} else {
-			if (obj.equals(expect1Obj)) {
-				result = expect1Value;
-			} else {
-				for (int i = 0; i < objArrray.length; i++) {
-					if (obj.equals(objArrray[i++])) {
-						if (i < objArrray.length) {
-							result = objArrray[i];
-						}
-						break;
+			for (int i = 0; i < objArrray.length; i++) {
+				if (BaseUtil.equalsWithNull(obj, objArrray[i++])) {
+					if (i < objArrray.length) {
+						result = objArrray[i];
 					}
+					break;
 				}
 			}
 		}
