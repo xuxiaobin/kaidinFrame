@@ -34,7 +34,7 @@ public class SetConvertUtil {
 		ArrayList<String> result = null;
 		
 		if (null != dataArray) {
-			result = new ArrayList<String>(dataArray.length);
+			result = new ArrayList<>(dataArray.length);
 			for (String value: dataArray) {
 				result.add(value);
 			}

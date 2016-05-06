@@ -42,7 +42,7 @@ public class BeanConvert<T> {
 
 	
 	public List<T> convert(Class<T> clazz, String[] properties, List<Object[]> valuesList) throws Exception {
-		List<T> result = new ArrayList<T>(valuesList.size());
+		List<T> result = new ArrayList<>(valuesList.size());
 		
 		for (Object[] objVals: valuesList) {
 			T object = clazz.newInstance();
