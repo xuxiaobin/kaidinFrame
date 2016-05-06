@@ -348,7 +348,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 			session.setFlushMode(FlushMode.MANUAL);
 			Query query = entityManager.createNativeQuery(sql);
 			if (null != valuesList) {
-				result = new ArrayList<Integer>(valuesList.size());
+				result = new ArrayList<>(valuesList.size());
 				for (Object[] values: valuesList) {
 					result.add(BaseDaoHelper.update(query, names, values));
 				}
@@ -683,7 +683,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public DataContainer<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException {
-		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {
@@ -718,7 +718,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public DataContainer<T> queryEntities(String hqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException {
-		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {
@@ -752,7 +752,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public DataContainer<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
-		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {
@@ -784,7 +784,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public DataContainer<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
-		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {

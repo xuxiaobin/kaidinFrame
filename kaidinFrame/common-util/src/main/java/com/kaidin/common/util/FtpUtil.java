@@ -172,7 +172,7 @@ public class FtpUtil {
 	 * @throws IOException 
 	 */
 	public ArrayList<String> getFileNameList(String remotePath) throws IOException {
-		ArrayList<String> fileNameList = new ArrayList<String>();
+		ArrayList<String> fileNameList = new ArrayList<>();
         
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
 		if (fileArray != null) {
@@ -194,7 +194,7 @@ public class FtpUtil {
 	 * @throws IOException 
 	 */
 	public ArrayList<String> getDirectoryNameList(String remotePath) throws IOException {
-		ArrayList<String> fileNameList = new ArrayList<String>();
+		ArrayList<String> fileNameList = new ArrayList<>();
         
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
 		if (fileArray != null) {
@@ -216,7 +216,7 @@ public class FtpUtil {
 	 * @throws IOException 
 	 */
 	public ArrayList<FTPFile> getFileList(String remotePath) throws IOException {
-		ArrayList<FTPFile> fileList = new ArrayList<FTPFile>();
+		ArrayList<FTPFile> fileList = new ArrayList<>();
         
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
 		if (fileArray != null) {

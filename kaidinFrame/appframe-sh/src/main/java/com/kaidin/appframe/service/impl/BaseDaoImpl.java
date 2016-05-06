@@ -377,7 +377,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 							session.setFlushMode(FlushMode.MANUAL);
 							Query query = session.createSQLQuery(sql);
 							if (null != valuesList) {
-								dataList = new ArrayList<Integer>(valuesList.size());
+								dataList = new ArrayList<>(valuesList.size());
 								for (Object[] values: valuesList) {
 									int count = BaseDaoHelper.update(query, names, values);
 									dataList.add(count);
@@ -793,7 +793,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
 	public DataContainer<T> queryEntities(final PageLoadConfig pageLoadCfg) throws AppframeException {
-		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {
@@ -833,7 +833,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
 	public DataContainer<T> queryEntities(String hqlWhere, final PageLoadConfig pageLoadCfg) throws AppframeException {
-		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {
@@ -873,7 +873,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
 	public DataContainer<T> queryEntities(String hqlWhere, final Map<String, Object> parameter, final PageLoadConfig pageLoadCfg) throws AppframeException {
-		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {
@@ -912,7 +912,7 @@ public class BaseDaoImpl<T extends BaseEntity> extends HibernateDaoSupport imple
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@SuppressWarnings("unchecked")
 	public DataContainer<T> queryEntities(String hqlWhere, final String[] names, final Object[] values, final PageLoadConfig pageLoadCfg) throws AppframeException {
-		DataContainer<T> result = new DataContainer<T>(pageLoadCfg);
+		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
 			if (logger.isDebugEnabled()) {

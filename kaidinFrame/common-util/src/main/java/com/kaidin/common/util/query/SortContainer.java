@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class SortContainer implements Serializable {
 	private static final long serialVersionUID = -4902827484393351934L;
-	private Map<String, String> container = new LinkedHashMap<String, String>(5);
+	private Map<String, String> container = new LinkedHashMap<>(5);
 	
 	
 	public void addSort(String column) {

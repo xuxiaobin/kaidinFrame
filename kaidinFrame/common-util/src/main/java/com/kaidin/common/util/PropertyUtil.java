@@ -63,7 +63,7 @@ public class PropertyUtil {
 			proper.load(inputStream);
 			Set<Entry<Object, Object>> entrySet = proper.entrySet();
 			if (null != entrySet && !entrySet.isEmpty()) {
-				result = new HashMap<String, String>(entrySet.size());
+				result = new HashMap<>(entrySet.size());
 				for (Entry<Object, Object> entry: entrySet) {
 					String key = String.valueOf(entry.getKey());
 					if (null != key && key.startsWith("ï»¿")) {
