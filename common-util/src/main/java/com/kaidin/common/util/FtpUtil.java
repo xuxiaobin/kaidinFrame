@@ -162,7 +162,7 @@ public class FtpUtil {
         
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
 		if (fileArray != null) {
-			for (FTPFile file : fileArray) {
+			for (FTPFile file: fileArray) {
 				if (FTPFile.FILE_TYPE == file.getType()) {
 					fileNameList.add(file.getName());
 				}
@@ -184,7 +184,7 @@ public class FtpUtil {
         
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
 		if (fileArray != null) {
-			for (FTPFile file : fileArray) {
+			for (FTPFile file: fileArray) {
 				if (FTPFile.DIRECTORY_TYPE == file.getType()) {
 					fileNameList.add(file.getName());
 				}
@@ -206,7 +206,7 @@ public class FtpUtil {
         
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
 		if (fileArray != null) {
-			for (FTPFile file : fileArray) {
+			for (FTPFile file: fileArray) {
 				fileList.add(file);
 //				System.out.println(file.getName());
 			}

@@ -3,6 +3,7 @@ package com.kaidin.common.util;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -27,11 +28,8 @@ public class BeanConvertTest {
 
 	@Test
 	public void testConvertClassOfTStringArrayListOfObject() throws Exception {
-		List<Object[]> valuesList = new ArrayList<>(2);
-		valuesList.add(VALUES);
-		valuesList.add(new Object[]{"李四", 20, "abcdefthij"});
-		
 		BeanConvert<Student> beanConvert = new BeanConvert<Student>();
+		List<Object[]> valuesList = Arrays.asList(VALUES, new Object[]{"李四", 20, "abcdefthij"});
 		List<Student> studentList = beanConvert.convert(Student.class, PROPERTIES, valuesList);
 		
 		assertEquals("张三", studentList.get(0).getName());
@@ -44,10 +42,6 @@ public class BeanConvertTest {
 	
 	@Test
 	public void testConvertClassOfTStringArrayListOfObject2() throws Exception {
-		List<Object[]> valuesList = new ArrayList<>(2);
-		valuesList.add(VALUES);
-		valuesList.add(new Object[]{"李四", 20, "abcdefthij"});
-		
 		BeanConvert<Student> beanConvert = new BeanConvert<Student>(new BeanConvertFilter<Student>() {
 			@Override
 			public boolean doFilter(Student student) {
@@ -60,6 +54,8 @@ public class BeanConvertTest {
 				}
 			}
 		});
+		
+		List<Object[]> valuesList = Arrays.asList(VALUES, new Object[]{"李四", 20, "abcdefthij"});
 		List<Student> studentList = beanConvert.convert(Student.class, PROPERTIES, valuesList);
 		
 		assertEquals(1, studentList.size());

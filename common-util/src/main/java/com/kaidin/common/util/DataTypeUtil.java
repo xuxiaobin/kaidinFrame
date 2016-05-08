@@ -118,7 +118,7 @@ public class DataTypeUtil {
 	}
 	
 	public static BigDecimal getAsBigDecimal(Object obj) {
-		return obj == null ? null : new BigDecimal(String.valueOf(obj));
+		return obj == null ? null: new BigDecimal(String.valueOf(obj));
 	}
 	public static BigDecimal getAsBigDecimal(Object obj, BigDecimal defaultValue) {
 		return null == obj? defaultValue: getAsBigDecimal(obj);
