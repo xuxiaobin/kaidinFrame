@@ -16,18 +16,18 @@ public class PageLoadConfig implements Serializable {
 	
 	
 	public int getOffset() {
-		return 1 < offset ? offset : 1;
+		return 1 < offset ? offset: 1;
 	}
 	public void setOffset(int offset) {
 		// 记录数从1开始
-		this.offset = 1 < offset ? offset : 1;
+		this.offset = 1 < offset ? offset: 1;
 	}
 	public int getLimit() {
-		return 1 < limit ? limit : 1;
+		return 1 < limit ? limit: 1;
 	}
 	public void setLimit(int limit) {
 		// 记录数量最少一条，否则没有意义
-		this.limit = 1 < limit ? limit : 1;
+		this.limit = 1 < limit ? limit: 1;
 	}
 	public SortContainer getSortContainer() {
 		return sortContainer;
