@@ -27,7 +27,7 @@ public class BeanConvertTest {
 
 	@Test
 	public void testConvertClassOfTStringArrayListOfObject() throws Exception {
-		List<Object[]> valuesList = new ArrayList<Object[]>(2);
+		List<Object[]> valuesList = new ArrayList<>(2);
 		valuesList.add(VALUES);
 		valuesList.add(new Object[]{"李四", 20, "abcdefthij"});
 		
@@ -44,7 +44,7 @@ public class BeanConvertTest {
 	
 	@Test
 	public void testConvertClassOfTStringArrayListOfObject2() throws Exception {
-		List<Object[]> valuesList = new ArrayList<Object[]>(2);
+		List<Object[]> valuesList = new ArrayList<>(2);
 		valuesList.add(VALUES);
 		valuesList.add(new Object[]{"李四", 20, "abcdefthij"});
 		
