@@ -1,8 +1,10 @@
 package com.kaidin.gui.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -67,9 +69,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 					result.setErrorCode(GuiConstType.ErrorCode.USER_LOCKED);
 					result.setErrorMsg("用户错误登陆次数过多，已被锁定");
 				} else if (EncryptUtil.md5(loginPasswd).equals(user.getPassword())) {
-					ArrayList<EntityCfgUser> dataList = new ArrayList<>(1);
-					dataList.add(user);
-					result.setDataList(dataList);
+					result.setDataList(Arrays.asList(user));
 					
 					user.setLastLoginTime(new Date());	// 记录最后登陆时间
 					user.setStatus(GuiConstType.ErrorCode.OK);
