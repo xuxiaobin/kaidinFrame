@@ -13,7 +13,7 @@ public class StringUtil {
 	 * @param str2
 	 * @return
 	 */
-	public static boolean equalsWithNull(String str1, String str2) {
+	public final static boolean equalsWithNull(String str1, String str2) {
 		return BaseUtil.equalsWithNull(str1, str2);
 	}
 	/**
@@ -22,7 +22,7 @@ public class StringUtil {
 	 * @param str2
 	 * @return
 	 */
-	public static boolean equalsIgnoreCaseWithNull(String str1, String str2) {
+	public final static boolean equalsIgnoreCaseWithNull(String str1, String str2) {
 		boolean result;
 		
 		if (null == str1) {
@@ -39,7 +39,7 @@ public class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static String toUpperCaseAtFirst(String str) {
+	public final static String toUpperCaseAtFirst(String str) {
 		if (null != str && !str.isEmpty()) {
 			String firstChar = str.substring(0, 1);
 			return str.replaceFirst(firstChar, firstChar.toUpperCase());
@@ -53,7 +53,7 @@ public class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isNotBlank(String str) {
+	public final static boolean isNotBlank(String str) {
 		boolean isBlank = false;
 		
 		if (null != str && 0 < str.trim().length()) {
@@ -69,7 +69,7 @@ public class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static String upperCase2Underline(String str) {
+	public final static String upperCase2Underline(String str) {
 		String result = null;
 		
 		if (null != str) {
@@ -99,7 +99,7 @@ public class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static String underline2UpperCase(String str) {
+	public final static String underline2UpperCase(String str) {
 		String result = null;
 		
 		if (null != str) {

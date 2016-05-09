@@ -25,7 +25,7 @@ public class RegexUtil {
      * @param str 源字符串
      * @return 是否包含数组的标志
      */
-	public static boolean containNumber(String str) {
+	public final static boolean containNumber(String str) {
 		boolean result = false;
 		
         if (null != str && !str.isEmpty()) {
@@ -42,7 +42,7 @@ public class RegexUtil {
      * @param str 源字符串
      * @return 是否是全部数字组成的标志
      */
-	public static boolean isAllNumbers(String str) {
+	public final static boolean isAllNumbers(String str) {
 		boolean result = false;
 		
         if (null != str && !str.isEmpty()) {
@@ -60,7 +60,7 @@ public class RegexUtil {
      * @param str 源字符串
      * @return 是否包含字母的标志
      */
-    public static boolean containLetter(String str) {
+    public final static boolean containLetter(String str) {
         boolean result = false;
         
         if (null != str && !str.isEmpty()) {
@@ -77,7 +77,7 @@ public class RegexUtil {
      * @param str 源字符串
      * @return 是否纯字母组合的标志
      */
-    public static boolean isAllLetters(String str) {
+    public final static boolean isAllLetters(String str) {
         boolean result = false;
         
         if (null != str && !str.isEmpty()) {
@@ -95,7 +95,7 @@ public class RegexUtil {
 	 * @param mailAddr
 	 * @return 是否满足邮箱地址规则
 	 */
-	public static boolean isMailAddr(String mailAddr) {
+	public final static boolean isMailAddr(String mailAddr) {
 		boolean result = false;
 		
 		if (null != mailAddr && 3 <= mailAddr.length()) {
@@ -110,7 +110,7 @@ public class RegexUtil {
 	 * @param ipAddr
 	 * @return 是否满足ip规则
 	 */
-	public static boolean isIpAddr(String ipAddr) {
+	public final static boolean isIpAddr(String ipAddr) {
 		boolean result = false;
 		
 		if (null != ipAddr && 7 <= ipAddr.length()) {

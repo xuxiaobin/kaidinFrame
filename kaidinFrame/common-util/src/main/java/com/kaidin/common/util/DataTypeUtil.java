@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class DataTypeUtil {
 	
-	public static Byte getAsByte(Object obj) {
+	public static Byte asByte(Object obj) {
 		Byte result = null;
 		
 		if (null != obj) {
@@ -23,11 +23,11 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Byte getAsByte(Object obj, byte defaultValue) {
-		return null == obj? defaultValue: getAsByte(obj);
+	public static Byte asByte(Object obj, byte defaultValue) {
+		return null == obj? defaultValue: asByte(obj);
 	}
 	
-	public static Short getAsShort(Object obj) {
+	public static Short asShort(Object obj) {
 		Short result = null;
 		
 		if (null != obj) {
@@ -40,11 +40,11 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Short getAsShort(Object obj, short defaultValue) {
-		return null == obj? defaultValue: getAsShort(obj);
+	public static Short asShort(Object obj, short defaultValue) {
+		return null == obj? defaultValue: asShort(obj);
 	}
 
-	public static Integer getAsInteger(Object obj) {
+	public static Integer asInteger(Object obj) {
 		Integer result = null;
 		
 		if (null != obj) {
@@ -57,11 +57,11 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Integer getAsInteger(Object obj, int defaultValue) {
-		return null == obj? defaultValue: getAsInteger(obj);
+	public static Integer asInteger(Object obj, int defaultValue) {
+		return null == obj? defaultValue: asInteger(obj);
 	}
 
-	public static Long getAsLong(Object obj) {
+	public static Long asLong(Object obj) {
 		Long result = null;
 		
 		if (null != obj) {
@@ -76,11 +76,11 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Long getAsLong(Object obj, long defaultValue) {
-		return null == obj? defaultValue: getAsLong(obj);
+	public static Long asLong(Object obj, long defaultValue) {
+		return null == obj? defaultValue: asLong(obj);
 	}
 
-	public static Float getAsFloat(Object obj) {
+	public static Float asFloat(Object obj) {
 		Float result = null;
 		
 		if (null != obj) {
@@ -96,11 +96,11 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Float getAsFloat(Object obj, float defaultValue) {
-		return null == obj? defaultValue: getAsFloat(obj);
+	public static Float asFloat(Object obj, float defaultValue) {
+		return null == obj? defaultValue: asFloat(obj);
 	}
 	
-	public static Double getAsDouble(Object obj) {
+	public static Double asDouble(Object obj) {
 		Double result = null;
 		
 		if (null != obj) {
@@ -113,18 +113,18 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Double getAsDouble(Object obj, double defaultValue) {
-		return null == obj? defaultValue: getAsDouble(obj);
+	public static Double asDouble(Object obj, double defaultValue) {
+		return null == obj? defaultValue: asDouble(obj);
 	}
 	
-	public static BigDecimal getAsBigDecimal(Object obj) {
+	public static BigDecimal asBigDecimal(Object obj) {
 		return obj == null ? null: new BigDecimal(String.valueOf(obj));
 	}
-	public static BigDecimal getAsBigDecimal(Object obj, BigDecimal defaultValue) {
-		return null == obj? defaultValue: getAsBigDecimal(obj);
+	public static BigDecimal asBigDecimal(Object obj, BigDecimal defaultValue) {
+		return null == obj? defaultValue: asBigDecimal(obj);
 	}
 
-	public static Boolean getAsBoolean(Object obj) {
+	public static Boolean asBoolean(Object obj) {
 		Boolean result = null;
 		
 		if (null != obj) {
@@ -154,11 +154,11 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Boolean getAsBoolean(Object obj, boolean defaultValue) {
-		return null == obj? defaultValue: getAsBoolean(obj);
+	public static Boolean asBoolean(Object obj, boolean defaultValue) {
+		return null == obj? defaultValue: asBoolean(obj);
 	}
 
-	public static Character getAsCharacter(Object obj) {
+	public static Character asCharacter(Object obj) {
 		Character result = null;
 		
 		if (null != obj) {
@@ -179,29 +179,29 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Character getAsCharacter(Object obj, char defaultValue) {
-		return null == obj? defaultValue: getAsCharacter(obj);
+	public static Character asCharacter(Object obj, char defaultValue) {
+		return null == obj? defaultValue: asCharacter(obj);
 	}
 
-	public static String getAsString(Object obj) {
+	public static String asString(Object obj) {
 		if (null == obj) {
 			return null;
 		} else {
 			return obj.toString();
 		}
 	}
-	public static String getAsString(Object obj, String defaultValue) {
-		return null == obj? defaultValue: getAsString(obj);
+	public static String asString(Object obj, String defaultValue) {
+		return null == obj? defaultValue: asString(obj);
 	}
 
-	public static Date getAsDate(Object obj) {
+	public static Date asDate(Object obj) {
 		Date result = null;;
 		
 		if (null != obj) {
 			if (obj instanceof Date) {
 				result = (Date) obj;
 			} else if (obj instanceof Number) {
-				result = new Date(getAsLong(obj));
+				result = new Date(asLong(obj));
 			} else if (obj instanceof String) {
 				try {
 					result = DateTimeUtil.getStringToDate(obj.toString());;
@@ -215,7 +215,7 @@ public class DataTypeUtil {
 		
 		return result;
 	}
-	public static Date getAsDate(Object obj, Date defaultValue) {
-		return null == obj? defaultValue: getAsDate(obj);
+	public static Date asDate(Object obj, Date defaultValue) {
+		return null == obj? defaultValue: asDate(obj);
 	}
 }

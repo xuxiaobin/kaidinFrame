@@ -1,6 +1,8 @@
 package com.kaidin.common.util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /**
  * 集合转换工具
@@ -15,7 +17,7 @@ public class SetConvertUtil {
 	 * @param dataList
 	 * @return
 	 */
-	public static String[] listToArray(List<String> dataList) {
+	public final static String[] listToArray(List<String> dataList) {
 		String[] result = null;
 		
 		if (null != dataList) {
@@ -30,14 +32,11 @@ public class SetConvertUtil {
 	 * @param dataArray
 	 * @return
 	 */
-	public static ArrayList<String> arrayToList(String[] dataArray) {
+	public final static ArrayList<String> arrayToList(String[] dataArray) {
 		ArrayList<String> result = null;
 		
 		if (null != dataArray) {
-			result = new ArrayList<>(dataArray.length);
-			for (String value: dataArray) {
-				result.add(value);
-			}
+			result = (ArrayList<String>) Arrays.asList(dataArray);
 		}
 		
 		return result;
@@ -52,7 +51,7 @@ public class SetConvertUtil {
 	 * @param objArrray
 	 * @return
 	 */
-	public static Object decode(Object obj, Object defaultValue, Object expect1Obj, Object expect1Value, Object... objArrray) {
+	public final static Object decode(Object obj, Object defaultValue, Object expect1Obj, Object expect1Value, Object... objArrray) {
 		Object result = defaultValue;
 		
 		if (BaseUtil.equalsWithNull(obj, expect1Obj)) {
