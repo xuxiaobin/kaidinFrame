@@ -15,7 +15,7 @@ public class ProxyFactory {
 	private transient static Log log = LogFactory.getLog(ProxyFactory.class);
 	// 优化newProxyInstance
 	private static final Class[] CONSTRUCT_PARAM = { InvocationHandler.class };
-	private static final HashMap CLAZZ_CACHE = new HashMap();
+	private static final HashMap<String, Class> CLAZZ_CACHE = new HashMap<>();
 
 	/*
 	 * 普通的代理拦截器类

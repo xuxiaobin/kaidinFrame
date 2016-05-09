@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.kaidin.gui.model.BoMenu;
 /**
- * ²Ëµ¥²Ù×÷µÄ½Ó¿Ú
+ * èœå•æ“ä½œçš„æ¥å£
  * @author xuxiaobin	kaidin@foxmail.com
  *
  */
 public interface IMenuManageService {
 	/**
-	 * »ñÈ¡ÓÃ»§µÄ²Ëµ¥
+	 * è·å–ç”¨æˆ·çš„èœå•
 	 * @param userId
 	 * @return
 	 */
