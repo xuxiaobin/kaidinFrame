@@ -13,7 +13,7 @@ public class BaseUtil {
 	 * @param obj2
 	 * @return
 	 */
-	public static boolean equalsWithNull(Object obj1, Object obj2) {
+	public final static boolean equalsWithNull(Object obj1, Object obj2) {
 		boolean result;
 		
 		if (null == obj1) {

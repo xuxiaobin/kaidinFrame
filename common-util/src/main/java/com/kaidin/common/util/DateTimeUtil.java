@@ -11,7 +11,7 @@ import java.util.Date;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class DateTimeUtil {
+public final class DateTimeUtil {
 	private static final String DEFALT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 	
 	

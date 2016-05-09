@@ -19,7 +19,7 @@ public class NumberUtil {
 	 * @param divisor
 	 * @return
 	 */
-	public static Number divided(Number dividend, Number divisor) {
+	public final static Number divided(Number dividend, Number divisor) {
 		Number result = null;
 
 		if (null != dividend && null != divisor && 0.0 != divisor.doubleValue()) {
@@ -35,7 +35,7 @@ public class NumberUtil {
 	 * @param number
 	 * @return
 	 */
-	public static String format2Decimal(Number number) {
+	public final static String format2Decimal(Number number) {
 		return formatNumber(number, DECIMAL_PLACES_2);
 	}
 
@@ -45,7 +45,7 @@ public class NumberUtil {
 	 * @param number
 	 * @return
 	 */
-	public static String format4Decimal(Number number) {
+	public final static String format4Decimal(Number number) {
 		return formatNumber(number, DECIMAL_PLACES_4);
 	}
 
@@ -54,11 +54,11 @@ public class NumberUtil {
 	 * @param number
 	 * @return
 	 */
-	public static String formatPercent(Number number) {
+	public final static String formatPercent(Number number) {
 		return formatNumber(number, DECIMAL_PLACES_PERCENT_2);
 	}
 
-	private static String formatNumber(Number number, String pattern) {
+	private final static String formatNumber(Number number, String pattern) {
 		String result = "N/A";
 
 		if (number != null) {
@@ -75,7 +75,7 @@ public class NumberUtil {
 	 * @param number
 	 * @return
 	 */
-	public static String formatEndOf0(Number number) {
+	public final static String formatEndOf0(Number number) {
 		String result = null;
 
 		result = String.valueOf(number);
