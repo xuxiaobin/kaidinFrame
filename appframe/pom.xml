@@ -9,14 +9,18 @@
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>base-hibernate</artifactId>
-	<name>base-hibernate</name>
-	<version>1.0.0</version>
+	<artifactId>appframe</artifactId>
+	<name>appframe v${project.version}</name>
+	<version>1.1</version>
 	<packaging>jar</packaging>
 	
 	<scm>
 		<developerConnection>徐小斌</developerConnection>
 	</scm>
+	
+	<properties>
+		<spring.version>4.1.7.RELEASE</spring.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -25,40 +29,43 @@
 			<version>2.6</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-digester3</artifactId>
-			<version>3.2</version>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-tools</artifactId>
 			<version>3.6.0.CR1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.spec.javax.ejb</groupId>
-			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
-			<version>1.0.2.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
-			<artifactId>jboss-ejb3-ext-api</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>ant</groupId>
-			<artifactId>ant</artifactId>
-			<version>1.7.0</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.kaidin</groupId>
 			<artifactId>common-util</artifactId>
-			<version>1.0</version>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<defaultGoal>compile</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

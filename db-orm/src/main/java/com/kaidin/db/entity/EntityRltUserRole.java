@@ -1,5 +1,5 @@
 package com.kaidin.db.entity;
-// Generated 2015-12-7 17:00:26 by Hibernate Tools 3.3.0.GA
+// Generated 2017-5-29 14:00:53 by Hibernate Tools 3.3.0.GA
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +14,7 @@ import com.kaidin.appframe.entity.BaseEntity;
  */
 @Entity
 @Table(name="rlt_user_role"
-	,catalog="kaidin"
+	,catalog="my"
 )
 public class EntityRltUserRole extends BaseEntity
  {
@@ -25,9 +25,7 @@ public class EntityRltUserRole extends BaseEntity
 	public static final String P_EntityCfgRole	= "entityCfgRole";
 
 	private long id;
-	// cfg_user.id
 	private EntityCfgUser entityCfgUser;
-	// cfg_role.id
 	private EntityCfgRole entityCfgRole;
 
 	// default constructor

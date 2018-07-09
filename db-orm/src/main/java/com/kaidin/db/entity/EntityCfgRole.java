@@ -1,5 +1,5 @@
 package com.kaidin.db.entity;
-// Generated 2015-12-7 17:00:26 by Hibernate Tools 3.3.0.GA
+// Generated 2017-5-29 14:00:53 by Hibernate Tools 3.3.0.GA
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +19,7 @@ import com.kaidin.appframe.entity.BaseEntity;
  */
 @Entity
 @Table(name="cfg_role"
-	,catalog="kaidin"
+	,catalog="my"
 )
 public class EntityCfgRole extends BaseEntity
  {
@@ -29,7 +29,7 @@ public class EntityCfgRole extends BaseEntity
 	public static final String P_Name	= "name";
 	public static final String P_CreateTime	= "createTime";
 	public static final String P_Status	= "status";
-	public static final String P_Description	= "description";
+	public static final String P_Desc	= "desc";
 	public static final String P_EntityRltUserRoles	= "entityRltUserRoles";
 
 	private long id;
@@ -38,24 +38,23 @@ public class EntityCfgRole extends BaseEntity
 	// 创建时间
 	private Date createTime;
 	// 状态
-	private short status;
+	private String status;
 	// 描述信息
-	private String description;
+	private String desc;
 	private Set<EntityRltUserRole> entityRltUserRoles= new HashSet<EntityRltUserRole>(0);
 
 	// default constructor
 	public EntityCfgRole() {
 	}
-	public EntityCfgRole(long id, short status) {
+	public EntityCfgRole(long id) {
 		this.id = id;
-		this.status = status;
 	}
-	public EntityCfgRole(long id, String name, Date createTime, short status, String description, Set<EntityRltUserRole> entityRltUserRoles) {
+	public EntityCfgRole(long id, String name, Date createTime, String status, String desc, Set<EntityRltUserRole> entityRltUserRoles) {
 		this.id = id;
 		this.name = name;
 		this.createTime = createTime;
 		this.status = status;
-		this.description = description;
+		this.desc = desc;
 		this.entityRltUserRoles = entityRltUserRoles;
 	}
 
@@ -85,20 +84,20 @@ public class EntityCfgRole extends BaseEntity
 		this.createTime = createTime;
 	}
     
-    @Column(name="status", nullable=false)
-	public short getStatus() {
+    @Column(name="status", length=8)
+	public String getStatus() {
 		return this.status;
 	}
-	public void setStatus(short status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
     
-    @Column(name="description", length=128)
-	public String getDescription() {
-		return this.description;
+    @Column(name="desc", length=128)
+	public String getDesc() {
+		return this.desc;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="entityCfgRole")
 	public Set<EntityRltUserRole> getEntityRltUserRoles() {
@@ -128,7 +127,7 @@ public class EntityCfgRole extends BaseEntity
 	 */
 	@Transient
 	public Set<BaseEntity> getConstraintSet() {
-		Set<BaseEntity> result = new HashSet<BaseEntity>();
+		Set<BaseEntity> result = new HashSet<>();
 		
 		result.addAll(this.entityRltUserRoles);
 		

@@ -7,7 +7,7 @@ package com.kaidin.appframe.exception;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class AppframeException extends RuntimeException {
+public class AppframeException extends BaseException {
 	private static final long serialVersionUID = -6150807000016793091L;
 	
 	
@@ -22,5 +22,9 @@ public class AppframeException extends RuntimeException {
 	}
 	public AppframeException(String message, Throwable cause) {
 		super(message, cause);
+	}
+
+	public AppframeException(IExceptionCode exceptionCode) {
+		super(exceptionCode);
 	}
 }

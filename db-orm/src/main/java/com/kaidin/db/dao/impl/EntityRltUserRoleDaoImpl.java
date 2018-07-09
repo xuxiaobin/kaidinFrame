@@ -1,8 +1,8 @@
 package com.kaidin.db.dao.impl;
-// Generated 2015-12-12 17:00:21 by Hibernate Tools 3.3.0.GA
+// Generated 2017-5-29 14:00:59 by Hibernate Tools 3.3.0.GA
 import org.springframework.stereotype.Repository;
 
-import com.kaidin.appframe.service.impl.BaseDaoImpl;
+import com.kaidin.appframe.service.impl.BaseDaoSpringImpl;
 import com.kaidin.db.dao.interfaces.IEntityRltUserRoleDao;
 import com.kaidin.db.entity.EntityRltUserRole;
 /**
@@ -10,7 +10,7 @@ import com.kaidin.db.entity.EntityRltUserRole;
  * @see com.kaidin.db.dao.impl.EntityRltUserRole
  */
 @Repository(value="IEntityRltUserRoleDao")
-public class EntityRltUserRoleDaoImpl extends BaseDaoImpl<EntityRltUserRole> implements IEntityRltUserRoleDao {
+public class EntityRltUserRoleDaoImpl extends BaseDaoSpringImpl<EntityRltUserRole> implements IEntityRltUserRoleDao {
 
 	public EntityRltUserRoleDaoImpl() throws Exception {
 		super(EntityRltUserRole.class);

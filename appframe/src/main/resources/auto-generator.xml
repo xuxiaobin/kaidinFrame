@@ -108,8 +108,8 @@
 		<echo message="packages:${entityPackage}" />
 		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
 			<classpath/>
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
-				revengfile="${cfgPath}/hibernate.reveng.xml"
+			<jdbcconfiguration configurationfile="${cfgPath}/cfg.hibernate.jdbc.xml"
+				revengfile="${cfgPath}/cfg.hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${entityPackage}">
 			</jdbcconfiguration>
@@ -132,8 +132,8 @@
 		<echo message="packages:${entityPackage}" />
 		<hibernateTool destdir="${cfgPath}" templatepath="${templatePath}">
 			<classpath/>
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
-				revengfile="${cfgPath}/hibernate.reveng.xml"
+			<jdbcconfiguration configurationfile="${cfgPath}/cfg.hibernate.jdbc.xml"
+				revengfile="${cfgPath}/cfg.hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${entityPackage}">
 			</jdbcconfiguration>
@@ -144,8 +144,8 @@
 	<!--
 	<target name="hbm2javaInterface">
 		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
-				revengfile="${cfgPath}/hibernate.reveng.xml"
+			<jdbcconfiguration configurationfile="${cfgPath}/cfg.hibernate.jdbc.xml"
+				revengfile="${cfgPath}/cfg.hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${daoInterfacePackage}">
 			</jdbcconfiguration>
@@ -166,8 +166,8 @@
 		</antcall>
 		<echo message="packages:${daoInterfacePackage}" />
 		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
-				revengfile="${cfgPath}/hibernate.reveng.xml"
+			<jdbcconfiguration configurationfile="${cfgPath}/cfg.hibernate.jdbc.xml"
+				revengfile="${cfgPath}/cfg.hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${daoInterfacePackage}">
 			</jdbcconfiguration>
@@ -190,8 +190,8 @@
 		</antcall>
 		<echo message="packages:${daoImplPackage}" />
 		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
-				revengfile="${cfgPath}/hibernate.reveng.xml"
+			<jdbcconfiguration configurationfile="${cfgPath}/cfg.hibernate.jdbc.xml"
+				revengfile="${cfgPath}/cfg.hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${daoImplPackage}">
 			</jdbcconfiguration>

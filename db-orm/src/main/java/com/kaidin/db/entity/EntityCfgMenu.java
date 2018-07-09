@@ -1,5 +1,5 @@
 package com.kaidin.db.entity;
-// Generated 2015-12-7 17:00:26 by Hibernate Tools 3.3.0.GA
+// Generated 2017-5-29 14:00:53 by Hibernate Tools 3.3.0.GA
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,19 +13,16 @@ import com.kaidin.appframe.entity.BaseEntity;
  */
 @Entity
 @Table(name="cfg_menu"
-	,catalog="kaidin"
+	,catalog="my"
 )
 public class EntityCfgMenu extends BaseEntity
  {
 	private static final long serialVersionUID = 0126L;
 	public static final String ENTITY_NAME = "com.kaidin.db.entity.EntityCfgMenu";
 	public static final String P_Id	= "id";
-	public static final String P_Href	= "href";
+	public static final String P_Url	= "url";
 	public static final String P_Name	= "name";
 	public static final String P_Alias	= "alias";
-	public static final String P_CssClass	= "cssClass";
-	public static final String P_CssStyle	= "cssStyle";
-	public static final String P_OtherProperties	= "otherProperties";
 	public static final String P_Level	= "level";
 	public static final String P_ParentId	= "parentId";
 	public static final String P_Code	= "code";
@@ -33,45 +30,35 @@ public class EntityCfgMenu extends BaseEntity
 	public static final String P_Status	= "status";
 
 	private long id;
-	// 菜单的连接地址
-	private String href;
+	// 菜单访问路径
+	private String url;
 	// 菜单名称
 	private String name;
 	// 菜单显示名称
 	private String alias;
-	// 菜单的css样式类
-	private String cssClass;
-	// 另外添加的css样式
-	private String cssStyle;
-	// 其他属性
-	private String otherProperties;
 	// 菜单等级
-	private Short level;
+	private Integer level;
 	// 父级菜单id
 	private long parentId;
 	// 菜单编码
 	private String code;
 	// 控制菜单从小到大显示顺序，
-	private Short sort;
+	private Integer sort;
 	// 菜单状态
-	private short status;
+	private String status;
 
 	// default constructor
 	public EntityCfgMenu() {
 	}
-	public EntityCfgMenu(String href, String name, long parentId, short status) {
-		this.href = href;
+	public EntityCfgMenu(String url, String name, long parentId) {
+		this.url = url;
 		this.name = name;
 		this.parentId = parentId;
-		this.status = status;
 	}
-	public EntityCfgMenu(String href, String name, String alias, String cssClass, String cssStyle, String otherProperties, Short level, long parentId, String code, Short sort, short status) {
-		this.href = href;
+	public EntityCfgMenu(String url, String name, String alias, Integer level, long parentId, String code, Integer sort, String status) {
+		this.url = url;
 		this.name = name;
 		this.alias = alias;
-		this.cssClass = cssClass;
-		this.cssStyle = cssStyle;
-		this.otherProperties = otherProperties;
 		this.level = level;
 		this.parentId = parentId;
 		this.code = code;
@@ -89,15 +76,15 @@ public class EntityCfgMenu extends BaseEntity
 		this.id = id;
 	}
     
-    @Column(name="href", nullable=false, length=128)
-	public String getHref() {
-		return this.href;
+    @Column(name="url", nullable=false, length=128)
+	public String getUrl() {
+		return this.url;
 	}
-	public void setHref(String href) {
-		this.href = href;
+	public void setUrl(String url) {
+		this.url = url;
 	}
     
-    @Column(name="name", nullable=false, length=128)
+    @Column(name="name", nullable=false, length=64)
 	public String getName() {
 		return this.name;
 	}
@@ -105,7 +92,7 @@ public class EntityCfgMenu extends BaseEntity
 		this.name = name;
 	}
     
-    @Column(name="alias", length=128)
+    @Column(name="alias", length=64)
 	public String getAlias() {
 		return this.alias;
 	}
@@ -113,35 +100,11 @@ public class EntityCfgMenu extends BaseEntity
 		this.alias = alias;
 	}
     
-    @Column(name="css_class", length=128)
-	public String getCssClass() {
-		return this.cssClass;
-	}
-	public void setCssClass(String cssClass) {
-		this.cssClass = cssClass;
-	}
-    
-    @Column(name="css_style", length=128)
-	public String getCssStyle() {
-		return this.cssStyle;
-	}
-	public void setCssStyle(String cssStyle) {
-		this.cssStyle = cssStyle;
-	}
-    
-    @Column(name="other_properties", length=128)
-	public String getOtherProperties() {
-		return this.otherProperties;
-	}
-	public void setOtherProperties(String otherProperties) {
-		this.otherProperties = otherProperties;
-	}
-    
     @Column(name="level")
-	public Short getLevel() {
+	public Integer getLevel() {
 		return this.level;
 	}
-	public void setLevel(Short level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
     
@@ -162,18 +125,18 @@ public class EntityCfgMenu extends BaseEntity
 	}
     
     @Column(name="sort")
-	public Short getSort() {
+	public Integer getSort() {
 		return this.sort;
 	}
-	public void setSort(Short sort) {
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
     
-    @Column(name="status", nullable=false)
-	public short getStatus() {
+    @Column(name="status", length=8)
+	public String getStatus() {
 		return this.status;
 	}
-	public void setStatus(short status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
