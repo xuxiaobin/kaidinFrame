@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/include/import.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -42,9 +42,11 @@
 <div class="container">
 	<%@ include file="/include/autoShow.jsp"%>
 	<div class="topOfMainContent"></div>
-	<div class="mainContent">
-		<%@ include file="/include/leftNavigationBar.jsp"%>
-		<div class="content">
+	<div class="row mainContent">
+		<div class="col-md-2 col-sm-3 col-xs-1 leftNavigationBar">
+			<%@ include file="/include/leftNavigationBar.jsp"%>
+		</div>
+		<div class="col-md-10 col-sm-9 col-xs-5 content">
 			<div class="text">
 				<br />
 				<br />

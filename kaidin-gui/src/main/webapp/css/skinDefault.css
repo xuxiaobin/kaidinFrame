@@ -65,8 +65,10 @@
 .foot .icoOfFoot
 {
 	float:left;
+	/**
 	margin-top:4px;
 	margin-left:260px;
+	*/
 	display:inline;
 	width:65px;
 	height:48px;

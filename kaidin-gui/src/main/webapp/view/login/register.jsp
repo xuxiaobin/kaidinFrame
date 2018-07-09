@@ -41,9 +41,11 @@
 <div class="container">
 	<%@ include file="/include/autoShow.jsp"%>
 	<div class="topOfMainContent"></div>
-	<div class="mainContent">
-		<%@ include file="/include/leftNavigationBar.jsp"%>
-		<div class="content">
+	<div class="row mainContent">
+		<div class="col-md-2 col-sm-3 col-xs-1 leftNavigationBar">
+			<%@ include file="/include/leftNavigationBar.jsp"%>
+		</div>
+		<div class="col-md-10 col-sm-9 col-xs-5 content">
 			<div class="text">
 				<br />
 				<br />
