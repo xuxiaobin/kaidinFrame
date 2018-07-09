@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kaidin.common.util.encrypt.EncryptUtil;
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.db.entity.EntityCfgUser;
 import com.kaidin.gui.common.constant.GuiConstType;
 import com.kaidin.gui.service.interfaces.IUserManageService;
@@ -45,7 +45,7 @@ public class LoginController {
 			String loginPasswd = request.getParameter("password");
 			logger.debug("loginPasswd:{}", EncryptUtil.md5(loginPasswd));
 			
-			DataContainer<EntityCfgUser> data = userManageService.login(loginName, loginPasswd);
+			PageData<EntityCfgUser> data = userManageService.login(loginName, loginPasswd);
 			if (GuiConstType.ErrorCode.OK == data.getErrorCode()) {
 				EntityCfgUser user = data.getDataList().get(0);
 				result.addObject("userAlias", user);

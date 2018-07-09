@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.kaidin.common.util.encrypt.EncryptUtil;
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.db.dao.interfaces.IEntityCfgUserDao;
 import com.kaidin.gui.common.constant.GuiConstType;
@@ -55,8 +55,8 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 	 * @return
 	 */
 	@Override
-	public DataContainer<EntityCfgUser> login(String loginName, String loginPasswd) {
-		DataContainer<EntityCfgUser> result = new DataContainer<>();
+	public PageData<EntityCfgUser> login(String loginName, String loginPasswd) {
+		PageData<EntityCfgUser> result = new PageData<>();
 		
 		try {
 			String hqlWhere = EntityCfgUser.P_Name + " =:loginName";
@@ -170,8 +170,8 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 	 * @return
 	 */
 	@Override
-	public DataContainer<EntityCfgUser> queryUser(PageLoadConfig pageConfig) {
-		DataContainer<EntityCfgUser> result = new DataContainer<>(pageConfig);
+	public PageData<EntityCfgUser> queryUser(PageLoadConfig pageConfig) {
+		PageData<EntityCfgUser> result = new PageData<>(pageConfig);
 		
 		try {
 			String hqlWhere = EntityCfgUser.P_Status + "!=:status";

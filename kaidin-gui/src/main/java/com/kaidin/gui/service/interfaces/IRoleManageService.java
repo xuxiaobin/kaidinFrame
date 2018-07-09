@@ -1,6 +1,6 @@
 package com.kaidin.gui.service.interfaces;
 
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.db.entity.EntityCfgRole;
 
@@ -10,7 +10,7 @@ public interface IRoleManageService {
 	 * @param pageConfig
 	 * @return
 	 */
-	DataContainer<EntityCfgRole> queryRole(PageLoadConfig pageConfig);
+	PageData<EntityCfgRole> queryRole(PageLoadConfig pageConfig);
 	
 	/**
 	 * 新建角色

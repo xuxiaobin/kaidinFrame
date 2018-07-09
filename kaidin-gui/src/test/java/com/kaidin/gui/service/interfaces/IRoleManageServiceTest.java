@@ -4,7 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.db.entity.EntityCfgRole;
 import com.kaidin.gui.common.constant.GuiConstType;
@@ -23,7 +23,7 @@ public class IRoleManageServiceTest {
 		ModelAndView result = new ModelAndView("roleManage");
 		
 		PageLoadConfig pageConfig = new PageLoadConfig();
-		DataContainer<EntityCfgRole> dataContainer = roleManageService.queryRole(pageConfig);
+		PageData<EntityCfgRole> dataContainer = roleManageService.queryRole(pageConfig);
 		result.addObject(GuiConstType.DATA_CONTAINER, dataContainer);
 		System.out.println(dataContainer);
 	}

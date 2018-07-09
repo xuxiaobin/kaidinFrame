@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.db.dao.interfaces.IEntityCfgRoleDao;
 import com.kaidin.db.entity.EntityCfgRole;
@@ -29,8 +29,8 @@ public class RoleManageService implements IRoleManageService {
 	 * @return
 	 */
 	@Override
-	public DataContainer<EntityCfgRole> queryRole(PageLoadConfig pageConfig) {
-		DataContainer<EntityCfgRole> result = new DataContainer<>(pageConfig);
+	public PageData<EntityCfgRole> queryRole(PageLoadConfig pageConfig) {
+		PageData<EntityCfgRole> result = new PageData<>(pageConfig);
 		
 		try {
 			String hqlWhere = EntityCfgRole.P_Status + "!=:statu";

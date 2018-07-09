@@ -10,7 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.db.entity.EntityCfgUser;
 import com.kaidin.gui.common.constant.GuiConstType;
@@ -33,7 +33,7 @@ public class UserManageController {
 		ModelAndView result = new ModelAndView("userManage");
 		
 		PageLoadConfig pageConfig = new PageLoadConfig();
-		DataContainer<EntityCfgUser> dataContainer = userManageService.queryUser(pageConfig);
+		PageData<EntityCfgUser> dataContainer = userManageService.queryUser(pageConfig);
 		result.addObject(GuiConstType.DATA_CONTAINER, dataContainer);
 		
 		return result;

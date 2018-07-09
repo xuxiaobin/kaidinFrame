@@ -1,6 +1,6 @@
 package com.kaidin.gui.service.interfaces;
 
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.db.entity.EntityCfgUser;
 /**
@@ -15,7 +15,7 @@ public interface IUserManageService {
 	 * @param loginPasswd
 	 * @return
 	 */
-	DataContainer<EntityCfgUser> login(String loginName, String loginPasswd);
+	PageData<EntityCfgUser> login(String loginName, String loginPasswd);
 	/**
 	 * 退出登录
 	 * @param userId
@@ -45,7 +45,7 @@ public interface IUserManageService {
 	 * @param pageConfig
 	 * @return
 	 */
-	DataContainer<EntityCfgUser> queryUser(PageLoadConfig pageConfig);
+	PageData<EntityCfgUser> queryUser(PageLoadConfig pageConfig);
 	
 	/**
 	 * 重置密码，登陆之后应该强制用户修改

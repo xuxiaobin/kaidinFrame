@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.gui.common.constant.GuiConstType;
 import com.kaidin.gui.model.BoDownloadFile;
@@ -29,7 +29,7 @@ public class DownloadController {
 		PageLoadConfig pageLoadCfg = new PageLoadConfig();
 		pageLoadCfg.setOffset(1);
 		pageLoadCfg.setLimit(15);
-		DataContainer<BoDownloadFile> dataContainer = FileService.getDirFiles(dir, null);
+		PageData<BoDownloadFile> dataContainer = FileService.getDirFiles(dir, null);
 		result.addObject(GuiConstType.DATA_CONTAINER, dataContainer);
 		
 		return result;

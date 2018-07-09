@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.kaidin.common.util.NumberUtil;
 import com.kaidin.common.util.StringUtil;
-import com.kaidin.common.util.query.DataContainer;
+import com.kaidin.common.util.query.PageData;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.gui.model.BoDownloadFile;
 /**
@@ -25,8 +25,8 @@ public class FileService {
 	private static List<String> EXCLUDE_EXTNAME_LIST = new ArrayList<>();
 	
 	
-	public static DataContainer<BoDownloadFile> getDirFiles(File dirFile, PageLoadConfig pageLoadCfg) {
-		DataContainer<BoDownloadFile> result = new DataContainer<>();
+	public static PageData<BoDownloadFile> getDirFiles(File dirFile, PageLoadConfig pageLoadCfg) {
+		PageData<BoDownloadFile> result = new PageData<>();
 		
 		List<BoDownloadFile> dataList = listDir(dirFile);
 		if (null != pageLoadCfg) {
