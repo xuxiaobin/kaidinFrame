@@ -11,7 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kaidin.common.util.EncryptUtil;
+import com.kaidin.common.util.encrypt.EncryptUtil;
 import com.kaidin.common.util.query.DataContainer;
 import com.kaidin.db.entity.EntityCfgUser;
 import com.kaidin.gui.common.constant.GuiConstType;
@@ -43,7 +43,7 @@ public class LoginController {
 		if (isCaptchaOk) {
 			String loginName = request.getParameter("loginName");
 			String loginPasswd = request.getParameter("password");
-			logger.debug("loginPasswd:" + EncryptUtil.md5(loginPasswd));
+			logger.debug("loginPasswd:{}", EncryptUtil.md5(loginPasswd));
 			
 			DataContainer<EntityCfgUser> data = userManageService.login(loginName, loginPasswd);
 			if (GuiConstType.ErrorCode.OK == data.getErrorCode()) {

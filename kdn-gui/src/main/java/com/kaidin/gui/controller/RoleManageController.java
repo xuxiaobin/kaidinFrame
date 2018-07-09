@@ -48,7 +48,7 @@ public class RoleManageController {
 			roleManageService.createRole(newRole);
 			modelMap.put("addstate", "添加成功");
 		} catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 			modelMap.put("addstate", "添加失败");
 		}
 		

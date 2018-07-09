@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.kaidin.common.util.CollectionUtil;
 import com.kaidin.db.dao.interfaces.IEntityCfgMenuDao;
 import com.kaidin.db.entity.EntityCfgMenu;
 import com.kaidin.gui.common.constant.GuiConstType;
@@ -38,12 +39,9 @@ public class MenuManageService implements IMenuManageService {
 			List<EntityCfgMenu> menuList = menuDao.queryEntities(hqlWhere,
 					new String[]{"status"},
 					new Object[]{GuiConstType.ErrorCode.OK});
-			logger.error("sssssssssssssssssss:" + menuList.size());
 			result = convertMenu(menuList);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}
 		
 		return result;
@@ -57,7 +55,7 @@ public class MenuManageService implements IMenuManageService {
 	private List<BoMenu> convertMenu(List<EntityCfgMenu> menuList) {
 		List<BoMenu> result = null;
 		
-		if (null != menuList && !menuList.isEmpty()) {
+		if (CollectionUtil.isNotEmpty(menuList)) {
 			result = new ArrayList<>();
 			Iterator<EntityCfgMenu> menuIterator = menuList.iterator();
 			while (menuIterator.hasNext()) {
@@ -77,7 +75,7 @@ public class MenuManageService implements IMenuManageService {
 		
 		if (null != rootMenu) {
 			result = new BoMenu(rootMenu);
-			if (null != menuList && !menuList.isEmpty()) {
+			if (CollectionUtil.isNotEmpty(menuList)) {
 				long menuId = rootMenu.getId();
 				List<BoMenu> subMenuList = result.getSubMenuList();
 				

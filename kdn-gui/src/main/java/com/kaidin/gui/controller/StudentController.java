@@ -52,7 +52,7 @@ public class StudentController {
 			studentDao.save(st);
 			modelMap.put("addstate", "添加成功");
 		} catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 			modelMap.put("addstate", "添加失败");
 		}
 		
@@ -67,7 +67,7 @@ public class StudentController {
 			studentDao.delete(st);
 			response.getWriter().print("{\"del\":\"true\"}");
 		} catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 	}
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.kaidin.common.util.NumberUtil;
+import com.kaidin.common.util.StringUtil;
 import com.kaidin.common.util.query.DataContainer;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.gui.model.BoDownloadFile;
@@ -32,7 +33,7 @@ public class FileService {
 			dataList = dataList.subList(pageLoadCfg.getOffset(), pageLoadCfg.getLimit());
 		}
 		for (BoDownloadFile file: dataList) {
-			logger.info(file.getName() + "\t" + file.getDownloadPath());
+			logger.info("{}\t{}", file.getName(), file.getDownloadPath());
 		}
 		result.setDataList(dataList);
 		
@@ -67,7 +68,6 @@ public class FileService {
 				}
 			}
 		} else {
-			System.out.println("你输入的不是一个文件夹，请检查路径是否有误！");
 			logger.info("你输入的不是一个文件夹，请检查路径是否有误！");
 		}
 		
@@ -84,7 +84,7 @@ public class FileService {
 		
 		if (null != file && !file.isDirectory()) {
 			String fileName = file.getName();
-			if (null != fileName && 0 < fileName.length()) {
+			if (StringUtil.isNotEmpty(fileName)) {
 				int index = fileName.lastIndexOf('.');
 				result = fileName.substring(index + 1);
 				if (null != result) {

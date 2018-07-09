@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kaidin.common.util.DataTypeUtil;
-import com.kaidin.common.util.EncryptUtil;
-import com.kaidin.common.util.gui.Captcha;
+import com.kaidin.common.util.encrypt.EncryptUtil;
+import com.kaidin.common.util.image.Captcha;
 import com.kaidin.gui.common.constant.GuiConstType;
 /**
  * 验证码应用服务控制器
@@ -35,14 +35,14 @@ public class CaptchaController {
 		boolean isOk = false;
 		
 		String inputCaptcha = request.getParameter(GuiConstType.SessionKey.CAPTCHA);
-		logger.debug("inputCaptcha:" + inputCaptcha);
+		logger.debug("inputCaptcha:{}", inputCaptcha);
 		if (null != inputCaptcha && Captcha.MIN_CODE_COUNT <= inputCaptcha.length()) {
 			HttpSession session = request.getSession(false);
 			if (null != session) {
 				Object sessionObj = session.getAttribute(GuiConstType.SessionKey.CAPTCHA);
-				String sessionCaptcha = DataTypeUtil.getAsString(sessionObj);
+				String sessionCaptcha = DataTypeUtil.asString(sessionObj);
 				session.removeAttribute(GuiConstType.SessionKey.CAPTCHA);
-				logger.debug("sessionCaptcha:" + sessionCaptcha);
+				logger.debug("sessionCaptcha:{}", sessionCaptcha);
 				if (inputCaptcha.equalsIgnoreCase(sessionCaptcha)) {
 					isOk = true;
 				}
@@ -64,7 +64,7 @@ public class CaptchaController {
 			Captcha codeBuilder = new Captcha();
 			char[] codeArray = codeBuilder.createCaptchaCode();
 			String codeStr = String.valueOf(codeArray);
-			logger.debug("sessionCaptcha:" + codeStr);
+			logger.debug("sessionCaptcha:{}", codeStr);
 			// 将验证码保存到Session中
 			HttpSession session = request.getSession();
 			session.setAttribute(GuiConstType.SessionKey.CAPTCHA, codeStr);
@@ -96,7 +96,7 @@ public class CaptchaController {
 			HttpSession session = request.getSession(false);
 			if (null != session) {
 				Object obj = session.getAttribute(GuiConstType.SessionKey.CAPTCHA);
-				String codeStr = DataTypeUtil.getAsString(obj);
+				String codeStr = DataTypeUtil.asString(obj);
 				String codeMd5Str = EncryptUtil.md5(codeStr);
 				if (null != codeMd5Str) {
 					result = codeMd5Str.getBytes();

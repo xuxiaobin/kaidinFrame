@@ -48,7 +48,7 @@ public class UserManageController {
 			userManageService.register(newUser);
 			modelMap.put("addstate", "添加成功");
 		} catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 			modelMap.put("addstate", "添加失败");
 		}
 		
@@ -66,7 +66,7 @@ public class UserManageController {
 		try {
 			userManageService.unregister(userId);
 		} catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return result;

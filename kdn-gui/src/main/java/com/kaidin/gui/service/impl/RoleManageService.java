@@ -41,9 +41,7 @@ public class RoleManageService implements IRoleManageService {
 		} catch (Exception e) {
 			result.setErrorCode(GuiConstType.ErrorCode.SERVICE_ERR);
 			result.setErrorMsg("服务错误");
-			logger.error(e.getMessage());
-			System.out.println(e);
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return result;
@@ -61,7 +59,7 @@ public class RoleManageService implements IRoleManageService {
 			newRole.setCreateTime(new Date());
 			newRole = roleDao.save(newRole);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return newRole;

@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.kaidin.common.util.CollectionUtil;
 import com.kaidin.gui.model.BoMenu;
 import com.kaidin.gui.util.ServiceUtil;
 
@@ -21,7 +22,7 @@ public class IMenuServiceTest {
 	public void testGetMenu() {
 		List<BoMenu> voList = menuManageService.getMenu(1);
 		
-		if (null != voList && !voList.isEmpty()) {
+		if (CollectionUtil.isNotEmpty(voList)) {
 			System.out.println("voList.size:" + voList.size());
 			for (BoMenu vo: voList) {
 				printMenu(vo, "");
@@ -37,7 +38,7 @@ public class IMenuServiceTest {
 			System.out.println(vo.getName() + "-->" + vo.getHref());
 			
 			List<BoMenu> subMenuList = vo.getSubMenuList();
-			if (null != subMenuList && !subMenuList.isEmpty()) {
+			if (CollectionUtil.isNotEmpty(subMenuList)) {
 				for (BoMenu subVo: subMenuList) {
 					printMenu(subVo, formatStr + "\t");
 				}

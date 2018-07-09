@@ -13,11 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.kaidin.common.util.EncryptUtil;
+import com.kaidin.common.util.encrypt.EncryptUtil;
 import com.kaidin.common.util.query.DataContainer;
 import com.kaidin.common.util.query.PageLoadConfig;
 import com.kaidin.db.dao.interfaces.IEntityCfgUserDao;
-import com.kaidin.db.entity.EntityCfgUser;
 import com.kaidin.gui.common.constant.GuiConstType;
 import com.kaidin.gui.service.interfaces.IUserManageService;
 /**
@@ -100,7 +99,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 		} catch (Exception e) {
 			result.setErrorCode(GuiConstType.ErrorCode.USER_NOT_EXIST);
 			result.setErrorMsg("服务错误");
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return result;
@@ -111,6 +110,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 	 * @param userId
 	 * @return
 	 */
+	@Override
 	public boolean logout(long userId) {
 		return false;
 	}
@@ -119,6 +119,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 	 * 从session中获得登陆的用户数
 	 * @return
 	 */
+	@Override
 	public int getLoinUserCount() {
 		int result = 0;
 		
@@ -138,7 +139,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 			newUser.setCreateTime(new Date());
 			newUser = userDao.save(newUser);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return newUser;
@@ -152,12 +153,12 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 		boolean isSuccess = false;
 		
 		try {
-			EntityCfgUser user = userDao.queryById(userId);
+			EntityCfgUser user = userDao.queryEntity(userId);
 			user.setStatus(GuiConstType.Status.DELETE);
 			userDao.update(user);
 			isSuccess = true;
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return isSuccess;
@@ -179,7 +180,7 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 		} catch (Exception e) {
 			result.setErrorCode(GuiConstType.ErrorCode.SERVICE_ERR);
 			result.setErrorMsg("服务错误");
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return result;
@@ -196,12 +197,12 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 		boolean isSuccess = false;
 		
 		try {
-			EntityCfgUser user = userDao.queryById(userId);
+			EntityCfgUser user = userDao.queryEntity(userId);
 			user.setStatus(GuiConstType.Status.RESET_PASSWD);
 			userDao.update(user);
 			isSuccess = true;
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return isSuccess;
@@ -217,12 +218,12 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 		boolean isSuccess = false;
 		
 		try {
-			EntityCfgUser user = userDao.queryById(userId);
+			EntityCfgUser user = userDao.queryEntity(userId);
 			user.setStatus(GuiConstType.Status.LOCK);
 			userDao.update(user);
 			isSuccess = true;
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return isSuccess;
@@ -238,12 +239,12 @@ public class UserManageService implements IUserManageService, HttpSessionListene
 		boolean isSuccess = false;
 		
 		try {
-			EntityCfgUser user = userDao.queryById(userId);
+			EntityCfgUser user = userDao.queryEntity(userId);
 			user.setStatus(GuiConstType.Status.OK);
 			userDao.update(user);
 			isSuccess = true;
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		
 		return isSuccess;
