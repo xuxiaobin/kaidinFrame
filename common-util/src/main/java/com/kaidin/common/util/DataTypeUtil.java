@@ -8,148 +8,158 @@ import java.util.Date;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class DataTypeUtil {
+public abstract class DataTypeUtil {
+	private static final String NULL_STR = "null";
+	
 	
 	public static Byte asByte(Object obj) {
-		Byte result = null;
-		
-		if (null != obj) {
-			if (obj instanceof Number) {
-				result = ((Number) obj).byteValue();
-			} else {
-				result = Byte.valueOf(obj.toString());
-			}
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof Number) {
+			return ((Number) obj).byteValue();
+		}
+		String objStr = obj.toString();
+		if (0 < objStr.length() && !NULL_STR.equals(objStr)) {
+			return Byte.valueOf(objStr, 10);
 		}
 		
-		return result;
+		return null;
 	}
 	public static Byte asByte(Object obj, byte defaultValue) {
 		return null == obj? defaultValue: asByte(obj);
 	}
 	
 	public static Short asShort(Object obj) {
-		Short result = null;
-		
-		if (null != obj) {
-			if (obj instanceof Number) {
-				result = ((Number) obj).shortValue();
-			} else {
-				result = Short.valueOf(obj.toString());
-			}
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof Number) {
+			return ((Number) obj).shortValue();
+		}
+		String objStr = obj.toString();
+		if (0 < objStr.length() && !NULL_STR.equals(objStr)) {
+			return Short.valueOf(objStr, 10);
 		}
 		
-		return result;
+		return null;
 	}
 	public static Short asShort(Object obj, short defaultValue) {
 		return null == obj? defaultValue: asShort(obj);
 	}
 
 	public static Integer asInteger(Object obj) {
-		Integer result = null;
-		
-		if (null != obj) {
-			if (obj instanceof Number) {
-				result = ((Number) obj).intValue();
-			} else {
-				result = Integer.valueOf(obj.toString());
-			}
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof Number) {
+			return ((Number) obj).intValue();
+		}
+		String objStr = obj.toString();
+		if (0 < objStr.length() && !NULL_STR.equals(objStr)) {
+			return Integer.valueOf(objStr);
 		}
 		
-		return result;
+		return null;
 	}
 	public static Integer asInteger(Object obj, int defaultValue) {
 		return null == obj? defaultValue: asInteger(obj);
 	}
 
 	public static Long asLong(Object obj) {
-		Long result = null;
-		
-		if (null != obj) {
-			if (obj instanceof Number)
-				result = ((Number) obj).longValue();
-			if (obj.equals("Null") || obj.equals("")) {
-				result = 0L;
-			} else {
-				result = Long.valueOf(obj.toString());
-			}
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof Number) {
+			return ((Number) obj).longValue();
+		}
+		String objStr = obj.toString();
+		if (0 < objStr.length() && !NULL_STR.equals(objStr)) {
+			return Long.valueOf(objStr);
 		}
 		
-		return result;
+		return null;
 	}
 	public static Long asLong(Object obj, long defaultValue) {
 		return null == obj? defaultValue: asLong(obj);
 	}
 
 	public static Float asFloat(Object obj) {
-		Float result = null;
-		
-		if (null != obj) {
-			if (obj instanceof Number) {
-				result = ((Number) obj).floatValue();
-			}
-			if (obj.equals("Null") || obj.equals("")) {
-				result = 0F;
-			} else {
-				result = Float.valueOf(obj.toString());
-			}
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof Number) {
+			return ((Number) obj).floatValue();
+		}
+		String objStr = obj.toString();
+		if (0 < objStr.length() && !NULL_STR.equals(objStr)) {
+			return Float.valueOf(objStr);
 		}
 		
-		return result;
+		return null;
 	}
 	public static Float asFloat(Object obj, float defaultValue) {
 		return null == obj? defaultValue: asFloat(obj);
 	}
 	
 	public static Double asDouble(Object obj) {
-		Double result = null;
-		
-		if (null != obj) {
-			if (obj instanceof Number) {
-				result = ((Number) obj).doubleValue();
-			} else {
-				result = Double.valueOf(obj.toString());
-			}
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof Number) {
+			return ((Number) obj).doubleValue();
+		}
+		String objStr = obj.toString();
+		if (0 < objStr.length() && !NULL_STR.equals(objStr)) {
+			return Double.valueOf(objStr);
 		}
 		
-		return result;
+		return null;
 	}
 	public static Double asDouble(Object obj, double defaultValue) {
 		return null == obj? defaultValue: asDouble(obj);
 	}
 	
 	public static BigDecimal asBigDecimal(Object obj) {
-		return obj == null ? null: new BigDecimal(String.valueOf(obj));
+		if (null == obj) {
+			return null;
+		}
+		String objStr = String.valueOf(obj);
+		if (0 < objStr.length() && !NULL_STR.equals(objStr)) {
+			return new BigDecimal(objStr);
+		}
+		
+		return null;
 	}
 	public static BigDecimal asBigDecimal(Object obj, BigDecimal defaultValue) {
 		return null == obj? defaultValue: asBigDecimal(obj);
 	}
 
 	public static Boolean asBoolean(Object obj) {
-		Boolean result = null;
+		if (null == obj) {
+			return null;
+		}
 		
-		if (null != obj) {
-			if (obj instanceof Boolean) {
-				result = ((Boolean) obj).booleanValue();
-			} else {
-				result = false;
-				if (obj instanceof Character) {
-					Character c = (Character) obj;
-					if ('T' == c || 't' == c) {
-						result = true;
-					}
-				} else if (obj instanceof Number) {
-					if (((Number) obj).doubleValue() > 0) {
-						result = true;
-					}
-				} else if (obj instanceof String) {
-					if ("true".equalsIgnoreCase(obj.toString())
-							|| "y".equalsIgnoreCase(obj.toString())) {
-						result = true;
-					}
-				} else {
-					throw new RuntimeException("dataType 'Boolean' transform error:" + obj.toString());
-				}
+		if (obj instanceof Boolean) {
+			return (Boolean) obj;
+		}
+		boolean result = false;
+		if (obj instanceof Character) {
+			Character c = (Character) obj;
+			if ('T' == c || 't' == c) {
+				result = true;
 			}
+		} else if (obj instanceof Number) {
+			if (((Number) obj).doubleValue() > 0) {
+				result = true;
+			}
+		} else if (obj instanceof String) {
+			if ("true".equalsIgnoreCase(obj.toString())
+					|| "y".equalsIgnoreCase(obj.toString())) {
+				result = true;
+			}
+		} else {
+			throw new RuntimeException("dataType 'Boolean' transform error:" + obj.toString());
 		}
 		
 		return result;
@@ -159,61 +169,50 @@ public class DataTypeUtil {
 	}
 
 	public static Character asCharacter(Object obj) {
-		Character result = null;
-		
-		if (null != obj) {
-			if (obj instanceof Character) {
-				result = ((Character) obj).charValue();
-			} else if ((obj instanceof String) && (((String) obj).length() == 1)) {
-				result = ((String) obj).charAt(0);
-			} else if (obj instanceof Boolean) {
-				if ((Boolean) obj) {
-					result = 'T';
-				} else {
-					result = 'F';
-				}
-			} else {
-				result = new Character(obj.toString().charAt(0));
-			}
+		if (null == obj) {
+			return null;
 		}
-		
-		return result;
+		if (obj instanceof Character) {
+			return ((Character) obj).charValue();
+		}
+		if ((obj instanceof String) && (((String) obj).length() == 1)) {
+			return ((String) obj).charAt(0);
+		}
+		if (obj instanceof Boolean) {
+			return (Boolean) obj ? 'T' : 'F';
+		}
+		return new Character(obj.toString().charAt(0));
 	}
 	public static Character asCharacter(Object obj, char defaultValue) {
 		return null == obj? defaultValue: asCharacter(obj);
 	}
 
 	public static String asString(Object obj) {
-		if (null == obj) {
-			return null;
-		} else {
-			return obj.toString();
-		}
+		return null == obj? null: obj.toString();
 	}
 	public static String asString(Object obj, String defaultValue) {
 		return null == obj? defaultValue: asString(obj);
 	}
 
 	public static Date asDate(Object obj) {
-		Date result = null;;
+		if (null == obj) {
+			return null;
+		}
 		
-		if (null != obj) {
-			if (obj instanceof Date) {
-				result = (Date) obj;
-			} else if (obj instanceof Number) {
-				result = new Date(asLong(obj));
-			} else if (obj instanceof String) {
-				try {
-					result = DateTimeUtil.getStringToDate(obj.toString());;
-				} catch (Exception e) {
-					throw new RuntimeException("dataType 'Date' transform error:" + obj.toString());
-				}
-			} else {
+		if (obj instanceof Date) {
+			return (Date) obj;
+		}
+		if (obj instanceof Number) {
+			return new Date(asLong(obj));
+		}
+		if (obj instanceof String) {
+			try {
+				return DateTimeUtil.getStringToDate(obj.toString());
+			} catch (Exception e) {
 				throw new RuntimeException("dataType 'Date' transform error:" + obj.toString());
 			}
 		}
-		
-		return result;
+		throw new RuntimeException("dataType 'Date' transform error:" + obj.toString());
 	}
 	public static Date asDate(Object obj, Date defaultValue) {
 		return null == obj? defaultValue: asDate(obj);

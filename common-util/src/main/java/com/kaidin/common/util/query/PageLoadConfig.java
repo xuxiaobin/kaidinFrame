@@ -2,6 +2,8 @@ package com.kaidin.common.util.query;
 
 import java.io.Serializable;
 import java.util.Map;
+
+import com.kaidin.common.util.StringUtil;
 /**
  * 页面查询传入的分页信息
  * @version 1.0
@@ -52,13 +54,11 @@ public class PageLoadConfig implements Serializable {
 	}
 	
 	public Map<String, String> getSort() {
-		Map<String, String> result = null;
-		
-		if (null != sortContainer) {
-			result = sortContainer.getSort();
+		if (null == sortContainer) {
+			return null;
 		}
 		
-		return result;
+		return sortContainer.getSort();
 	}
 	
 	/**
@@ -67,13 +67,11 @@ public class PageLoadConfig implements Serializable {
 	 * @return
 	 */
 	public String toSortSql() {
-		String result = "";
-		
-		if (null != sortContainer) {
-			result = sortContainer.toSortSql();
+		if (null == sortContainer) {
+			return StringUtil.EMPTY_STR;
 		}
 		
-		return result;
+		return sortContainer.toSortSql();
 	}
 	
 	@Override

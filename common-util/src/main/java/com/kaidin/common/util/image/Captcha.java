@@ -1,4 +1,4 @@
-package com.kaidin.common.util.gui;
+package com.kaidin.common.util.image;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -16,19 +16,20 @@ import javax.imageio.ImageIO;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class Captcha {
+public class Captcha extends BaseImage {
 	private static final char[] CODE_SET = "3456789ABCEFGHJKLMNPQRSTUVWXY".toCharArray();
-	public static final int MIN_CODE_COUNT = 4;	// 字符个数，最少4个（默认）
-	public static final int MIN_FONT_SIZE = 32;	// 最小的字体大小，像素
+	public static final short MIN_CODE_COUNT = 4;	// 字符个数，最少4个（默认）
+	public static final short MIN_FONT_SIZE = 32;	// 最小的字体大小，像素
 	private static final float CODE_WIDTH = 0.85F;	// 字符宽度百分比（完全按照字符间距会显得太大）
-	private String fontName = "Fixedsys";	// 字体名称，默认Fixedsys
-	private int fontStyle = Font.BOLD;	// 字体样式，默认加粗
 	private int fontSize = MIN_FONT_SIZE;	// 字体大小，默认32，（当做图片高度使用）
-	private float fontDegree = 0;	// 字体旋转的角度
-	private float diaphaneity = 0.8F;	// 透明度
 	private int codeCount = MIN_CODE_COUNT;
 	
 
+	public Captcha() {
+		fontDegree	= 0;	// 字体旋转的角度
+		diaphaneity	= 0.8F;	// 透明度
+	}
+	
 	/**
 	 * 生成随机验证码字符数组，可以指定字符个数，最少4个字符
 	 * @param codeCount
@@ -95,7 +96,7 @@ public class Captcha {
 //		graphics.dispose();
 //		graphics = buffImg.createGraphics();
 		result.fillRect(0, 0, buffImg.getWidth(), fontSize);
-		result.setFont(new Font(fontName, fontStyle, fontSize));
+		result.setFont(font);
 //		graphics.drawRect(0, 0, IMG_WIDTH - 1, IMG_HEIGHT - 1);
 		
 		return result;
@@ -111,7 +112,7 @@ public class Captcha {
 		int codeX = Double.valueOf(codeWidth * (1 - CODE_WIDTH)).intValue();	// 开始画的横坐标
 		int codeY = Double.valueOf(fontSize * CODE_WIDTH).intValue();	// 开始画的纵坐标
 		System.out.println("(" + codeX + "," + codeY + ")");
-		graphics.setFont(new Font(fontName, fontStyle, fontSize));
+		graphics.setFont(font);
 		for (int index = 0; index < codeArray.length; index++) {
 //			graphics.drawString(String.valueOf(codeArray[i]), codeX, codeY);
 			// 每次画一个字符
@@ -242,45 +243,16 @@ public class Captcha {
 	}
 	
 	
-	public String getFontName() {
-		return fontName;
+	public Font getFont() {
+		return font;
 	}
-	public void setFontName(String fontName) {
-		this.fontName = fontName;
-	}
-	public int getFontStyle() {
-		return fontStyle;
-	}
-	public void setFontStyle(int fontStyle) {
-		this.fontStyle = fontStyle;
-	}
-	/**
-	 * 获取字体大小
-	 * @return
-	 */
-	public int getFontSize() {
-		return fontSize;
-	}
-	/**
-	 * 设置字体大小
-	 * @param fontSize
-	 */
-	public void setFontSize(int fontSize) {
-		if (MIN_FONT_SIZE < fontSize) {
-			this.fontSize = fontSize;
+	public void setFont(Font font) {
+		fontSize = font.getSize();
+		if (MIN_FONT_SIZE > fontSize) {
+			// 字体最小为32
+			fontSize = MIN_FONT_SIZE;
 		}
-	}
-	public float getFontDegree() {
-		return fontDegree;
-	}
-	public void setFontDegree(float fontDegree) {
-		this.fontDegree = fontDegree;
-	}
-	public float getDiaphaneity() {
-		return diaphaneity;
-	}
-	public void setDiaphaneity(float diaphaneity) {
-		this.diaphaneity = diaphaneity;
+		this.font = new Font(font.getFontName(), font.getStyle(), fontSize);
 	}
 	/**
 	 * 获取当前设置的字符数量

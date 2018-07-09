@@ -66,13 +66,12 @@ public class FtpUtil {
 	 * @throws Exception
 	 */
 	public boolean closeServer() throws IOException {
-		boolean isSuccess = false;
-		
-		if (ftpClient != null) {
-			isSuccess = ftpClient.logout();
-			ftpClient.disconnect();
-			ftpClient = null;
+		if (null == ftpClient) {
+			return false;
 		}
+		boolean isSuccess = ftpClient.logout();
+		ftpClient.disconnect();
+		ftpClient = null;
 		
 		return isSuccess;
 	}
@@ -202,17 +201,17 @@ public class FtpUtil {
 	 * @throws IOException 
 	 */
 	public ArrayList<FTPFile> getFileList(String remotePath) throws IOException {
-		ArrayList<FTPFile> fileList = new ArrayList<>();
+		ArrayList<FTPFile> result = new ArrayList<>();
         
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
 		if (fileArray != null) {
 			for (FTPFile file: fileArray) {
-				fileList.add(file);
+				result.add(file);
 //				System.out.println(file.getName());
 			}
 		}
 		
-		return fileList;
+		return result;
 	}
 	
 	

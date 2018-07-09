@@ -3,6 +3,9 @@ package com.kaidin.common.util.query;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import com.kaidin.common.util.CollectionUtil;
+import com.kaidin.common.util.StringUtil;
 /**
  * 页面查询传入的排序信息
  * @version 1.0
@@ -11,7 +14,7 @@ import java.util.Map;
  */
 public class SortContainer implements Serializable {
 	private static final long serialVersionUID = -4902827484393351934L;
-	private Map<String, String> container = new LinkedHashMap<>(5);
+	private Map<String, String> container = new LinkedHashMap<>(2);
 	
 	
 	public void addSort(String column) {
@@ -26,34 +29,30 @@ public class SortContainer implements Serializable {
 	}
 	
 	public String toSortSql() {
-		String result = "";
-		
-		StringBuilder resultBuild = new StringBuilder();
-		if (!container.isEmpty()) {
-			for (String field: container.keySet()) {
-				resultBuild.append(field).append(" ").append(container.get(field)).append(", ");
-			}
-			result = resultBuild.substring(1, resultBuild.length() - 2);
-			if (0 < result.length()) {
-				result = " order by " + result;
-			}
+		if (CollectionUtil.isEmpty(container)) {
+			return StringUtil.EMPTY_STR;
 		}
 		
-		return result;
+		StringBuilder resultBuild = new StringBuilder(" order by ");
+		for (String field: container.keySet()) {
+			resultBuild.append(field).append(" ").append(container.get(field)).append(", ");
+		}
+		int strLength = resultBuild.length();
+		
+		return resultBuild.substring(0, strLength - 2);
 	}
 	
 	@Override
 	public String toString() {
-		String result = null;
-		
-		StringBuilder resultBuild = new StringBuilder();
-		if (!container.isEmpty()) {
-			for (String field: container.keySet()) {
-				resultBuild.append(field).append(":").append(container.get(field)).append(", ");
-			}
-			result = resultBuild.substring(1, resultBuild.length() - 2);
+		if (CollectionUtil.isEmpty(container)) {
+			return StringUtil.EMPTY_STR;
 		}
+		StringBuilder resultBuild = new StringBuilder();
+		for (String field: container.keySet()) {
+			resultBuild.append(field).append(":").append(container.get(field)).append(", ");
+		}
+		int strLength = resultBuild.length();
 		
-		return result;
+		return resultBuild.substring(0, strLength - 2);
 	}
 }

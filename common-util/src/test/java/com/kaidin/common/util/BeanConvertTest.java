@@ -2,7 +2,6 @@ package com.kaidin.common.util;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class BeanConvertTest {
 		assertEquals(12, studentList.get(0).getAge());
 		assertEquals("1234567890", studentList.get(0).getStudentNumber());
 		assertEquals("李四", studentList.get(1).getName());
-		assertEquals(13, studentList.get(1).getAge());
+		assertEquals(20, studentList.get(1).getAge());
 		assertEquals("abcdefthij", studentList.get(1).getStudentNumber());
 	}
 	

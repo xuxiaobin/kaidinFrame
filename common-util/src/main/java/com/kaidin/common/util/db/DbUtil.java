@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * @author xuxiaobin	kaidin@foxmail.com
  *
  */
-public class DbUtil {
+public abstract class DbUtil {
 	private static String JDBC_DRIVER_CLASS_NAME;
 	private static String URL;
 	private static String USER_NAME;
@@ -49,6 +49,7 @@ public class DbUtil {
 		return result;
 	}
 	
+	
 	/**
 	 * 扫尾工作，关闭连接等
 	 * @param conn
@@ -59,7 +60,7 @@ public class DbUtil {
 	public static void close(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
 		SQLException error = null;
 		
-		if (rs != null) {
+		if (null != rs && !rs.isClosed()) {
 			try {
 				rs.close();
 				rs = null;
@@ -68,7 +69,7 @@ public class DbUtil {
 			}
 		}
 
-		if (ps != null) {
+		if (null != ps && !ps.isClosed()) {
 			try {
 				ps.close();
 				ps = null;
@@ -77,7 +78,7 @@ public class DbUtil {
 			}
 		}
 
-		if (conn != null) {
+		if (null != conn && !conn.isClosed()) {
 			try {
 				conn.close();
 				conn = null;

@@ -1,7 +1,5 @@
 package com.kaidin.common.util;
 
-import static org.junit.Assert.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

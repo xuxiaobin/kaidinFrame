@@ -1,13 +1,14 @@
-package com.kaidin.common.util;
+package com.kaidin.common.util.encrypt;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
 
-import com.kaidin.common.util.EncryptUtil.EncryptType;
+import com.kaidin.common.util.StringUtil;
+import com.kaidin.common.util.encrypt.EncryptUtil.EncryptType;
 /**
  * @version	1.0
  * @author	kaidin@foxmail.com
@@ -16,7 +17,7 @@ import com.kaidin.common.util.EncryptUtil.EncryptType;
 public class EncryptUtilTest {
 	private static String str_12345 = "123456";
 	private static String str_admin123 = "admin123";
-	private static String str_enmpty = "";
+	private static String str_enmpty = StringUtil.EMPTY_STR;
 	private static String str_null = null;
 	private static File file = new File(EncryptUtilTest.class.getClassLoader().getResource("md5TestFile.txt").getFile());
 	

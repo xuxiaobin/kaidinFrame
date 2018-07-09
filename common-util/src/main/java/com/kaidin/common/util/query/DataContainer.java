@@ -2,6 +2,8 @@ package com.kaidin.common.util.query;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.kaidin.common.util.CollectionUtil;
 /**
  * 用于接口的返回值
  * @version	1.0
@@ -21,10 +23,11 @@ public class DataContainer<T> implements Serializable {
 	public DataContainer() {
 	}
 	public DataContainer(PageLoadConfig pageLoadConfig) {
-		if (null != pageLoadConfig) {
-			offset = pageLoadConfig.getOffset();
-			limit = pageLoadConfig.getLimit();
+		if (null == pageLoadConfig) {
+			return;
 		}
+		offset = pageLoadConfig.getOffset();
+		limit = pageLoadConfig.getLimit();
 	}
 	
 	public int getErrorCode() {
@@ -73,31 +76,31 @@ public class DataContainer<T> implements Serializable {
 	public String toString() {
 		StringBuilder resultBuild = new StringBuilder();
 		
-		if (0 == errorCode) {
-			// 没有错误输出数据信息
-			resultBuild.append("totalCount:").append(totalCount);
-			resultBuild.append(", offset:").append(offset);
-			resultBuild.append(", limit:").append(limit);
-			if (null != dataList) {
-				resultBuild.append(", dataList:{");
-				boolean isFirst = true;
-				for (T element: dataList) {
-					if (isFirst) {
-						resultBuild.append(element);
-						isFirst = false;
-					} else {
-						resultBuild.append(", ").append(element);
-					}
-				}
-				resultBuild.append("}");
-			} else {
-				resultBuild.append(", dataList:null");
-			}
-		} else {
+		if (0 != errorCode) {
 			// 有错误才输出错误
 			resultBuild.append("errorCode:").append(errorCode);
 			resultBuild.append(", errorMsg:").append(errorMsg);
+			return resultBuild.toString();
 		}
+		// 没有错误输出数据信息
+		resultBuild.append("totalCount:").append(totalCount);
+		resultBuild.append(", offset:").append(offset);
+		resultBuild.append(", limit:").append(limit);
+		if (CollectionUtil.isEmpty(dataList)) {
+			resultBuild.append(", dataList:null");
+			return resultBuild.toString();
+		}
+		resultBuild.append(", dataList:{");
+		boolean isFirst = true;
+		for (T element: dataList) {
+			if (isFirst) {
+				resultBuild.append(element);
+				isFirst = false;
+			} else {
+				resultBuild.append(", ").append(element);
+			}
+		}
+		resultBuild.append("}");
 		
 		return resultBuild.toString();
 	}

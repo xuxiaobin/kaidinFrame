@@ -1,4 +1,4 @@
-package com.kaidin.common.util.gui;
+package com.kaidin.common.util.image;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import com.kaidin.common.util.gui.Captcha;
+import com.kaidin.common.util.image.Captcha;
 
 /**
  * @version	1.0

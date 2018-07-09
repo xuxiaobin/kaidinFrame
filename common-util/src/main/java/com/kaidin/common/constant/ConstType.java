@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class ConstType implements Serializable {
+public abstract class ConstType implements Serializable {
 	private static final long serialVersionUID	= -3599123231405776466L;
 
 	/**
@@ -16,6 +16,7 @@ public class ConstType implements Serializable {
 	 */
 	public static class regex {
 		public static final String MAIL_ADDR	= "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
+		public static final String CHANESE	= "[\u4e00-\u9fa5]";	// 中文汉字
 //		public static final String IP_ADDR		= "\\b((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])(\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])){3}\\b";
 		public static final String IP_ADDR		= "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])(\\.((?!\\d\\d\\d)\\d+|1\\d\\d|2[0-4]\\d|25[0-5])){3}$";
 	}
@@ -35,13 +36,25 @@ public class ConstType implements Serializable {
 	 * IP地址相关
 	 */
 	public static class ip {
-		public static final Long LOCALHOST_VALUE	= 2130706433L;	//本地ip地址127.0.0.1
-		public static final Long MAX_VALUE			= 4294967295L;	//最大的ip地址对应的数值
+		public static final Long LOCALHOST_VALUE	= Long.decode("0x7f000001");	//本地ip地址127.0.0.1
+		public static final Long MAX_VALUE			= Long.decode("0xffffffff");	//最大的ip地址对应的数值
 		public static final Long MIN_VALUE			= 0L;	//最小的ip地址对应的数值
 		
 		public static final String ADDR_REGEX		= regex.IP_ADDR;	//ip地址的正则
 		public static final String LOCALHOST		= "localhost";
 		public static final String LOCALHOST_IP		= "127.0.0.1";
+	}
+	
+	/**
+	 * 文件大小
+	 */
+	public static class fileSize {
+		public static final long K_SIZE		= 1024;	// 2^10
+		public static final long M_SIZE		= K_SIZE << 10;	// 2^20
+		public static final long G_SIZE		= M_SIZE << 10;	// 2^30
+		public static final long T_SIZE		= G_SIZE << 10;	// 2^40
+		public static final long E_SIZE		= T_SIZE << 10;	// 2^50
+		public static final long Z_SIZE		= E_SIZE << 10;	// 2^60
 	}
 	
 	/**

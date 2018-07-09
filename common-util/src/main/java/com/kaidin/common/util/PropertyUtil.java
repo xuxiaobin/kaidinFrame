@@ -19,7 +19,7 @@ import com.kaidin.common.constant.ConstType;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class PropertyUtil {
+public abstract class PropertyUtil {
 	
 	/**
 	 * 读取Properties文件的键值对，组成Entry集合返回
@@ -30,19 +30,19 @@ public class PropertyUtil {
 	public static HashMap<String, String> readPropertyFile(String propertyFileName) throws Exception {
 		HashMap<String, String> result = null;
 		
-		InputStream fileInputStream = null;
+		InputStream inputStream = null;
 		try {
 			try {
-				fileInputStream = new FileInputStream(propertyFileName);
+				inputStream = new FileInputStream(propertyFileName);
 			} catch (FileNotFoundException e) {
-				fileInputStream = PropertyUtil.class.getClassLoader().getResourceAsStream(propertyFileName);
+				inputStream = PropertyUtil.class.getClassLoader().getResourceAsStream(propertyFileName);
 			}
-			result = readPropertyFile(fileInputStream);
+			result = readPropertyFile(inputStream);
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			if (null != fileInputStream) {
-				fileInputStream.close();
+			if (null != inputStream) {
+				inputStream.close();
 			}
 		}
 		
@@ -62,7 +62,7 @@ public class PropertyUtil {
 			Properties proper = new Properties();
 			proper.load(inputStream);
 			Set<Entry<Object, Object>> entrySet = proper.entrySet();
-			if (null != entrySet && !entrySet.isEmpty()) {
+			if (CollectionUtil.isNotEmpty(entrySet)) {
 				result = new HashMap<>(entrySet.size());
 				for (Entry<Object, Object> entry: entrySet) {
 					String key = String.valueOf(entry.getKey());

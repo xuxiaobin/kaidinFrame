@@ -11,7 +11,7 @@ import java.util.Date;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public final class DateTimeUtil {
+public abstract class DateTimeUtil {
 	private static final String DEFALT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 	
 	
@@ -23,14 +23,12 @@ public final class DateTimeUtil {
 	 * @throws ParseException
 	 */
 	public static Date getStringToDate(String dateStr, String pattern) throws ParseException {
-		Date result = null;
-		
-		if (null != dateStr) {
-			DateFormat format = new SimpleDateFormat(pattern);
-			result = format.parse(dateStr);
+		if (null == dateStr) {
+			return null;
 		}
 		
-		return result;
+		DateFormat format = new SimpleDateFormat(pattern);
+		return format.parse(dateStr);
 	}
 	/**
 	 * 把yyyy-MM-dd HH:mm:ss形式的字符串转成date类型
@@ -49,14 +47,12 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static String getDateToString(Date source) {
-		String result = null;
-		
-		if (null != source) {
-			DateFormat format = new SimpleDateFormat(DEFALT_PATTERN);
-			result = format.format(source);
+		if (null == source) {
+			return null;
 		}
-
-		return result;
+		
+		DateFormat format = new SimpleDateFormat(DEFALT_PATTERN);
+		return format.format(source);
 	}
 	/**
 	 * 获取当前时间的yyyy-MM-dd HH:mm:ss字符串形式
@@ -79,17 +75,17 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static String convertTimesToString(Long times, String[] units, long [] decimalisms) {
-		String result = null;
+		if (null == times || 0 > times) {
+			return null;
+		}
 		
-		if (null != times && 0 <= times) {
-			result = "";
-			for (int i = 0; decimalisms.length > i; i++) {
-				long count = times % decimalisms[i];
-				result = count + units[i] + result;
-				times /= decimalisms[i];
-				if (0 >= times) {
-					break;
-				}
+		String result = StringUtil.EMPTY_STR;
+		for (int i = 0; decimalisms.length > i; i++) {
+			long count = times % decimalisms[i];
+			result = count + units[i] + result;
+			times /= decimalisms[i];
+			if (0 >= times) {
+				break;
 			}
 		}
 		
@@ -119,16 +115,12 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static Date addHours(Date source, int offset) {
-		Date result = null;
-		
 		Calendar c = Calendar.getInstance();
 		if (null != source) {
 			c.setTime(source);
 		}
 		c.add(Calendar.HOUR, offset);
-		result = c.getTime();
-		
-		return result;
+		return c.getTime();
 	}
 	/**
 	 * 获取传入时间的前一个小时的开始时间
@@ -146,8 +138,6 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getThisHourBeginTime(Date source) {
-		Date result = null;
-
 		Calendar c = Calendar.getInstance();
 		if (null != source) {
 			c.setTime(source);
@@ -155,9 +145,7 @@ public final class DateTimeUtil {
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
-		result = c.getTime();
-
-		return result;
+		return c.getTime();
 	}
 	/**
 	 * 获取传入时间的下一天的开始时间
@@ -176,16 +164,12 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static Date addDays(Date source, int offset) {
-		Date result = null;
-		
 		Calendar c = Calendar.getInstance();
 		if (null != source) {
 			c.setTime(source);
 		}
 		c.add(Calendar.DATE, offset);
-		result = c.getTime();
-		
-		return result;
+		return c.getTime();
 	}
 	/**
 	 * 获取传入时间的前一天的开始时间
@@ -203,8 +187,6 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getThisDayBeginTime(Date source) {
-		Date result = null;
-		
 		Calendar c = Calendar.getInstance();
 		if (null != source) {
 			c.setTime(source);
@@ -213,9 +195,7 @@ public final class DateTimeUtil {
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
-		result = c.getTime();
-		
-		return result;
+		return c.getTime();
 	}
 	/**
 	 * 获取传入时间的下一天的开始时间
@@ -243,8 +223,6 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getThisWeekBeginTime(Date source) {
-		Date result = null;
-		
 		Calendar c = Calendar.getInstance();
 		if (null != source) {
 			c.setTime(source);
@@ -255,10 +233,7 @@ public final class DateTimeUtil {
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
-		result = c.getTime();
-
-		
-		return result;
+		return c.getTime();
 	}
 	/**
 	 * 获取传入时间的周下周一开始时间
@@ -285,16 +260,12 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static Date addMonths(Date source, int offset) {
-		Date result = null;
-		
 		Calendar c = Calendar.getInstance();
 		if (null != source) {
 			c.setTime(source);
 		}
 		c.add(Calendar.MONTH, offset);
-		result = c.getTime();
-		
-		return result;
+		return c.getTime();
 	}
 	
 	/**
@@ -313,8 +284,6 @@ public final class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getThisMonthBeginTime(Date source) {
-		Date result = null;
-		
 		Calendar c = Calendar.getInstance();
 		if (null != source) {
 			c.setTime(source);
@@ -325,9 +294,7 @@ public final class DateTimeUtil {
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
-		result = c.getTime();
-		
-		return result;
+		return c.getTime();
 	}
 	/**
 	 * 获取传入时间的月下一个月的一号开始时间

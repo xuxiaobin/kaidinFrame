@@ -7,13 +7,14 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 import com.kaidin.common.constant.ConstType;
+import com.kaidin.common.util.regex.RegexUtil;
 /**
  * ip地址和整数之间互转工具
  * @version 1.0
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class IpUtil {
+public abstract class IpUtil {
 	/**
 	 * 获取本机ip
 	 * @return
@@ -78,13 +79,40 @@ public class IpUtil {
 		
 		return isMatch;
 	}
+	public static byte[] asByteIp(String ipStr) {
+		byte[] result = null;
+
+		if (isIpAddr(ipStr)) {
+			result = new byte[4];
+			String[] tmpArry = ipStr.split("[.]");
+			for (int i = 0; i < 4; i++) {
+				short tmpInt = Short.valueOf(tmpArry[i]);
+				result[i] = (byte) tmpInt;
+			}
+		}
+
+		return result;
+	}
+	public static int asIntIp(String ipStr) {
+		int result = 0;
+
+		if (isIpAddr(ipStr)) {
+			String[] tmpArry = ipStr.split("[.]");
+			for (int i = 0; i < 4; i++) {
+				int tmpInt = Integer.valueOf(tmpArry[i]);
+				result += tmpInt << 8 * ( 3 - i);
+			}
+		}
+
+		return result;
+	}
 	
 	/**
 	 * 字符串ip转换为long
 	 * @param 字符串ip
 	 * @return
 	 */
-	public static Long getStringIp2Long(String ipStr) {
+	public static Long asLongIp(String ipStr) {
 		Long result = null;
 		
 		if (null != ipStr) {
@@ -110,28 +138,42 @@ public class IpUtil {
 		return result;
 	}
 
+	public static String asStringIp(byte[] ipByte) {
+		StringBuffer strBuffer = new StringBuffer(15);
+		
+		for (int i = 0; i < 4; i++) {
+			short tmp = Short.valueOf(ipByte[i]);
+			strBuffer.append(".").append(tmp & 0xff);
+		}
+		
+		return strBuffer.substring(1);
+	}
+	public static String asStringIp(int ipInt) {
+		StringBuffer strBuffer = new StringBuffer(15);
+		
+		strBuffer.append(ipInt >> 24 & 0xff);	// 最高位，无符号右移
+		strBuffer.append(".").append((ipInt >> 16) & 0xff);	// 次高位
+		strBuffer.append(".").append((ipInt >> 8) & 0xff);	// 次低位
+		strBuffer.append(".").append(ipInt & 0xff);	// 最低位
+		
+		return strBuffer.toString();
+	}
 	/**
 	 * 长整型ip转换为string
 	 * @param long型ip
 	 * @return
 	 */
-	public static String getLongIp2String(Long ipLong) {
-		String result = null;
+	public static String asStringIp(Long ipLong) {
+		StringBuffer strBuffer = new StringBuffer(15);
 		
 		if (isIpAddr(ipLong)) {
 			long mask[] = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
-			StringBuffer strBuffer = new StringBuffer();
 			for (int i = 3; i >= 0; i--) {
 				long num = (ipLong & mask[i]) >> (i * 8);
-				if (3 == i) {
-					strBuffer.append(num);
-				} else {
-					strBuffer.append(".").append(num);
-				}
+				strBuffer.append(".").append(num);
 			}
-			result = strBuffer.toString();
 		}
 		
-		return result;
+		return strBuffer.substring(1);
 	}
 }
