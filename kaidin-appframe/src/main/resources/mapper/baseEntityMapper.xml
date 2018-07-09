@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaidin.appframe.service.interfaces.IBaseMybatisDao">
+	<!-- 原始sql语句，返回int -->
+	<update id="updateNativeSql">
+		${value}
+	</update>
+	
+	<!-- 原始sql语句，返回map -->
+	<select id="queryNativeSql" resultType="java.util.Map">
+		${value}
+	</select>
+	
+	<!-- 原始sql语句，返回int -->
+	<select id="countNativeSql" resultType="int">
+		select count(1)
+		from (${value}) t
+	</select>
+</mapper>

@@ -1,5 +1,5 @@
-// Generated ${date} by Hibernate Tools ${version}
 ${pojo.getPackageDeclaration()}
+// Generated ${date} by Hibernate Tools ${version}
 
 import javax.ejb.Local;
 

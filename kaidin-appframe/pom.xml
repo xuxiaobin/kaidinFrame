@@ -3,27 +3,43 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	
+	<modelVersion>4.0.0</modelVersion>
+	
 	<parent>
 		<groupId>com.kaidin</groupId>
 		<artifactId>kaidin-parent</artifactId>
 		<version>1.1</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	
-	<modelVersion>4.0.0</modelVersion>
 	<artifactId>kaidin-appframe</artifactId>
 	<name>appframe v${project.version}</name>
-	<version>1.1</version>
 	<packaging>jar</packaging>
 	
 	<scm>
 		<developerConnection>徐小斌</developerConnection>
 	</scm>
 	
-	<properties>
-		<spring.version>4.1.7.RELEASE</spring.version>
-	</properties>
-
 	<dependencies>
+		<!-- 内部工程依赖 -->
+		<dependency>
+			<groupId>com.kaidin</groupId>
+			<artifactId>kaidin-common-util</artifactId>
+		</dependency>
+		<!-- spring依赖 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -40,20 +56,28 @@
 			<version>3.6.0.CR1</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- mybatis依赖 -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<!-- 单元测试依赖 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.kaidin</groupId>
-			<artifactId>common-util</artifactId>
 		</dependency>
 	</dependencies>
 	

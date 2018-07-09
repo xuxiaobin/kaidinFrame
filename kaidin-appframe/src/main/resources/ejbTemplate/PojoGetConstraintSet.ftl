@@ -5,8 +5,9 @@
 	 * getConstraintSet
 	 * @return Set<BaseEntity>
 	 */
+	@${pojo.importType("javax.persistence.Transient")}
 	public Set<BaseEntity> getConstraintSet() {
-		Set<BaseEntity> result = new HashSet<BaseEntity>();
+		Set<BaseEntity> result = new HashSet<>();
 		
 <#foreach property2 in pojo.getPropertiesForFullConstructor()>
 	<#if !property2.getValue().isSimpleValue()>

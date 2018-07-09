@@ -10,16 +10,14 @@
 	${pojo.getPropertyGetModifiers(property)} ${pojo.getJavaTypeName(property, true)} ${pojo.getGetterSignature(property)}() {
 		return this.${property.name};
 	}
-	<#if pojo.getPropertyName(property) == "Id">
+	<#if "Id" == pojo.getPropertyName(property)>
 	${pojo.getPropertyGetModifiers(property)} void set${pojo.getPropertyName(property)}(${pojo.getJavaTypeName(property, true)} ${property.name}) {
 		this.${property.name} = ${property.name};
 	}
-	
 	<#else>
-    ${pojo.getPropertySetModifiers(property)} void set${pojo.getPropertyName(property)}(${pojo.getJavaTypeName(property, true)} ${property.name}) {
-        this.${property.name} = ${property.name};
-    }
-    
+	${pojo.getPropertySetModifiers(property)} void set${pojo.getPropertyName(property)}(${pojo.getJavaTypeName(property, true)} ${property.name}) {
+		this.${property.name} = ${property.name};
+	}
 	</#if>
-	</#if>
+</#if>
 </#foreach>

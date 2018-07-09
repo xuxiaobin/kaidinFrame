@@ -1,4 +1,4 @@
-
+<#if pojo.needsToString()>
 	/**
 	 * toString
 	 * @return String
@@ -18,3 +18,4 @@
       
 		return buffer.toString();
 	}
+</#if>

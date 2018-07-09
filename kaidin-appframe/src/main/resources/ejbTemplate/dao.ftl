@@ -1,17 +1,17 @@
-// Generated ${date} by Hibernate Tools ${version}
 ${pojo.getPackageDeclaration()}
+// Generated ${date} by Hibernate Tools ${version}
 
 //import javax.ejb.Stateless;
-import com.kaidin.common.appframe.dao.BaseDaoImpl;
+import com.kaidin.common.appframe.dao.BaseDaoEjbImpl;
 import com.kaidin.common.appframe.dao.IDaoContext;
 import com.kaidin.db.dao.interfaces.I${pojo.getDeclarationName()}Dao;
 import com.kaidin.db.entity.${pojo.getDeclarationName()};
 /**
- * Dao object for domain model class ${pojo.getDeclarationName()}.
+ * Dao implements for domain model class ${pojo.getDeclarationName()}.
  * @see ${pojo.getQualifiedDeclarationName()}
  */
 //@Stateless(name="com.kaidin.gen.dao.interfaces.I${pojo.getDeclarationName()}Dao")
-public class ${pojo.getDeclarationName()}DaoImpl extends BaseDaoImpl<${pojo.getDeclarationName()}> implements I${pojo.getDeclarationName()}Dao {
+public class ${pojo.getDeclarationName()}DaoImpl extends BaseDaoEjbImpl<${pojo.getDeclarationName()}> implements I${pojo.getDeclarationName()}Dao {
 
 	public ${pojo.getDeclarationName()}DaoImpl(String jndiName, IDaoContext aDaoContext) throws Exception {
 		super(jndiName, ${pojo.getDeclarationName()}.class, aDaoContext);

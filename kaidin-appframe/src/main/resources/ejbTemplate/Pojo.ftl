@@ -3,7 +3,7 @@ ${pojo.getPackageDeclaration()}
 <#assign classbody>
 <#include "PojoTypeDeclaration.ftl"/> {
 <#if !pojo.isInterface()>
-	private static final long serialVersionUID = 359986L;
+	private static final long serialVersionUID = 0126L;
 	<#include "PojoFields.ftl"/>
 
 	<#include "PojoConstructors.ftl"/>

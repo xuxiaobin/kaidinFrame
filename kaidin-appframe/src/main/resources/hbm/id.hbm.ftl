@@ -33,7 +33,7 @@
  <#foreach column in property.columnIterator>
 	    <#include "pkcolumn.hbm.ftl">
  </#foreach>   
-		<generator class="com.kaidin.appframe.entity.BatchSequenceGenerator">
+		<generator class="com.kaidin.appframe.service.id.BatchSequenceGenerator">
   			<param name="sequence">${clazz.table.quotedName}$SEQ</param> 
   		</generator>
     </id>

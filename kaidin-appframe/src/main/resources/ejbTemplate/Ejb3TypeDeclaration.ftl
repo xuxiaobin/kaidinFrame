@@ -5,11 +5,11 @@
 @${pojo.importType("javax.persistence.Entity")}
 @${pojo.importType("javax.persistence.Table")}(name="${clazz.table.name}"
 <#if clazz.table.catalog?exists>
-    ,catalog="${clazz.table.catalog}"
+	,catalog="${clazz.table.catalog}"
 </#if>
 <#assign uniqueConstraint=pojo.generateAnnTableUniqueConstraint()>
 <#if uniqueConstraint?has_content>
-    , uniqueConstraints = ${uniqueConstraint}
+	, uniqueConstraints = ${uniqueConstraint}
 </#if>)
 </#if>
 </#if>
