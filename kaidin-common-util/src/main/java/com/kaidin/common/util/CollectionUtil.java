@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+
 /**
  * 集合转换工具
+ * 
  * @version 1.0
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
@@ -13,24 +15,27 @@ import java.util.Map;
 public abstract class CollectionUtil {
 	/**
 	 * 判断结合是否为空
+	 * 
 	 * @param collection
 	 * @return
 	 */
 	public static <T> boolean isEmpty(Collection<T> collection) {
 		return null == collection || collection.isEmpty();
 	}
-	
+
 	/**
 	 * 判断结合是否不为空
+	 * 
 	 * @param collection
 	 * @return
 	 */
 	public static <T> boolean isNotEmpty(Collection<T> collection) {
 		return null != collection && !collection.isEmpty();
 	}
-	
+
 	/**
 	 * 判断数组是否为不空
+	 * 
 	 * @param array
 	 * @return
 	 */
@@ -38,16 +43,18 @@ public abstract class CollectionUtil {
 		if (null == array || 0 == array.length) {
 			return true;
 		}
-		for (T item: array) {
+		for (T item : array) {
 			if (null != item) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
+
 	/**
 	 * 判断数组是否为不空
+	 * 
 	 * @param array
 	 * @return
 	 */
@@ -55,36 +62,39 @@ public abstract class CollectionUtil {
 		if (null == array || 0 == array.length) {
 			return false;
 		}
-		
-		for (T item: array) {
+
+		for (T item : array) {
 			if (null != item) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * 判断map是否为空
+	 * 
 	 * @param map
 	 * @return
 	 */
 	public static <K, V> boolean isEmpty(Map<K, V> map) {
 		return null == map || map.isEmpty();
 	}
+
 	/**
 	 * 判断map是否为不空
+	 * 
 	 * @param map
 	 * @return
 	 */
 	public static <K, V> boolean isNotEmpty(Map<K, V> map) {
 		return null != map && !map.isEmpty();
 	}
-	
-	
+
 	/**
 	 * 将字符串列表转换为定长的字符串数组
+	 * 
 	 * @param dataList
 	 * @return
 	 */
@@ -93,12 +103,13 @@ public abstract class CollectionUtil {
 		if (null == dataList) {
 			return null;
 		}
-		
+
 		return (T[]) dataList.toArray();
 	}
-	
+
 	/**
 	 * 将字符串数组转换为定长的字符串列表
+	 * 
 	 * @param dataArray
 	 * @return
 	 */
@@ -106,12 +117,13 @@ public abstract class CollectionUtil {
 		if (null == dataArray) {
 			return null;
 		}
-		
+
 		return (ArrayList<T>) Arrays.asList(dataArray);
 	}
-	
+
 	/**
 	 * 仿照oracle的decode方法
+	 * 
 	 * @param obj
 	 * @param defaultValue
 	 * @param expect1Obj
@@ -123,7 +135,7 @@ public abstract class CollectionUtil {
 		if (BaseUtil.equals(obj, expect1Obj)) {
 			return expect1Value;
 		}
-		
+
 		for (int i = 0; i < objArrray.length; i++) {
 			if (BaseUtil.equals(obj, objArrray[i++])) {
 				if (i < objArrray.length) {
@@ -131,7 +143,7 @@ public abstract class CollectionUtil {
 				}
 			}
 		}
-		
+
 		return defaultValue;
 	}
 }

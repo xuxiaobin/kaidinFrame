@@ -1,20 +1,23 @@
 package com.kaidin.common.util;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  * 数值转换工具
+ * 
  * @version 1.0
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
 public abstract class NumberUtil {
-	private static final String DECIMAL_PLACES_2	= "#0.00";
-	private static final String DECIMAL_PLACES_4	= "#0.0000";
-	private static final String DECIMAL_PLACES_PERCENT_2	= "#0.00%";
+	private static final String DECIMAL_PLACES_2		 = "#0.00";
+	private static final String DECIMAL_PLACES_4		 = "#0.0000";
+	private static final String DECIMAL_PLACES_PERCENT_2 = "#0.00%";
 
-	
 	/**
 	 * 两数相除，判空和除数不能为0
+	 * 
 	 * @param dividend
 	 * @param divisor
 	 * @return
@@ -30,6 +33,7 @@ public abstract class NumberUtil {
 
 	/**
 	 * 格式化数字保留2位小数
+	 * 
 	 * @param number
 	 * @return
 	 */
@@ -49,6 +53,7 @@ public abstract class NumberUtil {
 
 	/**
 	 * 格式化数据到2位小数百分比
+	 * 
 	 * @param number
 	 * @return
 	 */
@@ -67,6 +72,7 @@ public abstract class NumberUtil {
 
 	/**
 	 * 格式化小数后面的0，如果是整数的话去掉小数点
+	 * 
 	 * @param number
 	 * @return
 	 */
@@ -81,5 +87,18 @@ public abstract class NumberUtil {
 		}
 
 		return result;
+	}
+
+	/**
+	 * 去掉千分位逗号
+	 * 
+	 * @param number
+	 * @return
+	 */
+	public static String formatWithoutComma(Number number) {
+		NumberFormat numberFormat = NumberFormat.getNumberInstance();
+		numberFormat.setGroupingUsed(false); // 设置了以后不会有千分位，默认true
+
+		return numberFormat.format(number);
 	}
 }

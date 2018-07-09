@@ -59,25 +59,27 @@ public class FtpUtil {
 		
 		return isSuccess;
 	}
-	
+
 	/**
-	 * 断开与ftp服务器连接 
+	 * 断开与ftp服务器连接
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public boolean closeServer() throws IOException {
 		if (null == ftpClient) {
-			return false;
+			return true;
 		}
 		boolean isSuccess = ftpClient.logout();
 		ftpClient.disconnect();
 		ftpClient = null;
-		
+
 		return isSuccess;
 	}
 	
 	/**
 	 * Description: 向FTP服务器上传文件
+	 * 
 	 * @param hostname
 	 * @param port
 	 * @param userName
@@ -88,20 +90,16 @@ public class FtpUtil {
 	 * @return 成功返回true，否则返回false
 	 */
 	public boolean uploadFile(String remotePath, String remoteFileName, String localFileName) throws IOException {
-		boolean isSuccess = false;
-		
 		try (FileInputStream input = new FileInputStream(localFileName)) {
 			if (remotePath != null) {
 				ftpClient.changeWorkingDirectory(remotePath);
 			}
-			isSuccess = ftpClient.storeFile(remoteFileName, input);
+			return ftpClient.storeFile(remoteFileName, input);
 		} catch (IOException e) {
 			throw e;
 		}
-		
-		return isSuccess;
 	}
-	
+
 	/**
 	 * 下载文件
 	 * @param remotePath
@@ -111,8 +109,6 @@ public class FtpUtil {
 	 * @throws IOException
 	 */
 	public boolean downloadFile(String remotePath, String remoteFileName, String localFileName) throws IOException {
-		boolean isSuccess = false;
-		
 		try (FileOutputStream output = new FileOutputStream(localFileName)) {
 			ftpClient.changeWorkingDirectory(remotePath);
 			if (remotePath != null) {
@@ -121,133 +117,137 @@ public class FtpUtil {
 				}
 				remoteFileName = remotePath + remoteFileName;
 			}
-			isSuccess = ftpClient.retrieveFile(remoteFileName, output);
+			return ftpClient.retrieveFile(remoteFileName, output);
 		} catch (IOException e) {
 			throw e;
 		}
-		
-		return isSuccess;
 	}
 
 	/**
 	 * 下载文件
+	 * 
 	 * @param remotePath
 	 * @param remoteFileName
 	 * @return
 	 * @throws IOException
 	 */
 	public boolean deleteFile(String remotePath, String remoteFileName) throws IOException {
-		boolean isSuccess = false;
-		
-//		try {
-			ftpClient.changeWorkingDirectory(remotePath);
-			isSuccess = ftpClient.deleteFile(remoteFileName);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
-		return isSuccess;
+		ftpClient.changeWorkingDirectory(remotePath);
+		return ftpClient.deleteFile(remoteFileName);
 	}
-	
+
 	/**
 	 * 取得相对于当前连接目录的某个目录下所有文件名列表
-	 * @param remotePath
 	 * 
+	 * @param remotePath
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public ArrayList<String> getFileNameList(String remotePath) throws IOException {
-		ArrayList<String> fileNameList = new ArrayList<>();
-        
+		ArrayList<String> result = new ArrayList<>();
+
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
-		if (fileArray != null) {
-			for (FTPFile file: fileArray) {
-				if (FTPFile.FILE_TYPE == file.getType()) {
-					fileNameList.add(file.getName());
-				}
+		if (CollectionUtil.isEmpty(fileArray)) {
+			return result;
+		}
+		for (FTPFile file : fileArray) {
+			if (FTPFile.FILE_TYPE == file.getType()) {
+				result.add(file.getName());
 			}
 		}
-		
-		return fileNameList;
+
+		return result;
 	}
-	
+
 	/**
 	 * 取得相对于当前连接目录的某个目录下所有文件名列表
-	 * @param remotePath
 	 * 
+	 * @param remotePath
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public ArrayList<String> getDirectoryNameList(String remotePath) throws IOException {
-		ArrayList<String> fileNameList = new ArrayList<>();
-        
+		ArrayList<String> result = new ArrayList<>();
+
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
-		if (fileArray != null) {
-			for (FTPFile file: fileArray) {
-				if (FTPFile.DIRECTORY_TYPE == file.getType()) {
-					fileNameList.add(file.getName());
-				}
+		if (CollectionUtil.isEmpty(fileArray)) {
+			return result;
+		}
+		for (FTPFile file : fileArray) {
+			if (FTPFile.DIRECTORY_TYPE == file.getType()) {
+				result.add(file.getName());
 			}
 		}
-		
-		return fileNameList;
+
+		return result;
 	}
-	
+
 	/**
 	 * 取得相对于当前连接目录的某个目录下所有文件列表
-	 * @param remotePath
 	 * 
+	 * @param remotePath
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public ArrayList<FTPFile> getFileList(String remotePath) throws IOException {
 		ArrayList<FTPFile> result = new ArrayList<>();
-        
+
 		FTPFile[] fileArray = ftpClient.listFiles(remotePath);
-		if (fileArray != null) {
-			for (FTPFile file: fileArray) {
-				result.add(file);
-//				System.out.println(file.getName());
-			}
+		if (CollectionUtil.isEmpty(fileArray)) {
+			return result;
 		}
-		
+		for (FTPFile file : fileArray) {
+			result.add(file);
+			// System.out.println(file.getName());
+		}
+
 		return result;
 	}
-	
-	
+
 	public String getHostname() {
 		return hostname;
 	}
+
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
 	}
+
 	public int getPort() {
 		return port;
 	}
+
 	public void setPort(int port) {
 		this.port = port;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public FTPClient getFtpClient() {
 		return ftpClient;
 	}
+
 	public void setFtpClient(FTPClient ftpClient) {
 		this.ftpClient = ftpClient;
 	}
+
 	public int getConnTimeoutTimes() {
 		return connTimeoutTimes;
 	}
+
 	public void setConnTimeoutTimes(int connTimeoutTimes) {
 		this.connTimeoutTimes = connTimeoutTimes;
 	}

@@ -1,6 +1,7 @@
 package com.kaidin.common.constant;
 
 import java.io.Serializable;
+
 /**
  * 本类中的属性全都是静态的常量
  * 提供一些常用的常量，方便引用
@@ -74,27 +75,26 @@ public abstract class ConstType implements Serializable {
 	 * 基本数据类型
 	 */
 	public static class baseType {
-		public static final String DATATYPE_short	= "short";
-		public static final String DATATYPE_SHORT	= "Short";
-		public static final String DATATYPE_int	= "int";
-		public static final String DATATYPE_INTEGER	= "Integer";
-		public static final String DATATYPE_long	= "long";
-		public static final String DATATYPE_LONG	= "Long";
-		public static final String DATATYPE_float	= "float";
-		public static final String DATATYPE_FLOAT	= "Float";
-		public static final String DATATYPE_double	= "double";
-		public static final String DATATYPE_DOUBLE	= "Double";
-		
-		public static final String DATATYPE_byte	= "byte";
-		public static final String DATATYPE_BYTE	= "Byte";
-		public static final String DATATYPE_char	= "char";
-		public static final String DATATYPE_CHAR	= "Char";
-		public static final String DATATYPE_boolean	= "boolean";
-		public static final String DATATYPE_BOOLEAN	= "Boolean";
-		public static final String DATATYPE_STRING	= "String";
-		public static final String DATATYPE_DATE	= "Date";
-		public static final String DATATYPE_TIME	= "Time";
-		public static final String DATATYPE_DATETIME	= "DateTime";
-		public static final String DATATYPE_OBJECT	= "Object";
+		public static final String P_short = "short";
+		public static final String P_SHORT = "Short";
+		public static final String P_int = "int";
+		public static final String P_INTEGER = "Integer";
+		public static final String P_long = "long";
+		public static final String P_LONG = "Long";
+		public static final String P_float = "float";
+		public static final String P_FLOAT = "Float";
+		public static final String P_double = "double";
+		public static final String P_DOUBLE = "Double";
+		public static final String P_byte = "byte";
+		public static final String P_BYTE = "Byte";
+		public static final String P_char = "char";
+		public static final String P_CHAR = "Char";
+		public static final String P_boolean = "boolean";
+		public static final String P_BOOLEAN = "Boolean";
+		public static final String P_STRING = "String";
+		public static final String P_DATE = "Date";
+		public static final String P_TIME = "Time";
+		public static final String P_DATETIME = "DateTime";
+		public static final String P_OBJECT = "Object";
 	}
 }
