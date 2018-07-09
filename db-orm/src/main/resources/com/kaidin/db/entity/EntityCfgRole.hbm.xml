@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-23 12:09:07 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="com.kaidin.db.entity.EntityCfgRole" table="cfg_role" catalog="kaidin">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="com.kaidin.appframe.service.id.BatchSequenceGenerator">
+                <param name="sequence">cfg_role$SEQ</param>
+            </generator>
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="32">
+                <comment>角色名</comment>
+            </column>
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="create_time" length="19">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+        <property name="status" type="short">
+            <column name="status" not-null="true">
+                <comment>状态</comment>
+            </column>
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="128">
+                <comment>描述信息</comment>
+            </column>
+        </property>
+        <set name="entityRltUserRoles" table="rlt_user_role" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="role_id" not-null="true">
+                    <comment>cfg_role.id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.kaidin.db.entity.EntityRltUserRole" />
+        </set>
+    </class>
+</hibernate-mapping>

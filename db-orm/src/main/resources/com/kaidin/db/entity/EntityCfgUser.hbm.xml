@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-23 12:09:07 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="com.kaidin.db.entity.EntityCfgUser" table="cfg_user" catalog="kaidin">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="com.kaidin.appframe.service.id.BatchSequenceGenerator">
+                <param name="sequence">cfg_user$SEQ</param>
+            </generator>
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="32" not-null="true">
+                <comment>登陆用户名</comment>
+            </column>
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="32">
+                <comment>登陆密码</comment>
+            </column>
+        </property>
+        <property name="alias" type="string">
+            <column name="alias" length="32">
+                <comment>别名</comment>
+            </column>
+        </property>
+        <property name="gender" type="string">
+            <column name="gender" length="10">
+                <comment>性别</comment>
+            </column>
+        </property>
+        <property name="mail" type="string">
+            <column name="mail" length="128">
+                <comment>邮箱地址</comment>
+            </column>
+        </property>
+        <property name="birthday" type="timestamp">
+            <column name="birthday" length="10">
+                <comment>生日</comment>
+            </column>
+        </property>
+        <property name="telphone" type="string">
+            <column name="telphone" length="32">
+                <comment>电话</comment>
+            </column>
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="256">
+                <comment>地址</comment>
+            </column>
+        </property>
+        <property name="lastLoginTime" type="timestamp">
+            <column name="last_login_time" length="19">
+                <comment>最后登陆时间</comment>
+            </column>
+        </property>
+        <property name="passwordChangeTime" type="timestamp">
+            <column name="password_change_time" length="19">
+                <comment>最后修改时间</comment>
+            </column>
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="create_time" length="19">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+        <property name="status" type="short">
+            <column name="status" not-null="true">
+                <comment>状态</comment>
+            </column>
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="128">
+                <comment>描述信息</comment>
+            </column>
+        </property>
+        <set name="entityRltUserRoles" table="rlt_user_role" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" not-null="true">
+                    <comment>cfg_user.id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.kaidin.db.entity.EntityRltUserRole" />
+        </set>
+    </class>
+</hibernate-mapping>
