@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<parent>
+		<groupId>com.kaidin</groupId>
+		<artifactId>kaidin-parent</artifactId>
+		<version>1.1</version>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>kaidin-db-orm</artifactId>
+	<name>db-orm v${project.version}</name>
+	<description>数据映射的实体类文件，不包含业务逻辑方法</description>
+	<packaging>jar</packaging>
+	
+	<scm>
+		<developerConnection>徐小斌</developerConnection>
+	</scm>
+	
+	<properties>
+		<hibernate.version>3.0</hibernate.version>
+		<spring.version>4.1.7.RELEASE</spring.version>
+	</properties>
+
+	<dependencies>
+		<!-- 内部工程依赖 -->
+		<dependency>
+			<groupId>com.kaidin</groupId>
+			<artifactId>appframe</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- spring依赖 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- jsony解析依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+		<!-- mybatis依赖 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<!-- mysql驱动包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- 单元测试依赖 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.27-incubating</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
