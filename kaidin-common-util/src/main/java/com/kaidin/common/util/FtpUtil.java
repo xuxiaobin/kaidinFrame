@@ -8,55 +8,55 @@ import java.util.ArrayList;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+
 /**
- * 一个连接ftp的工具类，需要导入commons-net-3.2.jar包
- * 使用时请先打开服务openServer()
- * 中间写你需要的代码
- * 最后记得closeServer()
+ * 一个连接ftp的工具类，需要导入commons-net-3.2.jar包 使用时请先打开服务openServer() 中间写你需要的代码
+ * 最后记得closeServer() 如果需要实现更加复杂的功能，请获取ftpClient去做
  * 
- * 如果需要实现更加复杂的功能，请获取ftpClient去做
  * @version 1.0
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
 public class FtpUtil {
-	private String hostname;//ftp服务器地址
-	private int port = 21;//默认端口
-	private String userName = "anonymous";//默认是匿名用户
-	private String password = "anonymous";//默认的匿名用户的密码
+	private String    hostname;                      // ftp服务器地址
+	private int       port             = 21;         // 默认端口
+	private String    userName         = "anonymous"; // 默认是匿名用户
+	private String    password         = "anonymous"; // 默认的匿名用户的密码
 	private FTPClient ftpClient;
-	private int connTimeoutTimes = 1000 * 10;//默认的超时时间
-	
-	
+	private int       connTimeoutTimes = 1000 * 10;  // 默认的超时时间
+
 	public FtpUtil() {
 	}
+
 	public FtpUtil(String hostname, String userName, String pwd) {
 		this.hostname = hostname;
 		this.userName = userName;
 		this.password = pwd;
 	}
+
 	public FtpUtil(String hostname, int port, String userName, String pwd) {
 		this.hostname = hostname;
 		this.port = port;
 		this.userName = userName;
 		this.password = pwd;
 	}
-	
+
 	/**
 	 * 连接到ftp服务器
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public boolean openServer() throws IOException {
 		boolean isSuccess = false;
-		
+
 		ftpClient = new FTPClient();
 		ftpClient.connect(hostname, port);
 		ftpClient.setConnectTimeout(connTimeoutTimes);
 		ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 		isSuccess = ftpClient.login(userName, password);
 		System.out.println("已登录到" + hostname);
-		
+
 		return isSuccess;
 	}
 
@@ -76,7 +76,7 @@ public class FtpUtil {
 
 		return isSuccess;
 	}
-	
+
 	/**
 	 * Description: 向FTP服务器上传文件
 	 * 
@@ -86,7 +86,8 @@ public class FtpUtil {
 	 * @param password
 	 * @param path
 	 * @param remoteFileName
-	 * @param localFileName 本地文件名称
+	 * @param localFileName
+	 *            本地文件名称
 	 * @return 成功返回true，否则返回false
 	 */
 	public boolean uploadFile(String remotePath, String remoteFileName, String localFileName) throws IOException {
@@ -102,6 +103,7 @@ public class FtpUtil {
 
 	/**
 	 * 下载文件
+	 * 
 	 * @param remotePath
 	 * @param remoteFileName
 	 * @param localFileName
