@@ -6,14 +6,17 @@ package com.kaidin.appframe.api;
 
 import java.util.Iterator;
 
+import com.kaidin.appframe.api.interceptor.ApiInterceptor;
+
 /**
  * @version 1.0
  * @author kaidin@foxmail.com
  * @date 2018年7月10日 上午11:12:50
  */
 public class ApiInvocation implements Invocation {
-	private OpenApi<BaseResponseData, BaseRequestData> api;
-	private final Iterator<ApiInterceptor>             interceptorChain;
+	private DispatchContext                                                dispatchContext = new DispatchContext();
+	private OpenApi<? extends BaseResponseData, ? extends BaseRequestData> api;
+	private final Iterator<ApiInterceptor>                                 interceptorChain;
 
 	/**
 	 * 构造函数传入拦截器链
@@ -32,6 +35,34 @@ public class ApiInvocation implements Invocation {
 			return;
 		}
 		BaseResponseData responseData = api.execute();
+	}
+
+	/**
+	 * @return property value of api
+	 */
+	public OpenApi<? extends BaseResponseData, ? extends BaseRequestData> getApi() {
+		return api;
+	}
+
+	/**
+	 * @param api value to assigned to property api
+	 */
+	public void setApi(OpenApi<? extends BaseResponseData, ? extends BaseRequestData> api) {
+		this.api = api;
+	}
+
+	/**
+	 * @return property value of dispatchContext
+	 */
+	public DispatchContext getDispatchContext() {
+		return dispatchContext;
+	}
+
+	/**
+	 * @param dispatchContext value to assigned to property dispatchContext
+	 */
+	public void setDispatchContext(DispatchContext dispatchContext) {
+		this.dispatchContext = dispatchContext;
 	}
 
 }

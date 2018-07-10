@@ -5,29 +5,28 @@
 package com.kaidin.appframe.api.annotation;
 
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.stereotype.Component;
-
 /**
- * api注解
- * 
+ * 业务线标识
  * @version 1.0
  * @author kaidin@foxmail.com
- * @date 2018年7月10日 上午11:12:50
+ * @date 2018年7月10日 下午4:19:46
  */
-@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Inherited
-@Component
-public @interface Api {
+@Target(ElementType.PACKAGE)
+public @interface Biz {
 	/**
-	 * API名称，遵循REST风格，如：/data/List，避免大写字母，则API名称为DataListApi
-	 * 
+	 * 业务代码
 	 * @return
 	 */
 	String value();
+
+	/**
+	 * 版本号
+	 * @return
+	 */
+	String verion();
 }
