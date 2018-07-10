@@ -8,7 +8,8 @@
 	<parent>
 		<groupId>com.kaidin</groupId>
 		<artifactId>kaidin-parent</artifactId>
-		<version>1.1</version>
+		<version>1.1.0</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>kaidin-common-util</artifactId>
@@ -16,20 +17,20 @@
 	<description>和业务逻辑无关的工具类，为方便某些场合使用</description>
 	<packaging>jar</packaging>
 	
-	<scm>
-		<developerConnection>徐小斌</developerConnection>
-	</scm>
-	
 	<dependencies>
 		<dependency>
-			<!-- 主要是用到了apache的org.apache.commons.net.ftp.FTPClient类 -->
+			<!-- 用到了apache的org.apache.commons.net.ftp.FTPClient类 -->
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 		</dependency>
 		<dependency>
-			<!-- 主要是用到了apache的org.apache.commons.beanutils.PropertyUtils类 -->
+			<!-- 用到了apache的org.apache.commons.beanutils.PropertyUtils类 -->
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -39,7 +40,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
