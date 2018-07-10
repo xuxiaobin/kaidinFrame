@@ -4,5 +4,6 @@
 # config
 *.classpath
 
-
+# generated files
+target/
 
