@@ -2,7 +2,7 @@
 *.git
 
 # config
-*.settings/
+.settings/
 
 # generated files
 target/
