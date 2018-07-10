@@ -29,7 +29,7 @@
 		<module>db-entity</module>
 		<module>kaidin-db-orm</module>
 		<module>kaidin-gui</module>
-    <module>kaidin-tools</module>
+		<module>kaidin-tools</module>
   </modules>
 
 	<dependencyManagement>
@@ -174,7 +174,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
 	
 	<build>
 		<pluginManagement>

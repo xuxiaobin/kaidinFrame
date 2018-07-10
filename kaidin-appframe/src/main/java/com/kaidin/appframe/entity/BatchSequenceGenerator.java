@@ -12,10 +12,15 @@ import org.hibernate.id.SequenceGenerator;
 import org.hibernate.type.Type;
 
 import com.kaidin.common.util.PropertyUtil;
-
+/**
+ * 批量获取oracle数据库序列作id使用
+ * @version 1.1
+ * @author xuxiaobin	kaidin@foxmail.com
+ * @date 2015-6-23下午01:51:48
+ */
 public class BatchSequenceGenerator extends SequenceGenerator {
 	private int count = 0;
-	private Long position_id;
+	private Long positionId;
 	private boolean needBatch = false;
 	
 	
@@ -38,9 +43,9 @@ public class BatchSequenceGenerator extends SequenceGenerator {
 					count = 0;
 				}
 				if (count == 0) {
-					position_id = (Long) super.generate(session, object);
+					positionId = (Long) super.generate(session, object);
 				}
-				return new Long(position_id + (++count));
+				return new Long(positionId + (++count));
 			}
 		} else {
 			return super.generate(session, object);
@@ -65,17 +70,4 @@ public class BatchSequenceGenerator extends SequenceGenerator {
 			throw new MappingException("Can't load sequence.properties.");
 		}
 	}
-	
-//	public static void main(String[] args) throws Exception {
-//		InputStream is = BatchSequenceGenerator.class.getResourceAsStream("/cfg/sequence.properties");
-//		if (is == null) {
-//			throw new Exception("Can not find sequence.properties.");
-//		}
-//		Properties p = new Properties();
-//		p.load(is);
-//		for (Object obj : p.keySet()) {
-//			String sequence = String.valueOf(obj).toUpperCase();
-//			System.out.println(sequence + ",");
-//		}
-//	}
 }
