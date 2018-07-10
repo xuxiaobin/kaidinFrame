@@ -2,9 +2,12 @@
 *.git
 
 # config
-.settings/
+*.project
+.settings
+*.settings/
 .classpath
+*.classpath
 
 # generated files
 target/
-
+bin/

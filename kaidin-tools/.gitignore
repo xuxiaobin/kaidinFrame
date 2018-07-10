@@ -1,1 +1,14 @@
-/target/
+# git
+*.git
+.gitignore
+
+# config
+*.project
+.settings
+*.settings/
+.classpath
+*.classpath
+
+# generated files
+target/
+bin/
