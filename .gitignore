@@ -2,7 +2,7 @@
 *.git
 
 # config
-*.classpath
+*.settings/
 
 # generated files
 target/
