@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import java.text.SimpleDateFormat;
@@ -63,6 +67,7 @@ public class DateTimeUtilTest {
 	@Test
 	public void testGetNextMonthBeginTime() {
 	}
+
 	public static void main(String[] args) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date time = new Date();
@@ -70,8 +75,7 @@ public class DateTimeUtilTest {
 		c.setTime(time);
 		System.out.println(format.format(0));
 		System.out.println(format.format(c.getTime()));
-		
-		
+
 		System.out.println(DateTimeUtil.convertTimesToString(0L));
 		System.out.println(DateTimeUtil.convertTimesToString(1L));
 		System.out.println(DateTimeUtil.convertTimesToString(200L));

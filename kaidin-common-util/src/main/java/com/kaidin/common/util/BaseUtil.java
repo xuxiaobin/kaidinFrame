@@ -1,7 +1,11 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 /**
- * 一些基本的不太好分类的工具函数
+ * 基本的不太好分类的工具函数
  * @version 1.0
  * @author kaidin@foxmail.com
  * @date 20160429上午09:51:48
@@ -17,12 +21,12 @@ public abstract class BaseUtil {
 		if (null == obj1) {
 			return null == obj2;
 		}
-		
+
 		return obj1.equals(obj2);
 	}
-	
+
 	/**
-	 * 比较类似是否相同
+	 * 比较类是否相同
 	 * @param obj1
 	 * @param obj2
 	 * @return
@@ -31,7 +35,7 @@ public abstract class BaseUtil {
 		if (null != obj1 && null != obj2) {
 			return obj1.getClass().equals(obj2.getClass());
 		}
-		
+
 		return false;
 	}
 }

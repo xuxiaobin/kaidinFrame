@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import java.net.InetAddress;
@@ -8,6 +12,7 @@ import java.util.Enumeration;
 
 import com.kaidin.common.constant.ConstType;
 import com.kaidin.common.util.regex.RegexUtil;
+
 /**
  * ip地址和整数之间互转工具
  * @version 1.0
@@ -21,27 +26,24 @@ public abstract class IpUtil {
 	 * @throws UnknownHostException
 	 */
 	public static String getLocalHostIp() throws SocketException {
-		String result = null;
-
-		String localIp = null;	// 本地IP，如果没有配置外网IP则返回它
-		String netIp = null;	// 外网IP
+		String localIp = null; // 本地IP，如果没有配置外网IP则返回它
+		String netIp = null; // 外网IP
 
 		Enumeration<NetworkInterface> netInterfaces = NetworkInterface.getNetworkInterfaces();
 		InetAddress address = null;
-		boolean finded = false;	// 是否找到外网IP
+		boolean finded = false; // 是否找到外网IP
 		while (netInterfaces.hasMoreElements() && !finded) {
 			NetworkInterface netInterface = netInterfaces.nextElement();
 			Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
 			while (addresses.hasMoreElements()) {
 				address = addresses.nextElement();
-				if (!address.isSiteLocalAddress() && !address.isLoopbackAddress()
-						&& address.getHostAddress().indexOf(":") == -1) {
+				if (!address.isSiteLocalAddress() && !address.isLoopbackAddress() && address.getHostAddress().indexOf(":") == -1) {
 					// 外网IP
 					netIp = address.getHostAddress();
 					finded = true;
 					break;
 				} else if (address.isSiteLocalAddress() && !address.isLoopbackAddress()
-						&& address.getHostAddress().indexOf(":") == -1) {
+				        && address.getHostAddress().indexOf(":") == -1) {
 					// 内网IP
 					localIp = address.getHostAddress();
 				}
@@ -49,14 +51,12 @@ public abstract class IpUtil {
 		}
 
 		if (null != netIp && 7 <= netIp.length()) {
-			result = netIp;
-		} else {
-			result = localIp;
+			return netIp;
 		}
 
-		return result;
+		return localIp;
 	}
-	
+
 	/**
 	 * 判断是否满足ip规则
 	 * @param ipStr
@@ -65,115 +65,119 @@ public abstract class IpUtil {
 	public static boolean isIpAddr(String ipStr) {
 		return RegexUtil.isIpAddr(ipStr);
 	}
+
 	/**
 	 * 判断是否满足ip规则
 	 * @param ipLong
 	 * @return
 	 */
 	public static boolean isIpAddr(Long ipLong) {
-		boolean isMatch = false;
-		
 		if (null != ipLong && ConstType.ip.MIN_VALUE <= ipLong && ConstType.ip.MAX_VALUE >= ipLong) {
-			isMatch = true;
+			return true;
 		}
-		
-		return isMatch;
+
+		return false;
 	}
+
 	public static byte[] asByteIp(String ipStr) {
-		byte[] result = null;
+		if (!isIpAddr(ipStr)) {
+			return null;
+		}
 
-		if (isIpAddr(ipStr)) {
-			result = new byte[4];
-			String[] tmpArry = ipStr.split("[.]");
-			for (int i = 0; i < 4; i++) {
-				short tmpInt = Short.valueOf(tmpArry[i]);
-				result[i] = (byte) tmpInt;
-			}
+		byte[] result = new byte[4];
+		String[] tmpArry = ipStr.split("[.]");
+		for (int i = 0; i < 4; i++) {
+			short tmpInt = Short.valueOf(tmpArry[i]);
+			result[i] = (byte) tmpInt;
 		}
 
 		return result;
 	}
+
 	public static int asIntIp(String ipStr) {
+		if (!isIpAddr(ipStr)) {
+			return 0;
+		}
 		int result = 0;
-
-		if (isIpAddr(ipStr)) {
-			String[] tmpArry = ipStr.split("[.]");
-			for (int i = 0; i < 4; i++) {
-				int tmpInt = Integer.valueOf(tmpArry[i]);
-				result += tmpInt << 8 * ( 3 - i);
-			}
+		String[] tmpArry = ipStr.split("[.]");
+		for (int i = 0; i < 4; i++) {
+			int tmpInt = Integer.valueOf(tmpArry[i]);
+			result += tmpInt << 8 * (3 - i);
 		}
 
 		return result;
 	}
-	
+
 	/**
 	 * 字符串ip转换为long
 	 * @param 字符串ip
 	 * @return
 	 */
 	public static Long asLongIp(String ipStr) {
-		Long result = null;
-		
-		if (null != ipStr) {
-			String http = "http://";
-			if (ipStr.startsWith(http)) {
-				ipStr = ipStr.substring(http.length());
-			}
-			if (-1 < ipStr.indexOf(":")) {
-				ipStr = ipStr.substring(0, ipStr.indexOf(":"));
-			}
-			if (isIpAddr(ipStr)) {
-				String[] ips = ipStr.split("[.]");
-				result = Long.parseLong(ips[0]) << 24;
-				result += Long.parseLong(ips[1]) << 16;
-				result += Long.parseLong(ips[2]) << 8;
-				result += Long.parseLong(ips[3]);
-			}
-			if ("0".equals(ipStr)) {
-				result = 0l;
-			}
+		if (null == ipStr) {
+			return null;
 		}
-		
+		Long result = null;
+		String http = "http://";
+		if (ipStr.startsWith(http)) {
+			ipStr = ipStr.substring(http.length());
+		}
+		if (-1 < ipStr.indexOf(":")) {
+			ipStr = ipStr.substring(0, ipStr.indexOf(":"));
+		}
+		if (isIpAddr(ipStr)) {
+			String[] ips = ipStr.split("[.]");
+			result = Long.parseLong(ips[0]) << 24;
+			result += Long.parseLong(ips[1]) << 16;
+			result += Long.parseLong(ips[2]) << 8;
+			result += Long.parseLong(ips[3]);
+		}
+		if ("0".equals(ipStr)) {
+			result = 0l;
+		}
+
 		return result;
 	}
 
 	public static String asStringIp(byte[] ipByte) {
 		StringBuffer strBuffer = new StringBuffer(15);
-		
+
 		for (int i = 0; i < 4; i++) {
 			short tmp = Short.valueOf(ipByte[i]);
 			strBuffer.append(".").append(tmp & 0xff);
 		}
-		
+
 		return strBuffer.substring(1);
 	}
+
 	public static String asStringIp(int ipInt) {
 		StringBuffer strBuffer = new StringBuffer(15);
-		
-		strBuffer.append(ipInt >> 24 & 0xff);	// 最高位，无符号右移
-		strBuffer.append(".").append((ipInt >> 16) & 0xff);	// 次高位
-		strBuffer.append(".").append((ipInt >> 8) & 0xff);	// 次低位
-		strBuffer.append(".").append(ipInt & 0xff);	// 最低位
-		
+
+		strBuffer.append(ipInt >> 24 & 0xff); // 最高位，无符号右移
+		strBuffer.append(".").append((ipInt >> 16) & 0xff); // 次高位
+		strBuffer.append(".").append((ipInt >> 8) & 0xff); // 次低位
+		strBuffer.append(".").append(ipInt & 0xff); // 最低位
+
 		return strBuffer.toString();
 	}
+
 	/**
 	 * 长整型ip转换为string
 	 * @param long型ip
 	 * @return
 	 */
 	public static String asStringIp(Long ipLong) {
-		StringBuffer strBuffer = new StringBuffer(15);
-		
-		if (isIpAddr(ipLong)) {
-			long mask[] = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
-			for (int i = 3; i >= 0; i--) {
-				long num = (ipLong & mask[i]) >> (i * 8);
-				strBuffer.append(".").append(num);
-			}
+		if (!isIpAddr(ipLong)) {
+			return StringUtil.EMPTY_STR;
 		}
-		
+
+		StringBuffer strBuffer = new StringBuffer(15);
+		long mask[] = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
+		for (int i = 3; i >= 0; i--) {
+			long num = (ipLong & mask[i]) >> (i * 8);
+			strBuffer.append(".").append(num);
+		}
+
 		return strBuffer.substring(1);
 	}
 }

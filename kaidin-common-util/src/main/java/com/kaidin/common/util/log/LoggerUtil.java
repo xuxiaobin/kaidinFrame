@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util.log;
 
 import org.slf4j.Logger;
@@ -8,6 +12,7 @@ import com.kaidin.common.util.StringUtil;
  * 日志工具
  * 
  * @author kaidin@foxmail.com
+ * @date 2016-5-17下午01:51:48
  */
 public abstract class LoggerUtil {
 

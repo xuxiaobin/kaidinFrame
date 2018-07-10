@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util.image;
 
 import static org.junit.Assert.assertEquals;
@@ -13,6 +17,7 @@ public class DegreeUtilTest {
 		assertEquals(Math.PI * 315 / 180, DegreeUtil.angle2radian(315 + 360), 0.0001);
 		assertEquals(Math.PI / 2, DegreeUtil.angle2radian(90), 0.0001);
 	}
+
 	@Test
 	public void testRadian2angle() {
 		assertEquals(0F, DegreeUtil.radian2angle(0), 0.0);

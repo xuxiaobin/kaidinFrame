@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import java.io.File;
@@ -18,12 +22,18 @@ import org.apache.commons.net.ftp.FTPFile;
  * @date 2015-6-23下午01:51:48
  */
 public class FtpUtil {
-	private String    hostname;                      // ftp服务器地址
-	private int       port             = 21;         // 默认端口
-	private String    userName         = "anonymous"; // 默认是匿名用户
-	private String    password         = "anonymous"; // 默认的匿名用户的密码
+	/** ftp服务器地址 */
+	private String    hostname;
+	/** 默认端口 */
+	private int       port             = 21;
+	/** 默认是匿名用户 */
+	private String    userName         = "anonymous";
+	/** 默认的匿名用户的密码 */
+	private String    password         = "anonymous";
+	/** ftp客户端 */
 	private FTPClient ftpClient;
-	private int       connTimeoutTimes = 1000 * 10;  // 默认的超时时间
+	/** 默认的超时时间 10s */
+	private int       connTimeoutTimes = 1000 * 10;
 
 	public FtpUtil() {
 	}
@@ -200,57 +210,93 @@ public class FtpUtil {
 		}
 		for (FTPFile file : fileArray) {
 			result.add(file);
-			// System.out.println(file.getName());
 		}
 
 		return result;
 	}
 
+	/**
+	 * @return property value of hostname
+	 */
 	public String getHostname() {
 		return hostname;
 	}
 
+	/**
+	 * @param hostname value to assigned to property hostname
+	 */
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
 	}
 
+	/**
+	 * @return property value of port
+	 */
 	public int getPort() {
 		return port;
 	}
 
+	/**
+	 * @param port value to assigned to property port
+	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
 
+	/**
+	 * @return property value of userName
+	 */
 	public String getUserName() {
 		return userName;
 	}
 
+	/**
+	 * @param userName value to assigned to property userName
+	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
+	/**
+	 * @return property value of password
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * @param password value to assigned to property password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * @return property value of ftpClient
+	 */
 	public FTPClient getFtpClient() {
 		return ftpClient;
 	}
 
+	/**
+	 * @param ftpClient value to assigned to property ftpClient
+	 */
 	public void setFtpClient(FTPClient ftpClient) {
 		this.ftpClient = ftpClient;
 	}
 
+	/**
+	 * @return property value of connTimeoutTimes
+	 */
 	public int getConnTimeoutTimes() {
 		return connTimeoutTimes;
 	}
 
+	/**
+	 * @param connTimeoutTimes value to assigned to property connTimeoutTimes
+	 */
 	public void setConnTimeoutTimes(int connTimeoutTimes) {
 		this.connTimeoutTimes = connTimeoutTimes;
 	}
+
 }

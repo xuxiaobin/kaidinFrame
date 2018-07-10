@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util.encrypt;
 
 import static org.junit.Assert.assertEquals;
@@ -15,10 +19,10 @@ import com.kaidin.common.util.StringUtil;
  * @date 2015-6-23下午01:51:48
  */
 public class EncryptUtilTest {
-	private static String STR_12345	= "123456";
+	private static String STR_12345    = "123456";
 	private static String STR_ADMIN123 = "admin123";
-	private static String STR_NULL	 = null;
-	private static File   FILE		 = new File(EncryptUtilTest.class.getClassLoader().getResource("md5TestFile.txt").getFile());
+	private static String STR_NULL     = null;
+	private static File   FILE         = new File(EncryptUtilTest.class.getClassLoader().getResource("md5TestFile.txt").getFile());
 
 	@Test
 	public void testMd5() {

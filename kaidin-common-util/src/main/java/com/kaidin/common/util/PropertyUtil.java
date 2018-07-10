@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import java.io.FileInputStream;
@@ -68,7 +72,7 @@ public abstract class PropertyUtil {
 			proper.load(inputStream);
 			Set<Entry<Object, Object>> entrySet = proper.entrySet();
 			if (CollectionUtil.isEmpty(entrySet)) {
-				return result;
+				return null;
 			}
 			result = new HashMap<>(entrySet.size());
 			for (Entry<Object, Object> entry : entrySet) {
@@ -80,7 +84,7 @@ public abstract class PropertyUtil {
 				result.put(key, String.valueOf(entry.getValue()));
 			}
 			if (0 == result.size()) {
-				result = null;
+				return null;
 			}
 		} catch (Exception e) {
 			throw e;
@@ -89,30 +93,50 @@ public abstract class PropertyUtil {
 		return result;
 	}
 
+	/**
+	 * 读取属性文件中指定的key
+	 * @param propertyFileName
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
 	public static String readPropertyFile(String propertyFileName, String key) throws Exception {
-		String result = null;
-
 		Map<String, String> propertyMap = readPropertyFile(propertyFileName);
 		if (null != propertyMap) {
-			result = propertyMap.get(key);
+			return propertyMap.get(key);
 		}
 
-		return result;
+		return null;
 	}
 
-	public static void putProperty(Object configBean, String propertyFileName) throws Exception {
+	/**
+	 * 在对象configBean设置指定的值
+	 * @param targetObj
+	 * @param propertyFileName
+	 * @throws Exception
+	 */
+	public static void putProperty(Object targetObj, String propertyFileName) throws Exception {
 		Map<String, String> propertyMap = readPropertyFile(propertyFileName);
 
 		if (CollectionUtil.isEmpty(propertyMap)) {
 			return;
 		}
 		for (Entry<String, String> entry : propertyMap.entrySet()) {
-			setSimpleProperty(configBean, entry.getKey(), entry.getValue());
+			setSimpleProperty(targetObj, entry.getKey(), entry.getValue());
 		}
 	}
 
-	public static void setSimpleProperty(Object bean, String name, String value) throws IllegalAccessException, InvocationTargetException,
-	        NoSuchMethodException {
+	/**
+	 * 设置简单的值
+	 * @param bean
+	 * @param name
+	 * @param value
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 */
+	public static void setSimpleProperty(Object bean, String name, String value) throws IllegalAccessException,
+	        InvocationTargetException, NoSuchMethodException {
 		Class<?> clazz = PropertyUtils.getPropertyType(bean, name);
 		if (null == clazz) {
 			return;

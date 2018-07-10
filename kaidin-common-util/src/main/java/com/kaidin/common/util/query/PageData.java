@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util.query;
 
 import java.io.Serializable;
@@ -14,13 +18,20 @@ import com.kaidin.common.util.CollectionUtil;
  */
 public class PageData<T> implements Serializable {
 	private static final long serialVersionUID = 8125027060909448117L;
-	private boolean		   success;								// 是否调用成功
-	private String			errorCode;							  // 错误代码（可以自己定义）
-	private String			errorMsg;							   // 出错信息
-	private int			   totalCount	   = -1;				  // 记录总数，主要用于分页展示，默认为-1
-	private int			   offset		   = 1;				   // 记录开始部分，默认为1
-	private int			   limit			= 15;				  // 记录条数限制，默认为15
-	private List<T>		   dataList;
+	/** 是否调用成功 */
+	private boolean           success;
+	/** 错误代码（可以自己定义） */
+	private String            errorCode;
+	/** 出错信息 */
+	private String            errorMsg;
+	/** 记录总数，主要用于分页展示，默认为-1 */
+	private int               totalCount       = -1;
+	/** 记录开始部分，默认为1 */
+	private int               offset           = 1;
+	/** 记录条数限制，默认为15 */
+	private int               limit            = 15;
+	/**  */
+	private List<T>           dataList;
 
 	public PageData() {
 	}

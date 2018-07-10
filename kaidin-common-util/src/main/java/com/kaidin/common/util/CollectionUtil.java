@@ -1,8 +1,13 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -119,6 +124,34 @@ public abstract class CollectionUtil {
 		}
 
 		return (ArrayList<T>) Arrays.asList(dataArray);
+	}
+
+	/**
+	 * 截取list
+	 * @param dataList
+	 * @param size
+	 * @return
+	 */
+	public <T> List<T> subList(List<T> dataList, int size) {
+		return subList(dataList, 0, size);
+	}
+
+	/**
+	 * 截取list
+	 * @param dataList
+	 * @param fromIndex
+	 * @param toIndex
+	 * @return
+	 */
+	public <T> List<T> subList(List<T> dataList, int fromIndex, int toIndex) {
+		if (0 >= toIndex || CollectionUtil.isEmpty(dataList)) {
+			return null;
+		}
+		int listSize = dataList.size();
+		fromIndex = Math.min(fromIndex, listSize);
+		toIndex = Math.min(toIndex, listSize);
+
+		return dataList.subList(fromIndex, toIndex);
 	}
 
 	/**

@@ -1,6 +1,11 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import java.util.Random;
+
 /**
  * 随机函数工具
  * @version 1.0
@@ -8,16 +13,21 @@ import java.util.Random;
  * @date 2015-6-23下午01:51:48
  */
 public abstract class RandomUtil {
+	/**
+	 * 随机一个整数
+	 * @param beginValue
+	 * @param endValue
+	 * @return
+	 */
 	public static int nextInt(int beginValue, int endValue) {
-		int result = beginValue;
-		
 		int betweenValue = endValue - beginValue;
 		if (0 < betweenValue) {
-			result += new Random().nextInt(betweenValue);
-		} else if (0 > betweenValue) {
-			result = new Random().nextInt(-1 * betweenValue) + endValue;
+			return beginValue + new Random().nextInt(betweenValue);
 		}
-		
-		return result;
+		if (0 > betweenValue) {
+			return new Random().nextInt(-1 * betweenValue) + endValue;
+		}
+
+		return beginValue;
 	}
 }

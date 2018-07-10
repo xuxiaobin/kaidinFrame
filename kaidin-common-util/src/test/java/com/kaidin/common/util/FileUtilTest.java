@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import static org.junit.Assert.assertEquals;
@@ -12,20 +16,20 @@ public class FileUtilTest {
 
 	@Test
 	public void testCopyFile() throws IOException {
-//		String srcFile = "D:/download/thunder/bak";
-//		String targetFile = "D:/download/thunder/bak2";
-//		long costTimes = System.currentTimeMillis();
-//		FileUtil.copyFiles(srcFile, targetFile);
-//		costTimes = System.currentTimeMillis() - costTimes;
-//		System.out.println("costTimes:" + costTimes);
+		//		String srcFile = "D:/download/thunder/bak";
+		//		String targetFile = "D:/download/thunder/bak2";
+		//		long costTimes = System.currentTimeMillis();
+		//		FileUtil.copyFiles(srcFile, targetFile);
+		//		costTimes = System.currentTimeMillis() - costTimes;
+		//		System.out.println("costTimes:" + costTimes);
 	}
-	
+
 	@Test
 	public void testDeleteFiles() {
-//		String srcFile = "D:/download/thunder/bak2";
-//		FileUtil.deleteFiles(srcFile);
+		//		String srcFile = "D:/download/thunder/bak2";
+		//		FileUtil.deleteFiles(srcFile);
 	}
-	
+
 	@Test
 	public void testGetFileSizeDisplay() {
 		assertEquals("456B", FileUtil.asDisplaySize(456));

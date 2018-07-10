@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import static org.junit.Assert.assertEquals;
@@ -18,12 +22,13 @@ public class IpUtilTest {
 			}
 		}
 	}
+
 	@Test
 	public void testGetLocalHostIp() throws SocketException {
 		System.out.println(IpUtil.getLocalHostIp());
-//		assertEquals("172.16.18.182", IpUtil.getLocalHostIp());
+		//		assertEquals("172.16.18.182", IpUtil.getLocalHostIp());
 	}
-	
+
 	@Test
 	public void testIsIpAddr() {
 		assertEquals(true, IpUtil.isIpAddr("0.0.0.0"));
@@ -31,15 +36,15 @@ public class IpUtilTest {
 		assertEquals(false, IpUtil.isIpAddr("256.255.255.255"));
 		assertEquals(false, IpUtil.isIpAddr("255.255.255."));
 	}
-	
+
 	@Test
 	public void testAsByteIp() {
-		assertTrue(Arrays.equals(new byte[]{0, 0, 0, 0}, IpUtil.asByteIp("0.0.0.0")));
-		assertTrue(Arrays.equals(new byte[]{-1, -1, -1, -1}, IpUtil.asByteIp("255.255.255.255")));
-		assertTrue(Arrays.equals(new byte[]{127, 0, 5, 1}, IpUtil.asByteIp("127.0.5.1")));
-		assertTrue(Arrays.equals(new byte[]{127, 0, -1, 1}, IpUtil.asByteIp("127.0.255.1")));
+		assertTrue(Arrays.equals(new byte[] { 0, 0, 0, 0 }, IpUtil.asByteIp("0.0.0.0")));
+		assertTrue(Arrays.equals(new byte[] { -1, -1, -1, -1 }, IpUtil.asByteIp("255.255.255.255")));
+		assertTrue(Arrays.equals(new byte[] { 127, 0, 5, 1 }, IpUtil.asByteIp("127.0.5.1")));
+		assertTrue(Arrays.equals(new byte[] { 127, 0, -1, 1 }, IpUtil.asByteIp("127.0.255.1")));
 	}
-	
+
 	@Test
 	public void testAsIntIp() {
 		assertEquals(0x00_00_00_00, IpUtil.asIntIp("0.0.0.0"));
@@ -47,7 +52,7 @@ public class IpUtilTest {
 		assertEquals(0x7f_00_00_01, IpUtil.asIntIp("127.0.0.1"));
 		assertEquals(0x7f_00_c8_01, IpUtil.asIntIp("127.0.200.1"));
 	}
-	
+
 	@Test
 	public void testAsLongIp() {
 		assertEquals(ConstType.ip.MIN_VALUE, IpUtil.asLongIp("0.0.0.0"));
@@ -56,12 +61,12 @@ public class IpUtilTest {
 
 	@Test
 	public void testAsStringIpByte() {
-		assertEquals("0.0.0.0", IpUtil.asStringIp(new byte[]{0, 0, 0, 0}));
-		assertEquals("255.255.255.255", IpUtil.asStringIp(new byte[]{-1, -1, -1, -1}));
-		assertEquals("127.0.0.1", IpUtil.asStringIp(new byte[]{127, 0, 0, 1}));
-		assertEquals("127.0.200.1", IpUtil.asStringIp(new byte[]{127, 0, -56, 1}));
+		assertEquals("0.0.0.0", IpUtil.asStringIp(new byte[] { 0, 0, 0, 0 }));
+		assertEquals("255.255.255.255", IpUtil.asStringIp(new byte[] { -1, -1, -1, -1 }));
+		assertEquals("127.0.0.1", IpUtil.asStringIp(new byte[] { 127, 0, 0, 1 }));
+		assertEquals("127.0.200.1", IpUtil.asStringIp(new byte[] { 127, 0, -56, 1 }));
 	}
-	
+
 	@Test
 	public void testAsStringIpInt() {
 		assertEquals("0.0.0.0", IpUtil.asStringIp(0x00_00_00_00));
@@ -69,7 +74,7 @@ public class IpUtilTest {
 		assertEquals("127.0.0.1", IpUtil.asStringIp(0x7f_00_00_01));
 		assertEquals("127.0.200.1", IpUtil.asStringIp(0x7f_00_c8_01));
 	}
-	
+
 	@Test
 	public void testAsStringIpLong() {
 		assertEquals("0.0.0.0", IpUtil.asStringIp(ConstType.ip.MIN_VALUE));

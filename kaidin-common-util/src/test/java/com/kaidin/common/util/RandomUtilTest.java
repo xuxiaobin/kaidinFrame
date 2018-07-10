@@ -1,6 +1,11 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -15,7 +20,7 @@ public class RandomUtilTest {
 			int randValue = RandomUtil.nextInt(-10, 10);
 			assertTrue(-10 <= randValue && 10 >= randValue);
 		}
-		
+
 		for (int i = -10; i <= 10; i++) {
 			int randValue = RandomUtil.nextInt(10, -10);
 			assertTrue(-10 <= randValue && 10 >= randValue);

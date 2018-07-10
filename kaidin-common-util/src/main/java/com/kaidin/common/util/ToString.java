@@ -19,6 +19,10 @@ public class ToString implements Serializable {
 	/**  */
 	private static final long serialVersionUID = 6329620916091252588L;
 
+	/**
+	 * 简单字符串拼接
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);

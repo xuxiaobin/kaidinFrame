@@ -1,3 +1,7 @@
+/**
+ * Kaidin.com Inc.
+ * Copyright (c) 2008-2018 All Rights Reserved.
+ */
 package com.kaidin.common.util;
 
 import java.text.DecimalFormat;
@@ -11,8 +15,9 @@ import java.text.NumberFormat;
  * @date 2015-6-23下午01:51:48
  */
 public abstract class NumberUtil {
-	private static final String DECIMAL_PLACES_2		 = "#0.00";
-	private static final String DECIMAL_PLACES_4		 = "#0.0000";
+	/** 保留小数位数格式 */
+	private static final String DECIMAL_PLACES_2         = "#0.00";
+	private static final String DECIMAL_PLACES_4         = "#0.0000";
 	private static final String DECIMAL_PLACES_PERCENT_2 = "#0.00%";
 
 	/**
@@ -77,9 +82,7 @@ public abstract class NumberUtil {
 	 * @return
 	 */
 	public static String formatEndOf0(Number number) {
-		String result = null;
-
-		result = String.valueOf(number);
+		String result = String.valueOf(number);
 		if (null != result && 0 < result.indexOf(".")) {
 			// 正则表达
 			result = result.replaceAll("0+?$", StringUtil.EMPTY_STR); // 去掉后面无用的零
