@@ -1,7 +1,7 @@
 package com.kaidin.appframe.entity;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.hibernate.HibernateException;
@@ -12,18 +12,19 @@ import org.hibernate.id.SequenceGenerator;
 import org.hibernate.type.Type;
 
 import com.kaidin.common.util.PropertyUtil;
+
 /**
  * 批量获取oracle数据库序列作id使用
+ * 
  * @version 1.1
- * @author xuxiaobin	kaidin@foxmail.com
+ * @author xuxiaobin kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
 public class BatchSequenceGenerator extends SequenceGenerator {
-	private int count = 0;
-	private Long positionId;
+	private int     count     = 0;
+	private Long    positionId;
 	private boolean needBatch = false;
-	
-	
+
 	public Object generatorKey() {
 		return super.generatorKey();
 	}
@@ -57,10 +58,10 @@ public class BatchSequenceGenerator extends SequenceGenerator {
 	 */
 	public void configure(Type type, Properties params, Dialect d) throws MappingException {
 		super.configure(type, params, d);
-		
+
 		try {
-			HashMap<String, String> seqMap = PropertyUtil.readPropertyFile("/cfg/sequence.properties");
-			for (String seqName: seqMap.keySet()) {
+			Map<String, String> seqMap = PropertyUtil.readPropertyFile("/cfg/sequence.properties");
+			for (String seqName : seqMap.keySet()) {
 				if (seqName.equalsIgnoreCase(super.getSequenceName())) {
 					needBatch = true;
 					break;

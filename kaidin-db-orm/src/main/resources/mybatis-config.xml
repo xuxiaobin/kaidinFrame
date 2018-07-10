@@ -3,6 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<settings>
-		<setting name="logImpl" value="STDUOT_LOGGING"
+		<setting name="logImpl" value="STDUOT_LOGGING" />
 	</settings>
 </configuration>
