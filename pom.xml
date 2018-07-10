@@ -26,7 +26,6 @@
 	<modules>
 		<module>kaidin-common-util</module>
 		<module>kaidin-appframe</module>
-		<module>db-entity</module>
 		<module>kaidin-db-orm</module>
 		<module>kaidin-gui</module>
 		<module>kaidin-tools</module>
