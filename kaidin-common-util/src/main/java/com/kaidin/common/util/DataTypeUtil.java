@@ -166,7 +166,8 @@ public abstract class DataTypeUtil {
 				result = true;
 			}
 		} else if (obj instanceof String) {
-			if ("true".equalsIgnoreCase(obj.toString()) || "y".equalsIgnoreCase(obj.toString())) {
+			String objStr = obj.toString();
+			if ("true".equalsIgnoreCase(objStr) || "y".equalsIgnoreCase(objStr)) {
 				result = true;
 			}
 		} else {

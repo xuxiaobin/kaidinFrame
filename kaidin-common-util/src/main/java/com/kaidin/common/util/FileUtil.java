@@ -68,18 +68,16 @@ public abstract class FileUtil {
 
 		File[] subFileArry = srcFile.listFiles();
 		if (CollectionUtil.isEmpty(subFileArry)) {
-			new File(targetFileName).mkdirs();
+			return new File(targetFileName).mkdirs();
 		}
-		boolean result = false;
 		for (File subFile : subFileArry) {
 			String subTargetFileName = targetFileName + File.separator + subFile.getName();
-			result = copyFiles(subFile.getAbsolutePath(), subTargetFileName);
-			if (!result) {
-				break;
+			if (!copyFiles(subFile.getAbsolutePath(), subTargetFileName)) {
+				return false;
 			}
 		}
 
-		return result;
+		return true;
 	}
 
 	/**

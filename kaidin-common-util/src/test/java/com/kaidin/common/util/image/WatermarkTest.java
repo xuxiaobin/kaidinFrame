@@ -20,20 +20,27 @@ public class WatermarkTest {
 	public void testPressImage() throws IOException {
 		String watermarkImage = "src/test/resources/image/logo.jpg";
 
-		FileUtil.copyFiles(SOURCE_IMAGE_NAME, OUTPUT_PATH + "left-top.jpg");
-		Watermark.pressImage(OUTPUT_PATH + "left-top.jpg", watermarkImage, "left-top", 45F);
+		String outputImageFilePath = OUTPUT_PATH + "left-top.jpg";
+		FileUtil.deleteFiles(outputImageFilePath);
+		FileUtil.copyFiles(SOURCE_IMAGE_NAME, outputImageFilePath);
+		Watermark.pressImage(outputImageFilePath, watermarkImage, "left-top", 45F);
 
-		FileUtil.copyFiles(SOURCE_IMAGE_NAME, OUTPUT_PATH + "right-top.jpg");
-		Watermark.pressImage(OUTPUT_PATH + "right-top.jpg", watermarkImage, "right-top", 90F);
+		outputImageFilePath = OUTPUT_PATH + "right-top.jpg";
+		FileUtil.deleteFiles(outputImageFilePath);
+		FileUtil.copyFiles(SOURCE_IMAGE_NAME, outputImageFilePath);
+		Watermark.pressImage(outputImageFilePath, watermarkImage, "right-top", 90F);
 
-		FileUtil.copyFiles(SOURCE_IMAGE_NAME, OUTPUT_PATH + "left-bottom.jpg");
-		Watermark.pressImage(OUTPUT_PATH + "left-bottom.jpg", watermarkImage, "left-bottom", 135F);
+		outputImageFilePath = OUTPUT_PATH + "left-bottom.jpg";
+		FileUtil.copyFiles(SOURCE_IMAGE_NAME, outputImageFilePath);
+		Watermark.pressImage(outputImageFilePath, watermarkImage, "left-bottom", 135F);
 
-		FileUtil.copyFiles(SOURCE_IMAGE_NAME, OUTPUT_PATH + "right-bottom.jpg");
-		Watermark.pressImage(OUTPUT_PATH + "right-bottom.jpg", watermarkImage, "right-bottom", 180F);
+		outputImageFilePath = OUTPUT_PATH + "right-bottom.jpg";
+		FileUtil.copyFiles(SOURCE_IMAGE_NAME, outputImageFilePath);
+		Watermark.pressImage(outputImageFilePath, watermarkImage, "right-bottom", 180F);
 
-		FileUtil.copyFiles(SOURCE_IMAGE_NAME, OUTPUT_PATH + "other.jpg");
-		Watermark.pressImage(OUTPUT_PATH + "middle.jpg", watermarkImage, null, -45F);
+		outputImageFilePath = OUTPUT_PATH + "middle.jpg";
+		FileUtil.copyFiles(SOURCE_IMAGE_NAME, outputImageFilePath);
+		Watermark.pressImage(outputImageFilePath, watermarkImage, null, -45F);
 	}
 
 	@Test
