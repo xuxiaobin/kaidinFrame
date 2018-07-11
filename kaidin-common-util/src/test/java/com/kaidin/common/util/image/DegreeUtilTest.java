@@ -8,8 +8,18 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+/**
+ * 角度转换测试类
+ * 
+ * @version 1.0
+ * @author kaidin@foxmail.com
+ * @date 2018年7月11日 下午10:15:33
+ */
 public class DegreeUtilTest {
 
+	/**
+	 * 弧度转成角度测试
+	 */
 	@Test
 	public void testAngle2radian() {
 		assertEquals(0F, DegreeUtil.angle2radian(0), 0.0);
@@ -18,6 +28,9 @@ public class DegreeUtilTest {
 		assertEquals(Math.PI / 2, DegreeUtil.angle2radian(90), 0.0001);
 	}
 
+	/**
+	 * 角度转成弧度测试
+	 */
 	@Test
 	public void testRadian2angle() {
 		assertEquals(0F, DegreeUtil.radian2angle(0), 0.0);
