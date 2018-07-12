@@ -13,6 +13,7 @@ package com.kaidin.common.util;
 public interface BeanConvertFilter<T> {
 	/**
 	 * 过滤逻辑
+	 * 返回false是要被过滤的
 	 * @param obj
 	 * @return
 	 */

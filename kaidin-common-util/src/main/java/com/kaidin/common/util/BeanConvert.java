@@ -67,13 +67,10 @@ public class BeanConvert<T> {
 		for (Object[] valueArray : valueList) {
 			T obj = clazz.newInstance();
 			convert(obj, propertyArray, valueArray);
-			if (null == filter) {
-				result.add(obj);
+			if (null != filter && filter.doFilter(obj)) {
 				continue;
 			}
-			if (filter.doFilter(obj)) {
-				result.add(obj);
-			}
+			result.add(obj);
 		}
 
 		return result;

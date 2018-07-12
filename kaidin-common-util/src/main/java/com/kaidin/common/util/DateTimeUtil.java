@@ -89,7 +89,7 @@ public abstract class DateTimeUtil {
 		}
 
 		String result = StringUtil.EMPTY_STR;
-		for (int i = 0; decimalisms.length > i; i++) {
+		for (int i = 0; i < decimalisms.length; i++) {
 			long count = times % decimalisms[i];
 			result = count + units[i] + result;
 			times /= decimalisms[i];

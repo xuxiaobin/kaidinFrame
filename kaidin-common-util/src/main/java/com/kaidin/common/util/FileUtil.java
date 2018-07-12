@@ -91,21 +91,18 @@ public abstract class FileUtil {
 			return true;
 		}
 
-		boolean result = false;
 		if (srcFile.isDirectory()) {
 			File[] subFileArry = srcFile.listFiles();
 			if (CollectionUtil.isNotEmpty(subFileArry)) {
 				for (File subFile : subFileArry) {
-					result = deleteFiles(subFile.getAbsolutePath());
-					if (!result) {
-						break;
+					if (!deleteFiles(subFile.getAbsolutePath())) {
+						return false;
 					}
 				}
 			}
 		}
-		result = srcFile.delete();
 
-		return result;
+		return srcFile.delete();
 	}
 
 	/**

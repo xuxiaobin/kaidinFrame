@@ -16,7 +16,7 @@ import java.text.MessageFormat;
 public abstract class StringUtil {
 	/** 空字符串 */
 	public static final String EMPTY_STR = "";
-	
+
 	/**
 	 * 判断字符串是否为空
 	 * StringUtil.isEmpty(null)	= true
@@ -27,10 +27,10 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isEmpty(String str){
+	public static boolean isEmpty(String str) {
 		return null == str || str.isEmpty();
 	}
-	
+
 	/**
 	 * 判断字符串是否不为空
 	 * StringUtil.isNotEmpty(null)	= false
@@ -41,10 +41,10 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isNotEmpty(String str){
+	public static boolean isNotEmpty(String str) {
 		return null != str && !str.isEmpty();
 	}
-	
+
 	/**
 	 * 判断字符串只是由空白字符（空格或者制表符）组成，或者为空（包括null）
 	 * StringUtil.isBlank(null)	= true
@@ -64,10 +64,23 @@ public abstract class StringUtil {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
+	/**
+	 * 判断字符串是否包含摸个字符
+	 * @param str
+	 * @param s
+	 * @return
+	 */
+	public static boolean contains(String str, CharSequence s) {
+		if (null == str) {
+			return false;
+		}
+		return str.contains(s);
+	}
+
 	/**
 	 * 判断是否包含空白字符
 	 * @param str
@@ -83,10 +96,10 @@ public abstract class StringUtil {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * 判断字符串只是由非空白字符（空格或者制表符）组成，或者为非空（包括null）
 	 * StringUtil.isBlank(null)	= true
@@ -106,10 +119,10 @@ public abstract class StringUtil {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * 判断两个字符串是否相同，添加判空逻辑（大小写敏感）
 	 * StringUtil.equals(null, null)	= true
@@ -124,7 +137,7 @@ public abstract class StringUtil {
 	public static boolean equals(String str1, String str2) {
 		return BaseUtil.equals(str1, str2);
 	}
-	
+
 	/**
 	 * 忽略大小写之后判断两个字符串是否相同，添加判空逻辑（大小写不敏感）
 	 * StringUtil.equalsIgnoreCase(null, null)	= true
@@ -140,10 +153,10 @@ public abstract class StringUtil {
 		if (null == str1) {
 			return null == str2;
 		}
-		
+
 		return str1.equalsIgnoreCase(str2);
 	}
-	
+
 	/**
 	 * 判断字符串str是否是prefix开头（大小写敏感）
 	 * StringUtil.startsWith(null, null)	= false
@@ -188,7 +201,7 @@ public abstract class StringUtil {
 		String tmpStr = str.substring(0, prefix.length());
 		return tmpStr.equalsIgnoreCase(prefix);
 	}
-	
+
 	/**
 	 * 判断字符串str是否是suffix结尾（大小写敏感）
 	 * StringUtil.endWith(null, null)	= false
@@ -207,7 +220,7 @@ public abstract class StringUtil {
 		}
 		return str.endsWith(suffix);
 	}
-	
+
 	/**
 	 * 判断字符串str是否是suffix结尾（大小写不敏感）
 	 * StringUtil.endWithIgnoreCase(null, null)	= false
@@ -235,7 +248,7 @@ public abstract class StringUtil {
 		String tmpStr = str.substring(strLength - suffixLength);
 		return tmpStr.equalsIgnoreCase(suffix);
 	}
-	
+
 	/**
 	 * 将首字母大写
 	 * StringUtil.toUpperCaseAtFirst(null)	= null
@@ -266,7 +279,7 @@ public abstract class StringUtil {
 		}
 		return str.toUpperCase();
 	}
-	
+
 	/**
 	 * 将字符串字母小写
 	 * StringUtil.toUpperCase(null)	= null
@@ -294,7 +307,7 @@ public abstract class StringUtil {
 		if (null == str) {
 			return null;
 		}
-		
+
 		int length = str.length();
 		StringBuilder builder = new StringBuilder(str);
 		for (int i = 0; i < length; i++) {
@@ -309,7 +322,7 @@ public abstract class StringUtil {
 				}
 			}
 		}
-		
+
 		return builder.toString();
 	}
 
@@ -341,8 +354,7 @@ public abstract class StringUtil {
 							continue;
 						}
 						nextChar -= 32;
-						builder.replace(currentIndex, ++nextIndex,
-								String.valueOf(nextChar));
+						builder.replace(currentIndex, ++nextIndex, String.valueOf(nextChar));
 					} else if ('_' == nextChar) {
 						builder.deleteCharAt(currentIndex--);
 						length--;
@@ -353,10 +365,10 @@ public abstract class StringUtil {
 				}
 			}
 		}
-		
+
 		return builder.toString();
 	}
-	
+
 	/**
 	 * 获取指定字符串的子串，负索引表示从尾部开始计算
 	 * StringUtil.subString(null, *, *)	= null
@@ -384,24 +396,24 @@ public abstract class StringUtil {
 		if (start < 0) {
 			start += strLen;
 		}
-		
+
 		if (end > strLen) {
 			end = strLen;
 		}
 		if (start > end) {
 			return EMPTY_STR;
 		}
-		
+
 		if (start < 0) {
 			start = 0;
 		}
 		if (end < 0) {
 			end = 0;
 		}
-		
+
 		return str.substring(start, end);
 	}
-	
+
 	/**
 	 * 格式化参数输出
 	 * @param message
