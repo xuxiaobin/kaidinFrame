@@ -1,11 +1,10 @@
 package com.kaidin.appframe.entity;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+
+import com.kaidin.common.util.ToString;
 
 /**
  * 一般一个实体类对应一个表，该类所有实体类的基类
@@ -14,9 +13,10 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity extends ToString {
 	private static final long  serialVersionUID = -98238666283832953L;
-	public static final String P_id			 = "id";
+	/** id */
+	public static final String P_id             = "id";
 
 	/**
 	 * 获取id
@@ -25,14 +25,17 @@ public abstract class BaseEntity implements Serializable {
 	 */
 	public abstract long getId();
 
+	/**
+	 * 克隆
+	 * @param parent
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 */
 	public BaseEntity clone(BaseEntity parent) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		PropertyUtils.copyProperties(this, parent);
 
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 }

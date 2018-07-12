@@ -25,18 +25,6 @@ public class BatchSequenceGenerator extends SequenceGenerator {
 	private Long    positionId;
 	private boolean needBatch = false;
 
-	public Object generatorKey() {
-		return super.generatorKey();
-	}
-
-	public String[] sqlCreateStrings(Dialect dialect) throws HibernateException {
-		return super.sqlCreateStrings(dialect);
-	}
-
-	public String[] sqlDropStrings(Dialect dialect) throws HibernateException {
-		return super.sqlDropStrings(dialect);
-	}
-
 	public Serializable generate(SessionImplementor session, Object object) throws HibernateException {
 		if (needBatch) {
 			synchronized (this) {
