@@ -69,6 +69,29 @@ public abstract class StringUtil {
 	}
 
 	/**
+	 * 判断字符串只是由非空白字符（空格或者制表符）组成，或者为非空（包括null）
+	 * StringUtil.isBlank(null)	= true
+	 * StringUtil.isBlank("")	= true
+	 * StringUtil.isBlank(" ")	= true
+	 * StringUtil.isBlank("xb")	= false
+	 * StringUtil.isBlank(" xb ")	= false
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNotBlank(String str) {
+		if (null == str) {
+			return false;
+		}
+		for (char ch : str.toCharArray()) {
+			if (!Character.isWhitespace(ch)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * 判断字符串是否包含摸个字符
 	 * @param str
 	 * @param s
@@ -93,29 +116,6 @@ public abstract class StringUtil {
 		int strLen = str.length();
 		for (int i = 0; i < strLen; i++) {
 			if (Character.isWhitespace(str.charAt(i))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * 判断字符串只是由非空白字符（空格或者制表符）组成，或者为非空（包括null）
-	 * StringUtil.isBlank(null)	= true
-	 * StringUtil.isBlank("")	= true
-	 * StringUtil.isBlank(" ")	= true
-	 * StringUtil.isBlank("xb")	= false
-	 * StringUtil.isBlank(" xb ")	= false
-	 * @param str
-	 * @return
-	 */
-	public static boolean isNotBlank(String str) {
-		if (null == str) {
-			return false;
-		}
-		for (char ch : str.toCharArray()) {
-			if (!Character.isWhitespace(ch)) {
 				return true;
 			}
 		}
