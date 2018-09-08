@@ -15,6 +15,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import com.kaidin.common.constant.ConstType;
+
 /**
  * 图片验证码生成
  * @version 1.0
@@ -23,7 +25,7 @@ import javax.imageio.ImageIO;
  */
 public class Captcha extends BaseImage {
 	/** 使用的字符，规避2和z，1和i，0和o不容易区分 */
-	private static final char[] CODE_SET       = "3456789ABCEFGHJKLMNPQRSTUVWXY".toCharArray();
+	private static final char[] CODE_SET       = ConstType.charSet.BASE30.toCharArray();
 	/** 字符个数，最少4个（默认） */
 	public static final short   MIN_CODE_COUNT = 4;
 	/** 最小的字体大小，像素 */

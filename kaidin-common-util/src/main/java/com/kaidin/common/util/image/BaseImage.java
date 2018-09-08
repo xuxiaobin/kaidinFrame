@@ -23,58 +23,34 @@ public class BaseImage {
 	/** 字体颜色，默认为白色 */
 	protected Color fontColor   = Color.WHITE;
 
-	/**
-	 * @return property value of font
-	 */
 	public Font getFont() {
 		return font;
 	}
 
-	/**
-	 * @param font value to assigned to property font
-	 */
 	public void setFont(Font font) {
 		this.font = font;
 	}
 
-	/**
-	 * @return property value of fontDegree
-	 */
 	public float getFontDegree() {
 		return fontDegree;
 	}
 
-	/**
-	 * @param fontDegree value to assigned to property fontDegree
-	 */
 	public void setFontDegree(float fontDegree) {
 		this.fontDegree = fontDegree;
 	}
 
-	/**
-	 * @return property value of diaphaneity
-	 */
 	public float getDiaphaneity() {
 		return diaphaneity;
 	}
 
-	/**
-	 * @param diaphaneity value to assigned to property diaphaneity
-	 */
 	public void setDiaphaneity(float diaphaneity) {
 		this.diaphaneity = diaphaneity;
 	}
 
-	/**
-	 * @return property value of fontColor
-	 */
 	public Color getFontColor() {
 		return fontColor;
 	}
 
-	/**
-	 * @param fontColor value to assigned to property fontColor
-	 */
 	public void setFontColor(Color fontColor) {
 		this.fontColor = fontColor;
 	}

@@ -84,6 +84,15 @@ public abstract class ConstType implements Serializable {
 	 * 字符集相关
 	 */
 	public static class charSet {
+		/** 适合做验证码，字母大写；规避0和o，1和i，2和z不容易区分 */
+		public static final String BASE30     = "3456789ABCDEFGHJKLMNPQRSTUVWXY";
+		/** 字母小写；0~9的数字和字母22个 */
+		public static final String BASE32     = "0123456789abcdefghijklmnopqrstuv";
+		/** 字母小写；0~9的数字和字母26个 */
+		public static final String BASE36     = BASE32 + "wxyz";
+		/** 相比base64，删除+/0OIl */
+		public static final String BASE58     = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+
 		/** 中文超大字符集 */
 		public static final String GBK        = "GBK";
 		/** ISO 拉丁字母表 No.1，也叫作 ISO-LATIN-1 */
