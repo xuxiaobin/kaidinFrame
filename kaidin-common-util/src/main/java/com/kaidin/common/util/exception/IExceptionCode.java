@@ -16,11 +16,11 @@ public interface IExceptionCode extends Serializable {
 	 * 错误码
 	 * @return
 	 */
-	String getErrorCode();
+	String getErrCode();
 
 	/**
 	 * 错误描述信息
 	 * @return
 	 */
-	String getErrorEesc();
+	String getErrMsg();
 }
