@@ -17,7 +17,7 @@ public abstract class BaseUtil {
 	 * @param obj2
 	 * @return
 	 */
-	public static boolean equals(Object obj1, Object obj2) {
+	public static final boolean equals(Object obj1, Object obj2) {
 		if (null == obj1) {
 			return null == obj2;
 		}
@@ -31,7 +31,7 @@ public abstract class BaseUtil {
 	 * @param obj2
 	 * @return
 	 */
-	public static boolean equalsType(Object obj1, Object obj2) {
+	public static final boolean equalsType(Object obj1, Object obj2) {
 		if (null != obj1 && null != obj2) {
 			return obj1.getClass().equals(obj2.getClass());
 		}

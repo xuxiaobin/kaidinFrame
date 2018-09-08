@@ -27,7 +27,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isEmpty(String str) {
+	public static final boolean isEmpty(String str) {
 		return null == str || str.isEmpty();
 	}
 
@@ -41,7 +41,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isNotEmpty(String str) {
+	public static final boolean isNotEmpty(String str) {
 		return null != str && !str.isEmpty();
 	}
 
@@ -55,7 +55,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isBlank(String str) {
+	public static final boolean isBlank(String str) {
 		if (null == str) {
 			return true;
 		}
@@ -78,7 +78,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean isNotBlank(String str) {
+	public static final boolean isNotBlank(String str) {
 		if (null == str) {
 			return false;
 		}
@@ -97,7 +97,7 @@ public abstract class StringUtil {
 	 * @param s
 	 * @return
 	 */
-	public static boolean contains(String str, CharSequence s) {
+	public static final boolean contains(String str, CharSequence s) {
 		if (null == str) {
 			return false;
 		}
@@ -109,7 +109,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static boolean containsWhitespace(CharSequence str) {
+	public static final boolean containsWhitespace(CharSequence str) {
 		if (null == str) {
 			return false;
 		}
@@ -134,7 +134,7 @@ public abstract class StringUtil {
 	 * @param str2
 	 * @return
 	 */
-	public static boolean equals(String str1, String str2) {
+	public static final boolean equals(String str1, String str2) {
 		return BaseUtil.equals(str1, str2);
 	}
 
@@ -149,7 +149,7 @@ public abstract class StringUtil {
 	 * @param str2
 	 * @return
 	 */
-	public static boolean equalsIgnoreCase(String str1, String str2) {
+	public static final boolean equalsIgnoreCase(String str1, String str2) {
 		if (null == str1) {
 			return null == str2;
 		}
@@ -169,7 +169,7 @@ public abstract class StringUtil {
 	 * @param prefix
 	 * @return
 	 */
-	public static boolean startsWith(String str, String prefix) {
+	public static final boolean startsWith(String str, String prefix) {
 		if (null == str || null == prefix) {
 			return false;
 		}
@@ -188,7 +188,7 @@ public abstract class StringUtil {
 	 * @param prefix
 	 * @return
 	 */
-	public static boolean startsWithIgnoreCase(String str, String prefix) {
+	public static final boolean startsWithIgnoreCase(String str, String prefix) {
 		if (null == str || null == prefix) {
 			return false;
 		}
@@ -214,7 +214,7 @@ public abstract class StringUtil {
 	 * @param prefix
 	 * @return
 	 */
-	public static boolean endWith(String str, String suffix) {
+	public static final boolean endWith(String str, String suffix) {
 		if (null == str || null == suffix) {
 			return false;
 		}
@@ -233,7 +233,7 @@ public abstract class StringUtil {
 	 * @param prefix
 	 * @return
 	 */
-	public static boolean endWithIgnoreCase(String str, String suffix) {
+	public static final boolean endWithIgnoreCase(String str, String suffix) {
 		if (null == str || null == suffix) {
 			return false;
 		}
@@ -257,7 +257,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static String toUpperCaseAtFirst(String str) {
+	public static final String toUpperCaseAtFirst(String str) {
 		if (isEmpty(str)) {
 			return str;
 		}
@@ -273,7 +273,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static String toUpperCase(String str) {
+	public static final String toUpperCase(String str) {
 		if (null == str) {
 			return null;
 		}
@@ -288,7 +288,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static String toLowerCase(String str) {
+	public static final String toLowerCase(String str) {
 		if (null == str) {
 			return null;
 		}
@@ -303,7 +303,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static String upperCase2Underline(String str) {
+	public static final String upperCase2Underline(String str) {
 		if (null == str) {
 			return null;
 		}
@@ -334,7 +334,7 @@ public abstract class StringUtil {
 	 * @param str
 	 * @return
 	 */
-	public static String underline2UpperCase(String str) {
+	public static final String underline2UpperCase(String str) {
 		if (null == str) {
 			return null;
 		}
@@ -385,7 +385,7 @@ public abstract class StringUtil {
 	 * @param end
 	 * @return
 	 */
-	public static String subString(String str, int start, int end) {
+	public static final String subString(String str, int start, int end) {
 		if (isEmpty(str)) {
 			return str;
 		}
@@ -420,7 +420,7 @@ public abstract class StringUtil {
 	 * @param params
 	 * @return
 	 */
-	public static String format(String message, Object... params) {
+	public static final String format(String message, Object... params) {
 		if (null == params || 0 == params.length || null == message) {
 			return message;
 		}
