@@ -4,12 +4,12 @@
  */
 package com.kaidin.common.util.query;
 
-import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.kaidin.common.util.CollectionUtil;
 import com.kaidin.common.util.StringUtil;
+import com.kaidin.common.util.ToString;
 
 /**
  * 页面查询传入的排序信息
@@ -17,7 +17,7 @@ import com.kaidin.common.util.StringUtil;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class SortContainer implements Serializable {
+public class SortContainer extends ToString {
 	private static final long   serialVersionUID = -4902827484393351934L;
 	private Map<String, String> container        = new LinkedHashMap<>(2);
 
@@ -39,22 +39,8 @@ public class SortContainer implements Serializable {
 		}
 
 		StringBuilder resultBuild = new StringBuilder(" order by ");
-		for (String field : container.keySet()) {
-			resultBuild.append(field).append(" ").append(container.get(field)).append(", ");
-		}
-		int strLength = resultBuild.length();
-
-		return resultBuild.substring(0, strLength - 2);
-	}
-
-	@Override
-	public String toString() {
-		if (CollectionUtil.isEmpty(container)) {
-			return StringUtil.EMPTY_STR;
-		}
-		StringBuilder resultBuild = new StringBuilder();
-		for (String field : container.keySet()) {
-			resultBuild.append(field).append(":").append(container.get(field)).append(", ");
+		for (Map.Entry<String, String> entry : container.entrySet()) {
+			resultBuild.append(entry.getKey()).append(" ").append(entry.getValue()).append(", ");
 		}
 		int strLength = resultBuild.length();
 

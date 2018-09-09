@@ -4,10 +4,9 @@
  */
 package com.kaidin.common.util.query;
 
-import java.io.Serializable;
 import java.util.List;
 
-import com.kaidin.common.util.CollectionUtil;
+import com.kaidin.common.util.ToString;
 
 /**
  * 用于接口的返回值
@@ -16,14 +15,14 @@ import com.kaidin.common.util.CollectionUtil;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class PageData<T> implements Serializable {
+public class PageData<T> extends ToString {
 	private static final long serialVersionUID = 8125027060909448117L;
 	/** 是否调用成功 */
 	private boolean           success;
 	/** 错误代码（可以自己定义） */
-	private String            errorCode;
+	private String            errCode;
 	/** 出错信息 */
-	private String            errorMsg;
+	private String            errMsg;
 	/** 记录总数，主要用于分页展示，默认为-1 */
 	private int               totalCount       = -1;
 	/** 记录开始部分，默认为1 */
@@ -52,49 +51,48 @@ public class PageData<T> implements Serializable {
 		this.success = success;
 	}
 
-	public String getErrorCode() {
-		return errorCode;
+	public String getErrCode() {
+		return errCode;
 	}
 
-	public void setErrorCode(String errorCode) {
-		this.errorCode = errorCode;
+	public void setErrCode(String errCode) {
+		this.errCode = errCode;
 	}
 
-	public String getErrorMsg() {
-		return errorMsg;
+	public String getErrMsg() {
+		return errMsg;
 	}
 
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
+	public void setErrMsg(String errMsg) {
+		this.errMsg = errMsg;
 	}
 
 	public int getTotalCount() {
 		// 记录总数至少为0
-		return 0 < totalCount ? totalCount : 0;
+		return Math.max(totalCount, 0);
 	}
 
 	public void setTotalCount(int totalCount) {
-		this.totalCount = 0 < totalCount ? totalCount : 0;
+		this.totalCount = totalCount;
 	}
 
 	public int getOffset() {
 		// 记录数从1开始
-		return 1 < offset ? offset : 1;
+		return Math.max(offset, 1);
 	}
 
 	public void setOffset(int offset) {
 		// 记录数从1开始
-		this.offset = 1 < offset ? offset : 1;
+		this.offset = offset;
 	}
 
 	public int getLimit() {
 		// 记录数量最少一条，否则没有意义
-		return 1 < limit ? limit : 1;
+		return Math.max(limit, 1);
 	}
 
 	public void setLimit(int limit) {
-		// 记录数量最少一条，否则没有意义
-		this.limit = 1 < limit ? limit : 1;
+		this.limit = limit;
 	}
 
 	public List<T> getDataList() {
@@ -103,38 +101,5 @@ public class PageData<T> implements Serializable {
 
 	public void setDataList(List<T> dataList) {
 		this.dataList = dataList;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder resultBuild = new StringBuilder();
-
-		if (!success) {
-			// 有错误才输出错误
-			resultBuild.append("errorCode:").append(errorCode);
-			resultBuild.append(", errorMsg:").append(errorMsg);
-			return resultBuild.toString();
-		}
-		// 没有错误输出数据信息
-		resultBuild.append("totalCount:").append(totalCount);
-		resultBuild.append(", offset:").append(offset);
-		resultBuild.append(", limit:").append(limit);
-		if (CollectionUtil.isEmpty(dataList)) {
-			resultBuild.append(", dataList:null");
-			return resultBuild.toString();
-		}
-		resultBuild.append(", dataList:{");
-		boolean isFirst = true;
-		for (T element : dataList) {
-			if (isFirst) {
-				resultBuild.append(element);
-				isFirst = false;
-			} else {
-				resultBuild.append(", ").append(element);
-			}
-		}
-		resultBuild.append("}");
-
-		return resultBuild.toString();
 	}
 }

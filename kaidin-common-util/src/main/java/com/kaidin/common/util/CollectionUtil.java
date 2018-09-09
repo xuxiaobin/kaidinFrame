@@ -24,7 +24,7 @@ public abstract class CollectionUtil {
 	 * @param collection
 	 * @return
 	 */
-	public static <T> boolean isEmpty(Collection<T> collection) {
+	public static final <T> boolean isEmpty(Collection<T> collection) {
 		return null == collection || collection.isEmpty();
 	}
 
@@ -34,7 +34,7 @@ public abstract class CollectionUtil {
 	 * @param collection
 	 * @return
 	 */
-	public static <T> boolean isNotEmpty(Collection<T> collection) {
+	public static final <T> boolean isNotEmpty(Collection<T> collection) {
 		return null != collection && !collection.isEmpty();
 	}
 
@@ -44,7 +44,7 @@ public abstract class CollectionUtil {
 	 * @param array
 	 * @return
 	 */
-	public static <T> boolean isEmpty(T[] array) {
+	public static final <T> boolean isEmpty(T[] array) {
 		if (null == array || 0 == array.length) {
 			return true;
 		}
@@ -63,7 +63,7 @@ public abstract class CollectionUtil {
 	 * @param array
 	 * @return
 	 */
-	public static <T> boolean isNotEmpty(T[] array) {
+	public static final <T> boolean isNotEmpty(T[] array) {
 		if (null == array || 0 == array.length) {
 			return false;
 		}
@@ -83,7 +83,7 @@ public abstract class CollectionUtil {
 	 * @param map
 	 * @return
 	 */
-	public static <K, V> boolean isEmpty(Map<K, V> map) {
+	public static final <K, V> boolean isEmpty(Map<K, V> map) {
 		return null == map || map.isEmpty();
 	}
 
@@ -93,7 +93,7 @@ public abstract class CollectionUtil {
 	 * @param map
 	 * @return
 	 */
-	public static <K, V> boolean isNotEmpty(Map<K, V> map) {
+	public static final <K, V> boolean isNotEmpty(Map<K, V> map) {
 		return null != map && !map.isEmpty();
 	}
 
@@ -104,7 +104,7 @@ public abstract class CollectionUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T[] asArray(Collection<T> dataList) {
+	public static final <T> T[] asArray(Collection<T> dataList) {
 		if (null == dataList) {
 			return null;
 		}
@@ -118,7 +118,7 @@ public abstract class CollectionUtil {
 	 * @param dataArray
 	 * @return
 	 */
-	public static <T> ArrayList<T> asArrayList(T[] dataArray) {
+	public static final <T> ArrayList<T> asArrayList(T[] dataArray) {
 		if (null == dataArray) {
 			return null;
 		}
@@ -132,7 +132,7 @@ public abstract class CollectionUtil {
 	 * @param size
 	 * @return
 	 */
-	public <T> List<T> subList(List<T> dataList, int size) {
+	public static final <T> List<T> subList(List<T> dataList, int size) {
 		return subList(dataList, 0, size);
 	}
 
@@ -143,7 +143,7 @@ public abstract class CollectionUtil {
 	 * @param toIndex
 	 * @return
 	 */
-	public <T> List<T> subList(List<T> dataList, int fromIndex, int toIndex) {
+	public static final <T> List<T> subList(List<T> dataList, int fromIndex, int toIndex) {
 		if (0 >= toIndex || CollectionUtil.isEmpty(dataList)) {
 			return null;
 		}
@@ -164,7 +164,8 @@ public abstract class CollectionUtil {
 	 * @param objArrray
 	 * @return
 	 */
-	public static Object decode(Object obj, Object defaultValue, Object expect1Obj, Object expect1Value, Object... objArrray) {
+	public static final Object decode(Object obj, Object defaultValue, Object expect1Obj, Object expect1Value,
+	        Object... objArrray) {
 		if (BaseUtil.equals(obj, expect1Obj)) {
 			return expect1Value;
 		}

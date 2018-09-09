@@ -12,18 +12,17 @@ import org.apache.commons.logging.LogFactory;
 
 public class ProxyFactory {
 
-	private transient static Log log = LogFactory.getLog(ProxyFactory.class);
+	private transient static Log                log             = LogFactory.getLog(ProxyFactory.class);
 	// 优化newProxyInstance
-	private static final Class[] CONSTRUCT_PARAM = { InvocationHandler.class };
-	private static final HashMap<String, Class> CLAZZ_CACHE = new HashMap<>();
+	private static final Class[]                CONSTRUCT_PARAM = { InvocationHandler.class };
+	private static final HashMap<String, Class> CLAZZ_CACHE     = new HashMap<>();
 
 	/*
 	 * 普通的代理拦截器类
 	 */
-	public static Object getCommonProxyInstance(Class interfaceClassName,
-			ProxyInvocationHandler handler) throws Exception {
-		Object tmpClass = ProxyFactory.getProxyObject(interfaceClassName
-				.getClassLoader(), new Class[] { interfaceClassName }, handler);
+	public static Object getCommonProxyInstance(Class interfaceClassName, ProxyInvocationHandler handler) throws Exception {
+		Object tmpClass = ProxyFactory.getProxyObject(interfaceClassName.getClassLoader(), new Class[] { interfaceClassName },
+		        handler);
 		return tmpClass;
 	}
 
@@ -37,8 +36,7 @@ public class ProxyFactory {
 	 *            InvocationHandler
 	 * @return Object
 	 */
-	public static final Object getProxyObject(ClassLoader loader,
-			Class[] interfaces, InvocationHandler h) {
+	public static final Object getProxyObject(ClassLoader loader, Class[] interfaces, InvocationHandler h) {
 		String key = interfaces[0].getName();
 		Class clazz = (Class) CLAZZ_CACHE.get(key);
 		if (clazz == null) {
@@ -54,39 +52,29 @@ public class ProxyFactory {
 		try {
 			Constructor cons = clazz.getConstructor(CONSTRUCT_PARAM);
 			return (Object) cons.newInstance(new Object[] { h });
-		} catch (NoSuchMethodException e) {
-			throw new InternalError(e.toString());
-		} catch (IllegalAccessException e) {
-			throw new InternalError(e.toString());
-		} catch (InstantiationException e) {
-			throw new InternalError(e.toString());
-		} catch (InvocationTargetException e) {
+		} catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
 			throw new InternalError(e.toString());
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Object ExecuteMethodByName(Object obj, String methodName,
-			Class objClass) {
+	public static Object ExecuteMethodByName(Object obj, String methodName, Class objClass) {
 		try {
-			Method m1 = objClass.getDeclaredMethod(methodName, (Class[])null);
-			return m1.invoke(obj, (Object[])null);
+			Method m1 = objClass.getDeclaredMethod(methodName, (Class[]) null);
+			return m1.invoke(obj, (Object[]) null);
 		} catch (Exception ex) {
-			log.error("Execute a method name:'" + methodName
-					+ "' error,details:" + ex.getMessage());
+			log.error("Execute a method name:'" + methodName + "' error,details:" + ex.getMessage());
 		}
 		return null;
 
 	}
 
-	public static Object ExecuteMethodByName(Object obj, String methodName,
-			Class objClass, Class[] parameterTypes, Object[] args) {
+	public static Object ExecuteMethodByName(Object obj, String methodName, Class objClass, Class[] parameterTypes, Object[] args) {
 		try {
 			Method m1 = objClass.getDeclaredMethod(methodName, parameterTypes);
 			return m1.invoke(obj, args);
 		} catch (Exception ex) {
-			log.error("Execute a method name:'" + methodName
-					+ "' error,details:" + ex.getMessage());
+			log.error("Execute a method name:'" + methodName + "' error,details:" + ex.getMessage());
 		}
 		return null;
 

@@ -49,7 +49,7 @@ public class Captcha extends BaseImage {
 	 */
 	public static char[] createCaptchaCode(int codeCount) {
 		//如果传入的字符长度大于默认的长度就用传入的，否则用默认的
-		codeCount = codeCount > MIN_CODE_COUNT ? codeCount : MIN_CODE_COUNT;
+		codeCount = Math.max(codeCount, MIN_CODE_COUNT);
 		char[] result = new char[codeCount];
 
 		Random random = new Random(System.currentTimeMillis());
