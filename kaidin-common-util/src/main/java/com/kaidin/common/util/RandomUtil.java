@@ -39,8 +39,8 @@ public abstract class RandomUtil {
 	/**
 	 * 随机长度11的字符串，每毫秒可以随机不容易重复
 	 * 36^11需要二进制57bit
-	 * 6bit随机数+6bit随机数+45bit当前时间毫秒数，57bit转为base36而来
-	 * 45bit可以表示到3084年
+	 * 6bit随机数+6bit随机数+44bit当前时间毫秒数，56bit转为base36而来
+	 * 44bit可以表示到2527年
 	 * @return
 	 */
 	public static String nextBase36Code() {
@@ -48,7 +48,7 @@ public abstract class RandomUtil {
 		long randomValue = random.nextInt(1 << 6 + 1);
 		randomValue <<= 6;
 		randomValue |= random.nextInt(1 << 6 + 1);
-		randomValue <<= 45;
+		randomValue <<= 44;
 		randomValue |= System.currentTimeMillis();
 
 		char[] charArry = new char[11];
