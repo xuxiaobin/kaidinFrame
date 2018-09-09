@@ -88,8 +88,10 @@ public abstract class ConstType implements Serializable {
 		public static final String BASE30     = "3456789ABCDEFGHJKLMNPQRSTUVWXY";
 		/** 字母小写；0~9的数字和字母22个 */
 		public static final String BASE32     = "0123456789abcdefghijklmnopqrstuv";
-		/** 字母小写；0~9的数字和字母26个 */
+		/** 字母小写；0~9的数字和小写字母26个 */
 		public static final String BASE36     = BASE32 + "wxyz";
+		/** 0~9的数字和大小写字母52个 */
+		public static final String BASE62     = BASE36 + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		/** 相比base64，删除+/0OIl */
 		public static final String BASE58     = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
