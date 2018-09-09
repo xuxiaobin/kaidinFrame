@@ -56,6 +56,7 @@ public abstract class RandomUtil {
 		while (randomValue > 0) {
 			Long index = randomValue % charArray36.length;
 			charArry[count++] = charArray36[index.intValue()];
+			randomValue /= charArray36.length;
 		}
 
 		return new String(charArry);
