@@ -27,4 +27,19 @@ public class RandomUtilTest {
 		}
 	}
 
+	@Test
+	public void testNextBase36Code() {
+		for (int i = 0; i < 1000; i++) {
+			assertTrue(RandomUtil.nextBase36Code().length() == 11);
+			assertTrue(!RandomUtil.nextBase36Code().equals(RandomUtil.nextBase36Code()));
+		}
+	}
+
+	@Test
+	public void testNextBase62Code() {
+		for (int i = 0; i < 1000; i++) {
+			assertTrue(RandomUtil.nextBase62Code().length() == 10);
+			assertTrue(!RandomUtil.nextBase62Code().equals(RandomUtil.nextBase36Code()));
+		}
+	}
 }
