@@ -45,9 +45,9 @@ public abstract class RandomUtil {
 	 */
 	public static String nextBase36Code() {
 		Random random = new Random();
-		long randomValue = random.nextInt(1 << 6 + 1);
+		long randomValue = random.nextInt(1 << 5 + 1);
 		randomValue <<= 6;
-		randomValue |= random.nextInt(1 << 6 + 1);
+		randomValue |= random.nextInt(1 << 5 + 1);
 		randomValue <<= 44;
 		randomValue |= System.currentTimeMillis();
 
