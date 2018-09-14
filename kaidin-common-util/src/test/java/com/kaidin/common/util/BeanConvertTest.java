@@ -49,11 +49,8 @@ public class BeanConvertTest {
 			public boolean doFilter(Student student) {
 				String name = student.getName();
 				student.setName("学生：" + name);
-				if (18 > student.getAge()) {
-					return false; // 小于18岁被过滤
-				} else {
-					return true;
-				}
+				// 小于18岁被过滤
+				return 18 > student.getAge();
 			}
 		});
 

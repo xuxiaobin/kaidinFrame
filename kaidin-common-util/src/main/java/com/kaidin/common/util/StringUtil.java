@@ -98,10 +98,7 @@ public abstract class StringUtil {
 	 * @return
 	 */
 	public static final boolean contains(String str, CharSequence s) {
-		if (null == str) {
-			return false;
-		}
-		return str.contains(s);
+		return (null == str ? false : str.contains(s));
 	}
 
 	/**

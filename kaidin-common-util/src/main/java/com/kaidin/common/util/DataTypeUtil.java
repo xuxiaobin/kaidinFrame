@@ -155,26 +155,18 @@ public abstract class DataTypeUtil {
 		if (obj instanceof Boolean) {
 			return (Boolean) obj;
 		}
-		boolean result = false;
 		if (obj instanceof Character) {
 			Character c = (Character) obj;
-			if ('T' == c || 't' == c) {
-				result = true;
-			}
-		} else if (obj instanceof Number) {
-			if (((Number) obj).doubleValue() > 0) {
-				result = true;
-			}
-		} else if (obj instanceof String) {
-			String objStr = obj.toString();
-			if ("true".equalsIgnoreCase(objStr) || "y".equalsIgnoreCase(objStr) || "yes".equalsIgnoreCase(objStr)) {
-				result = true;
-			}
-		} else {
-			throw new RuntimeException("dataType 'Boolean' transform error:" + obj.toString());
+			return ('T' == c || 't' == c);
 		}
-
-		return result;
+		if (obj instanceof Number) {
+			return (((Number) obj).doubleValue() > 0);
+		}
+		if (obj instanceof String) {
+			String objStr = obj.toString();
+			return ("true".equalsIgnoreCase(objStr) || "y".equalsIgnoreCase(objStr) || "yes".equalsIgnoreCase(objStr));
+		}
+		throw new RuntimeException("dataType 'Boolean' transform error:" + obj.toString());
 	}
 
 	public static Boolean asBoolean(Object obj, boolean defaultValue) {
