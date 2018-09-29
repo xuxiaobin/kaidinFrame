@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
+import com.kaidin.common.constant.ConstType;
+
 /**
  * 一个连接ftp的工具类，需要导入commons-net-3.2.jar包 使用时请先打开服务openServer() 中间写你需要的代码
  * 最后记得closeServer() 如果需要实现更加复杂的功能，请获取ftpClient去做
@@ -33,7 +35,7 @@ public class FtpUtil {
 	/** ftp客户端 */
 	private FTPClient ftpClient;
 	/** 默认的超时时间 10s */
-	private int       connTimeoutTimes = 1000 * 10;
+	private int       connTimeoutTimes = Long.valueOf(ConstType.time.MS_OF_SECOND * 10).intValue();
 
 	public FtpUtil() {
 	}
@@ -45,10 +47,8 @@ public class FtpUtil {
 	}
 
 	public FtpUtil(String hostname, int port, String userName, String pwd) {
-		this.hostname = hostname;
+		this(hostname, userName, pwd);
 		this.port = port;
-		this.userName = userName;
-		this.password = pwd;
 	}
 
 	/**
@@ -106,8 +106,6 @@ public class FtpUtil {
 				ftpClient.changeWorkingDirectory(remotePath);
 			}
 			return ftpClient.storeFile(remoteFileName, input);
-		} catch (IOException e) {
-			throw e;
 		}
 	}
 
@@ -130,8 +128,6 @@ public class FtpUtil {
 				remoteFileName = remotePath + remoteFileName;
 			}
 			return ftpClient.retrieveFile(remoteFileName, output);
-		} catch (IOException e) {
-			throw e;
 		}
 	}
 
@@ -215,86 +211,50 @@ public class FtpUtil {
 		return result;
 	}
 
-	/**
-	 * @return property value of hostname
-	 */
 	public String getHostname() {
 		return hostname;
 	}
 
-	/**
-	 * @param hostname value to assigned to property hostname
-	 */
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
 	}
 
-	/**
-	 * @return property value of port
-	 */
 	public int getPort() {
 		return port;
 	}
 
-	/**
-	 * @param port value to assigned to property port
-	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
 
-	/**
-	 * @return property value of userName
-	 */
 	public String getUserName() {
 		return userName;
 	}
 
-	/**
-	 * @param userName value to assigned to property userName
-	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	/**
-	 * @return property value of password
-	 */
 	public String getPassword() {
 		return password;
 	}
 
-	/**
-	 * @param password value to assigned to property password
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 * @return property value of ftpClient
-	 */
 	public FTPClient getFtpClient() {
 		return ftpClient;
 	}
 
-	/**
-	 * @param ftpClient value to assigned to property ftpClient
-	 */
 	public void setFtpClient(FTPClient ftpClient) {
 		this.ftpClient = ftpClient;
 	}
 
-	/**
-	 * @return property value of connTimeoutTimes
-	 */
 	public int getConnTimeoutTimes() {
 		return connTimeoutTimes;
 	}
 
-	/**
-	 * @param connTimeoutTimes value to assigned to property connTimeoutTimes
-	 */
 	public void setConnTimeoutTimes(int connTimeoutTimes) {
 		this.connTimeoutTimes = connTimeoutTimes;
 	}

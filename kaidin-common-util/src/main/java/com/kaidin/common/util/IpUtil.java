@@ -20,6 +20,8 @@ import com.kaidin.common.util.regex.RegexUtil;
  * @date 2015-6-23下午01:51:48
  */
 public abstract class IpUtil {
+	private static final long MASK[] = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
+
 	/**
 	 * 获取本机ip
 	 * @return
@@ -72,11 +74,7 @@ public abstract class IpUtil {
 	 * @return
 	 */
 	public static boolean isIpAddr(Long ipLong) {
-		if (null != ipLong && ConstType.ip.MIN_VALUE <= ipLong && ConstType.ip.MAX_VALUE >= ipLong) {
-			return true;
-		}
-
-		return false;
+		return (null != ipLong && ConstType.ip.MIN_VALUE <= ipLong && ConstType.ip.MAX_VALUE >= ipLong);
 	}
 
 	public static byte[] asByteIp(String ipStr) {
@@ -172,9 +170,8 @@ public abstract class IpUtil {
 		}
 
 		StringBuffer strBuffer = new StringBuffer(15);
-		long mask[] = { 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000 };
 		for (int i = 3; i >= 0; i--) {
-			long num = (ipLong & mask[i]) >> (i * 8);
+			long num = (ipLong & MASK[i]) >> (i * 8);
 			strBuffer.append(".").append(num);
 		}
 

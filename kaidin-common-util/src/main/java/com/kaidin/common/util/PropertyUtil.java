@@ -36,8 +36,6 @@ public abstract class PropertyUtil {
 	 * @throws Exception
 	 */
 	public static Map<String, String> readPropertyFile(String propertyFileName) throws IOException {
-		Map<String, String> result = null;
-
 		InputStream inputStream = null;
 		try {
 			try {
@@ -45,16 +43,12 @@ public abstract class PropertyUtil {
 			} catch (FileNotFoundException e) {
 				inputStream = PropertyUtil.class.getClassLoader().getResourceAsStream(propertyFileName);
 			}
-			result = readPropertyFile(inputStream);
-		} catch (IOException e) {
-			throw e;
+			return readPropertyFile(inputStream);
 		} finally {
 			if (null != inputStream) {
 				inputStream.close();
 			}
 		}
-
-		return result;
 	}
 
 	/**
@@ -65,29 +59,24 @@ public abstract class PropertyUtil {
 	 * @throws Exception
 	 */
 	public static Map<String, String> readPropertyFile(InputStream inputStream) throws IOException {
-		Map<String, String> result = null;
+		Properties proper = new Properties();
+		proper.load(inputStream);
+		Set<Entry<Object, Object>> entrySet = proper.entrySet();
+		if (CollectionUtil.isEmpty(entrySet)) {
+			return null;
+		}
 
-		try {
-			Properties proper = new Properties();
-			proper.load(inputStream);
-			Set<Entry<Object, Object>> entrySet = proper.entrySet();
-			if (CollectionUtil.isEmpty(entrySet)) {
-				return null;
+		Map<String, String> result = new HashMap<>(entrySet.size());
+		for (Entry<Object, Object> entry : entrySet) {
+			String key = String.valueOf(entry.getKey());
+			if (StringUtil.startsWith(key, "ï»¿")) {
+				// 首行读取异常（文件编码的问题）
+				continue;
 			}
-			result = new HashMap<>(entrySet.size());
-			for (Entry<Object, Object> entry : entrySet) {
-				String key = String.valueOf(entry.getKey());
-				if (StringUtil.startsWith(key, "ï»¿")) {
-					// 首行读取异常（文件编码的问题）
-					continue;
-				}
-				result.put(key, String.valueOf(entry.getValue()));
-			}
-			if (0 == result.size()) {
-				return null;
-			}
-		} catch (Exception e) {
-			throw e;
+			result.put(key, String.valueOf(entry.getValue()));
+		}
+		if (0 == result.size()) {
+			return null;
 		}
 
 		return result;
@@ -144,14 +133,20 @@ public abstract class PropertyUtil {
 		String fieldTypeName = clazz.getName();
 		if (fieldTypeName.equals(Integer.class.getName()) || ConstType.baseType.P_int.equals(fieldTypeName)) {
 			PropertyUtils.setSimpleProperty(bean, name, Integer.valueOf(value));
-		} else if (fieldTypeName.equals(Long.class.getName()) || ConstType.baseType.P_long.equals(fieldTypeName)) {
-			PropertyUtils.setSimpleProperty(bean, name, Long.valueOf(value));
-		} else if (fieldTypeName.equals(Float.class.getName()) || ConstType.baseType.P_float.equals(fieldTypeName)) {
-			PropertyUtils.setSimpleProperty(bean, name, Float.valueOf(value));
-		} else if (fieldTypeName.equals(Double.class.getName()) || ConstType.baseType.P_double.equals(fieldTypeName)) {
-			PropertyUtils.setSimpleProperty(bean, name, Double.valueOf(value));
-		} else {
-			PropertyUtils.setSimpleProperty(bean, name, value);
+			return;
 		}
+		if (fieldTypeName.equals(Long.class.getName()) || ConstType.baseType.P_long.equals(fieldTypeName)) {
+			PropertyUtils.setSimpleProperty(bean, name, Long.valueOf(value));
+			return;
+		}
+		if (fieldTypeName.equals(Float.class.getName()) || ConstType.baseType.P_float.equals(fieldTypeName)) {
+			PropertyUtils.setSimpleProperty(bean, name, Float.valueOf(value));
+			return;
+		}
+		if (fieldTypeName.equals(Double.class.getName()) || ConstType.baseType.P_double.equals(fieldTypeName)) {
+			PropertyUtils.setSimpleProperty(bean, name, Double.valueOf(value));
+			return;
+		}
+		PropertyUtils.setSimpleProperty(bean, name, value);
 	}
 }

@@ -20,7 +20,8 @@ import com.kaidin.common.constant.ConstType;
  */
 public abstract class FileUtil {
 	/** 拷贝文件使用的buffsize 2M */
-	private final static long BUFF_SIZE = ConstType.fileSize.M_SIZE * 2;
+	private final static long   BUFF_SIZE  = ConstType.fileSize.M_SIZE * 2;
+	private final static char[] UNIT_ARRAY = ConstType.fileSize.UNITS.toCharArray();
 
 	/**
 	 * 拷贝文件
@@ -48,8 +49,6 @@ public abstract class FileUtil {
 				inChannel.transferTo(position, buffSize, outChannel);
 			}
 			return true;
-		} catch (IOException e) {
-			throw e;
 		}
 	}
 
@@ -150,8 +149,7 @@ public abstract class FileUtil {
 		for (; ConstType.fileSize.M_SIZE <= byteSize; i++) {
 			byteSize = byteSize >> 10;
 		}
-		char[] unitArray = new char[] { 'K', 'M', 'G', 'T', 'E' };
 
-		return NumberUtil.format2Decimal(byteSize / 1024F) + unitArray[i];
+		return NumberUtil.format2Decimal(byteSize / 1024F) + UNIT_ARRAY[i];
 	}
 }

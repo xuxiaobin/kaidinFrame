@@ -66,18 +66,20 @@ public abstract class ConstType implements Serializable {
 	 * 文件大小
 	 */
 	public static class fileSize {
+		/** 文件单位 */
+		public static final String UNITS  = "KMGTE";
 		/** 1K的字节数 */
-		public static final long K_SIZE = 1024;        // 2^10
+		public static final long   K_SIZE = 1024;        // 2^10
 		/** 1M的字节数 */
-		public static final long M_SIZE = K_SIZE << 10; // 2^20
+		public static final long   M_SIZE = K_SIZE << 10; // 2^20
 		/** 1G的字节数 */
-		public static final long G_SIZE = M_SIZE << 10; // 2^30
+		public static final long   G_SIZE = M_SIZE << 10; // 2^30
 		/** 1T的字节数 */
-		public static final long T_SIZE = G_SIZE << 10; // 2^40
+		public static final long   T_SIZE = G_SIZE << 10; // 2^40
 		/** 1E的字节数 */
-		public static final long E_SIZE = T_SIZE << 10; // 2^50
+		public static final long   E_SIZE = T_SIZE << 10; // 2^50
 		/** 1Z的字节数 */
-		public static final long Z_SIZE = E_SIZE << 10; // 2^60
+		public static final long   Z_SIZE = E_SIZE << 10; // 2^60
 	}
 
 	/**
