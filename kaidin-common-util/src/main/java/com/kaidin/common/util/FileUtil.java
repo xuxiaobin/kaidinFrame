@@ -9,6 +9,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.RecursiveTask;
 
 import com.kaidin.common.constant.ConstType;
 
@@ -105,7 +110,7 @@ public abstract class FileUtil {
 	}
 
 	/**
-	 * 获取文件大小伙子目录大小
+	 * 获取文件大小，包含子目录大小
 	 * @param targetFile
 	 * @return
 	 */
@@ -118,6 +123,7 @@ public abstract class FileUtil {
 		if (null == subFileArry) {
 			return 0;
 		}
+
 		long result = 0;
 		for (File subFile : subFileArry) {
 			result += getFileSize(subFile);
@@ -127,12 +133,50 @@ public abstract class FileUtil {
 	}
 
 	/**
-	 * 获取文件大小伙子目录大小
+	 * 获取文件大小，包含子目录大小
 	 * @param fileName
 	 * @return
 	 */
 	public static long getFileSize(String targetFileName) {
-		return getFileSize(new File(targetFileName));
+		File targetFile = new File(targetFileName);
+		//		return getFileSize(targetFile);
+		return new ForkJoinPool().invoke(new FileSizeFinder(targetFile));
+	}
+
+	@SuppressWarnings("serial")
+	public static class FileSizeFinder extends RecursiveTask<Long> {
+		private File file;
+
+		public FileSizeFinder(File file) {
+			this.file = file;
+		}
+
+		@Override
+		public Long compute() {
+			if (file.isFile()) {
+				return file.length();
+			}
+
+			File[] subFiles = file.listFiles();
+			if (null == subFiles) {
+				return 0L;
+			}
+
+			long result = 0;
+			List<ForkJoinTask<Long>> tasks = new ArrayList<>();
+			for (File subFile : subFiles) {
+				if (subFile.isFile()) {
+					result += subFile.length();
+				} else {
+					tasks.add(new FileSizeFinder(subFile));
+				}
+			}
+			for (ForkJoinTask<Long> task : invokeAll(tasks)) {
+				result += task.join();
+			}
+
+			return result;
+		}
 	}
 
 	/**
