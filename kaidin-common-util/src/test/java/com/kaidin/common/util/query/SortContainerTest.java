@@ -12,7 +12,7 @@ public class SortContainerTest {
 
 	@Test
 	public void testGetSort() {
-		SortContainer instance = new SortContainer();
+		SortRequest instance = new SortRequest();
 		instance.addSortDesc("dddd");
 		instance.addSort("222222");
 		instance.addSort("11111");

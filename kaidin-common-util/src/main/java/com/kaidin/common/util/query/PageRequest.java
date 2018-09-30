@@ -19,7 +19,7 @@ public class PageRequest extends ToString {
 	private static final long serialVersionUID = 9104457759636937598L;
 	private int               offset           = 1;                   // 记录开始部分，默认1
 	private int               limit            = 15;                  // 记录条数限制，默认15条
-	private SortContainer     sortContainer;                          // 排序使用
+	private SortRequest     sortContainer;                          // 排序使用
 
 	public int getOffset() {
 		return Math.max(offset, 1);
@@ -37,24 +37,24 @@ public class PageRequest extends ToString {
 		this.limit = limit;
 	}
 
-	public SortContainer getSortContainer() {
+	public SortRequest getSortContainer() {
 		return sortContainer;
 	}
 
-	public void setSortContainer(SortContainer sortContainer) {
+	public void setSortContainer(SortRequest sortContainer) {
 		this.sortContainer = sortContainer;
 	}
 
 	public void addSort(String column) {
 		if (null == sortContainer) {
-			sortContainer = new SortContainer();
+			sortContainer = new SortRequest();
 		}
 		sortContainer.getSort().put(column, "asc");
 	}
 
 	public void addSortDesc(String column) {
 		if (null == sortContainer) {
-			sortContainer = new SortContainer();
+			sortContainer = new SortRequest();
 		}
 		sortContainer.getSort().put(column, "desc");
 	}

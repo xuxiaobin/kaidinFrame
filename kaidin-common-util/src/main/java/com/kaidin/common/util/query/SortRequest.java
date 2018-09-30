@@ -17,7 +17,7 @@ import com.kaidin.common.util.ToString;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class SortContainer extends ToString {
+public class SortRequest extends ToString {
 	private static final long   serialVersionUID = -4902827484393351934L;
 	private Map<String, String> container        = new LinkedHashMap<>(2);
 
