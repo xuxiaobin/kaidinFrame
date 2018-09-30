@@ -111,35 +111,11 @@ public abstract class FileUtil {
 
 	/**
 	 * 获取文件大小，包含子目录大小
-	 * @param targetFile
-	 * @return
-	 */
-	private static long getFileSize(File targetFile) {
-		if (targetFile.isFile()) {
-			return targetFile.length();
-		}
-
-		File[] subFileArry = targetFile.listFiles();
-		if (null == subFileArry) {
-			return 0;
-		}
-
-		long result = 0;
-		for (File subFile : subFileArry) {
-			result += getFileSize(subFile);
-		}
-
-		return result;
-	}
-
-	/**
-	 * 获取文件大小，包含子目录大小
 	 * @param fileName
 	 * @return
 	 */
 	public static long getFileSize(String targetFileName) {
 		File targetFile = new File(targetFileName);
-		//		return getFileSize(targetFile);
 		return new ForkJoinPool().invoke(new FileSizeFinder(targetFile));
 	}
 
