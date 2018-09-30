@@ -15,7 +15,7 @@ import com.kaidin.appframe.entity.BaseEntity;
 import com.kaidin.appframe.exception.AppframeException;
 import com.kaidin.appframe.service.interfaces.IBaseMybatisDao;
 import com.kaidin.common.util.query.PageData;
-import com.kaidin.common.util.query.PageLoadConfig;
+import com.kaidin.common.util.query.PageRequest;
 
 /**
  * 操作数据库的sqlSessionTemplate实现
@@ -164,7 +164,7 @@ public abstract class BaseDaoMybatisImpl<T extends BaseEntity> implements IBaseM
 	// ================ query DataContainer =======================
 	@Override
 	@Transactional(readOnly = true)
-	public PageData<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData<T> queryEntities(PageRequest pageLoadCfg) throws AppframeException {
 		PageData<T> result = new PageData<>(pageLoadCfg);
 
 		Map<String, Object> parameter = new HashMap<>();
@@ -185,7 +185,7 @@ public abstract class BaseDaoMybatisImpl<T extends BaseEntity> implements IBaseM
 
 	@Override
 	@Transactional(readOnly = true)
-	public PageData<T> queryEntities(String sqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData<T> queryEntities(String sqlWhere, PageRequest pageLoadCfg) throws AppframeException {
 		PageData<T> result = new PageData<>(pageLoadCfg);
 
 		Map<String, Object> parameter = new HashMap<>();
@@ -206,7 +206,7 @@ public abstract class BaseDaoMybatisImpl<T extends BaseEntity> implements IBaseM
 
 	@Override
 	@Transactional(readOnly = true)
-	public PageData<T> queryEntities(String sqlWhere, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData<T> queryEntities(String sqlWhere, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException {
 		PageData<T> result = new PageData<>(pageLoadCfg);
 
 		parameter.put(SQL_KEY, sqlWhere);
@@ -251,7 +251,7 @@ public abstract class BaseDaoMybatisImpl<T extends BaseEntity> implements IBaseM
 
 	@Override
 	@Transactional(readOnly = true)
-	public PageData<Map<String, Object>> queryNativeSql(String sql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg)
+	public PageData<Map<String, Object>> queryNativeSql(String sql, Map<String, Object> parameter, PageRequest pageLoadCfg)
 	        throws AppframeException {
 		PageData<Map<String, Object>> result = new PageData<>();
 

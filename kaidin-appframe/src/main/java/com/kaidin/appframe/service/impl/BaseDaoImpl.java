@@ -18,7 +18,7 @@ import com.kaidin.appframe.service.interfaces.IBaseDao;
 import com.kaidin.appframe.service.interfaces.IDaoContext;
 import com.kaidin.common.util.DataTypeUtil;
 import com.kaidin.common.util.query.DataContainer;
-import com.kaidin.common.util.query.PageLoadConfig;
+import com.kaidin.common.util.query.PageRequest;
 /**
  * 操作数据库的ejb实现
  * @version 1.0
@@ -682,7 +682,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public DataContainer<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer<T> queryEntities(PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
@@ -717,7 +717,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public DataContainer<T> queryEntities(String hqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer<T> queryEntities(String hqlWhere, PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
@@ -751,7 +751,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public DataContainer<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
@@ -783,7 +783,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	}
 	@Override
 	@SuppressWarnings("unchecked")
-	public DataContainer<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer<T> result = new DataContainer<>(pageLoadCfg);
 		
 		try {
@@ -1153,7 +1153,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	
 	@Override
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public DataContainer queryByFullHql(String hql, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryByFullHql(String hql, PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1185,7 +1185,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public DataContainer queryByFullHql(String hql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryByFullHql(String hql, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1216,7 +1216,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	}
 	@Override
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public DataContainer queryByFullHql(String hql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryByFullHql(String hql, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1250,7 +1250,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public DataContainer queryNativeSql(String sql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryNativeSql(String sql, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {
@@ -1278,7 +1278,7 @@ public class BaseDaoImpl<T extends BaseEntity> implements IBaseDao<T> {
 	}
 	@Override
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public DataContainer queryNativeSql(String sql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public DataContainer queryNativeSql(String sql, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException {
 		DataContainer result = new DataContainer(pageLoadCfg);
 		
 		try {

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.kaidin.appframe.exception.AppframeException;
 import com.kaidin.common.util.query.PageData;
-import com.kaidin.common.util.query.PageLoadConfig;
+import com.kaidin.common.util.query.PageRequest;
 
 /**
  * 所有数据库操作的封装
@@ -52,13 +52,13 @@ public interface IBaseHibernateDao<T> extends IBaseDao<T> {
 
 	List<T> queryEntities(String hqlWhere, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 
-	PageData<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<T> queryEntities(PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<T> queryEntities(String hqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<T> queryEntities(String hqlWhere, PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException;
 
 	int countByFullHql(String hql, Map<String, Object> parameter) throws AppframeException;
 
@@ -80,11 +80,11 @@ public interface IBaseHibernateDao<T> extends IBaseDao<T> {
 
 	List<?> queryByFullHqlNoLimit(String hql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 
-	PageData<?> queryByFullHql(String hql, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<?> queryByFullHql(String hql, PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<?> queryByFullHql(String hql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<?> queryByFullHql(String hql, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<?> queryByFullHql(String hql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<?> queryByFullHql(String hql, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException;
 
 	// ================ other =======================
 

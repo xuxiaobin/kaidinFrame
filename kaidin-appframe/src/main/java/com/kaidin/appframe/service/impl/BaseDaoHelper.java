@@ -7,7 +7,7 @@ import org.hibernate.Query;
 
 import com.kaidin.appframe.config.AppframeConfig;
 import com.kaidin.common.util.CollectionUtil;
-import com.kaidin.common.util.query.PageLoadConfig;
+import com.kaidin.common.util.query.PageRequest;
 
 /**
  * 操作数据库类的父类
@@ -73,7 +73,7 @@ public class BaseDaoHelper {
 	
 	// =================== list =========================
 	@SuppressWarnings("rawtypes")
-	public static List list(Query query, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) {
+	public static List list(Query query, Map<String, Object> parameter, PageRequest pageLoadCfg) {
 		if (CollectionUtil.isNotEmpty(parameter)) {
 			for (String name: parameter.keySet()) {
 				query.setParameter(name, parameter.get(name));
@@ -90,7 +90,7 @@ public class BaseDaoHelper {
 		return query.list();
 	}
 	@SuppressWarnings("rawtypes")
-	public static List list(javax.persistence.Query query, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) {
+	public static List list(javax.persistence.Query query, Map<String, Object> parameter, PageRequest pageLoadCfg) {
 		if (CollectionUtil.isNotEmpty(parameter)) {
 			for (String name: parameter.keySet()) {
 				query.setParameter(name, parameter.get(name));

@@ -15,7 +15,7 @@ import com.kaidin.common.util.ToString;
  * @author kaidin@foxmail.com
  * @date 2015-6-23下午01:51:48
  */
-public class PageLoadConfig extends ToString {
+public class PageRequest extends ToString {
 	private static final long serialVersionUID = 9104457759636937598L;
 	private int               offset           = 1;                   // 记录开始部分，默认1
 	private int               limit            = 15;                  // 记录条数限制，默认15条

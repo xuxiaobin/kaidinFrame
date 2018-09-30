@@ -35,7 +35,7 @@ public class PageData<T> extends ToString {
 	public PageData() {
 	}
 
-	public PageData(PageLoadConfig pageLoadConfig) {
+	public PageData(PageRequest pageLoadConfig) {
 		if (null == pageLoadConfig) {
 			return;
 		}

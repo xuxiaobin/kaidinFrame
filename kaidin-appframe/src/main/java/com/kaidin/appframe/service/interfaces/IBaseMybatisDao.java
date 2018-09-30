@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.kaidin.appframe.exception.AppframeException;
 import com.kaidin.common.util.query.PageData;
-import com.kaidin.common.util.query.PageLoadConfig;
+import com.kaidin.common.util.query.PageRequest;
 
 /**
  * 所有数据库操作的封装的mybatis接口
@@ -49,11 +49,11 @@ public interface IBaseMybatisDao<T> extends IBaseDao<T> {
 	List<Map<String, Object>> queryNativeSql(String sql, Map<String, Object> parameter, int rowIndex, int rowNum) throws AppframeException;
 
 	// ################## query PageData ##################
-	PageData<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<T> queryEntities(PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<T> queryEntities(String sqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<T> queryEntities(String sqlWhere, PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<T> queryEntities(String sqlWhere, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<T> queryEntities(String sqlWhere, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<Map<String, Object>> queryNativeSql(String sql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException;
+	PageData<Map<String, Object>> queryNativeSql(String sql, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException;
 }

@@ -13,16 +13,16 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.kaidin.appframe.config.AppframeConfig;
-import com.kaidin.common.util.query.PageLoadConfig;
+import com.kaidin.common.util.query.PageRequest;
 
 public class HibernateListCallbackImpl<T> implements HibernateCallback<T> {
 	private String queryString;
 	private final String[] names;
 	private final Object[] values;
-	private final PageLoadConfig pageLoadCfg;
+	private final PageRequest pageLoadCfg;
 	
 	
-	public HibernateListCallbackImpl(String queryString, String[] names, Object[] values, PageLoadConfig pageLoadCfg) {
+	public HibernateListCallbackImpl(String queryString, String[] names, Object[] values, PageRequest pageLoadCfg) {
 		this.queryString = queryString;
 		this.names = names;
 		this.values = values;

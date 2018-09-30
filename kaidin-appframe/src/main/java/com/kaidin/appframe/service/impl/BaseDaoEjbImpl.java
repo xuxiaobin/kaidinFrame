@@ -18,7 +18,7 @@ import com.kaidin.appframe.service.interfaces.IBaseHibernateDao;
 import com.kaidin.appframe.service.interfaces.IDaoContext;
 import com.kaidin.common.util.DataTypeUtil;
 import com.kaidin.common.util.query.PageData;
-import com.kaidin.common.util.query.PageLoadConfig;
+import com.kaidin.common.util.query.PageRequest;
 
 /**
  * 操作数据库的ejb实现
@@ -580,7 +580,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageData<T> queryEntities(PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData<T> queryEntities(PageRequest pageLoadCfg) throws AppframeException {
 		PageData<T> result = new PageData<>(pageLoadCfg);
 
 		try {
@@ -610,7 +610,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageData<T> queryEntities(String hqlWhere, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData<T> queryEntities(String hqlWhere, PageRequest pageLoadCfg) throws AppframeException {
 		PageData<T> result = new PageData<>(pageLoadCfg);
 
 		try {
@@ -640,7 +640,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageData<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException {
 		PageData<T> result = new PageData<>(pageLoadCfg);
 
 		try {
@@ -669,7 +669,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageData<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException {
 		PageData<T> result = new PageData<>(pageLoadCfg);
 
 		try {
@@ -1049,7 +1049,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PageData queryByFullHql(String hql, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData queryByFullHql(String hql, PageRequest pageLoadCfg) throws AppframeException {
 		PageData result = new PageData(pageLoadCfg);
 
 		try {
@@ -1077,7 +1077,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PageData queryByFullHql(String hql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData queryByFullHql(String hql, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException {
 		PageData result = new PageData(pageLoadCfg);
 
 		try {
@@ -1105,7 +1105,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PageData queryByFullHql(String hql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData queryByFullHql(String hql, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException {
 		PageData result = new PageData(pageLoadCfg);
 
 		try {
@@ -1134,7 +1134,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PageData queryNativeSql(String sql, Map<String, Object> parameter, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData queryNativeSql(String sql, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException {
 		PageData result = new PageData(pageLoadCfg);
 
 		try {
@@ -1159,7 +1159,7 @@ public class BaseDaoEjbImpl<T extends BaseEntity> implements IBaseHibernateDao<T
 
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PageData queryNativeSql(String sql, String[] names, Object[] values, PageLoadConfig pageLoadCfg) throws AppframeException {
+	public PageData queryNativeSql(String sql, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException {
 		PageData result = new PageData(pageLoadCfg);
 
 		try {
