@@ -9,26 +9,26 @@ import com.kaidin.common.util.exception.IExceptionCode;
 public enum AppframeExceptionEnum implements IExceptionCode {
 	PARAMETER_ERROR("PARAMETER_ERROR", "参数错误");
 
-	private String errorCode;
-	private String errorDesc;
+	private String errCode;
+	private String errMsg;
 
 	/**
 	 * 构造函数不对外
 	 * @param errorCode
 	 * @param errorDesc
 	 */
-	private AppframeExceptionEnum(String errorCode, String errorDesc) {
-		this.errorCode = errorCode;
-		this.errorDesc = errorDesc;
+	private AppframeExceptionEnum(String errCode, String errMsg) {
+		this.errCode = errCode;
+		this.errMsg = errMsg;
 	}
 
 	@Override
-	public String getErrorCode() {
-		return errorCode;
+	public String getErrCode() {
+		return errCode;
 	}
 
 	@Override
-	public String getErrorEesc() {
-		return errorDesc;
+	public String getErrMsg() {
+		return errMsg;
 	}
 }

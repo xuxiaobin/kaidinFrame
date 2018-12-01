@@ -29,7 +29,6 @@
 		<dependency>
 			<groupId>com.kaidin</groupId>
 			<artifactId>appframe</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<!-- spring依赖 -->
 		<dependency>

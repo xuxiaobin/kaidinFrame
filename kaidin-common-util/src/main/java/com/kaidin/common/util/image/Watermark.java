@@ -157,8 +157,6 @@ public class Watermark extends BaseImage {
 		try (FileOutputStream outputStream = new FileOutputStream(fileName)) {
 			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(outputStream);
 			encoder.encode(image);
-		} catch (IOException e) {
-			throw e;
 		}
 	}
 }

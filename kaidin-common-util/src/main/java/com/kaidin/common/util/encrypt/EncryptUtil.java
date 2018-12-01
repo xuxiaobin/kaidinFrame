@@ -102,8 +102,6 @@ public abstract class EncryptUtil {
 				msgDigest.update(buffer, 0, length);
 			}
 			return bytesToHex(msgDigest.digest());
-		} catch (IOException e) {
-			throw e;
 		}
 	}
 
