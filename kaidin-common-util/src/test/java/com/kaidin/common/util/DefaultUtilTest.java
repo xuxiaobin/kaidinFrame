@@ -20,7 +20,8 @@ public class DefaultUtilTest {
 	public void testIfNull() {
 		int drfaultValue = 123;
 		assertTrue(drfaultValue == DefaultUtil.ifNull(null, drfaultValue));
-		assertTrue(456 == DefaultUtil.ifNull(456, drfaultValue));
+		int value = 456;
+		assertTrue(value == DefaultUtil.ifNull(value, drfaultValue));
 	}
 
 	@Test
@@ -28,7 +29,8 @@ public class DefaultUtilTest {
 		String drfaultStr = "123456";
 		assertTrue(drfaultStr == DefaultUtil.ifEmpty(null, drfaultStr));
 		assertTrue(drfaultStr == DefaultUtil.ifEmpty("", drfaultStr));
-		assertTrue("123".equals(DefaultUtil.ifEmpty("123", drfaultStr)));
+		String value = "123";
+		assertTrue(value.equals(DefaultUtil.ifEmpty(value, drfaultStr)));
 	}
 
 }
