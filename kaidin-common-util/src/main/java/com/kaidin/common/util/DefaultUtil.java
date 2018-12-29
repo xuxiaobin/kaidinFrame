@@ -11,6 +11,9 @@ package com.kaidin.common.util;
  * @date 2018年12月29日 下午7:54:32
  */
 public abstract class DefaultUtil {
+	/** 默认的配置项名称 */
+	public static final String DEFAULT = "default";
+
 	/**
 	 * 如果为空返回默认值
 	 * @param obj
