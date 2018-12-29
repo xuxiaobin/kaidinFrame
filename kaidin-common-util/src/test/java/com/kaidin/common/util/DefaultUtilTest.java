@@ -18,19 +18,19 @@ public class DefaultUtilTest {
 
 	@Test
 	public void testIfNull() {
-		int drfaultValue = 123;
-		assertTrue(drfaultValue == DefaultUtil.ifNull(null, drfaultValue));
+		int defaultValue = 123;
+		assertTrue(defaultValue == DefaultUtil.ifNull(null, defaultValue));
 		int value = 456;
-		assertTrue(value == DefaultUtil.ifNull(value, drfaultValue));
+		assertTrue(value == DefaultUtil.ifNull(value, defaultValue));
 	}
 
 	@Test
 	public void testIfEmpty() {
-		String drfaultStr = "123456";
-		assertTrue(drfaultStr == DefaultUtil.ifEmpty(null, drfaultStr));
-		assertTrue(drfaultStr == DefaultUtil.ifEmpty("", drfaultStr));
+		String defaultStr = "123456";
+		assertTrue(defaultStr == DefaultUtil.ifEmpty(null, defaultStr));
+		assertTrue(defaultStr == DefaultUtil.ifEmpty("", defaultStr));
 		String value = "123";
-		assertTrue(value.equals(DefaultUtil.ifEmpty(value, drfaultStr)));
+		assertTrue(value.equals(DefaultUtil.ifEmpty(value, defaultStr)));
 	}
 
 }

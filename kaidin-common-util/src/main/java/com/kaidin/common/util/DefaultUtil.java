@@ -17,17 +17,17 @@ public abstract class DefaultUtil {
 	 * @param drfaultValue
 	 * @return
 	 */
-	public static <T> T ifNull(T obj, T drfaultValue) {
-		return null != obj ? obj : drfaultValue;
+	public static <T> T ifNull(T obj, T defaultValue) {
+		return null != obj ? obj : defaultValue;
 	}
 
 	/**
 	 * 如果为空返回默认值
 	 * @param str
-	 * @param drfaultStr
+	 * @param defaultStr
 	 * @return
 	 */
-	public static String ifEmpty(String str, String drfaultStr) {
-		return StringUtil.isEmpty(str) ? drfaultStr : str;
+	public static String ifEmpty(String str, String defaultStr) {
+		return StringUtil.isEmpty(str) ? defaultStr : str;
 	}
 }
