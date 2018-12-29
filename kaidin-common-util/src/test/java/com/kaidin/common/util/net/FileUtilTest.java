@@ -2,7 +2,7 @@
  * Kaidin.com Inc.
  * Copyright (c) 2008-2018 All Rights Reserved.
  */
-package com.kaidin.common.util;
+package com.kaidin.common.util.net;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,6 +11,8 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.kaidin.common.constant.ConstType;
+import com.kaidin.common.util.DataTypeUtil;
+import com.kaidin.common.util.FileUtil;
 
 public class FileUtilTest {
 

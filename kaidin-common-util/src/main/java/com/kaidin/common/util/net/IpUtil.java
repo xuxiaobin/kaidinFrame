@@ -2,7 +2,7 @@
  * Kaidin.com Inc.
  * Copyright (c) 2008-2018 All Rights Reserved.
  */
-package com.kaidin.common.util;
+package com.kaidin.common.util.net;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 import com.kaidin.common.constant.ConstType;
+import com.kaidin.common.util.StringUtil;
 import com.kaidin.common.util.regex.RegexUtil;
 
 /**

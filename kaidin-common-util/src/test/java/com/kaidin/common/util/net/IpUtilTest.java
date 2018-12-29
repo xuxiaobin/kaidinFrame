@@ -2,7 +2,7 @@
  * Kaidin.com Inc.
  * Copyright (c) 2008-2018 All Rights Reserved.
  */
-package com.kaidin.common.util;
+package com.kaidin.common.util.net;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -13,6 +13,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.kaidin.common.constant.ConstType;
+import com.kaidin.common.util.net.IpUtil;
 
 public class IpUtilTest {
 	public static void main(String[] args) {

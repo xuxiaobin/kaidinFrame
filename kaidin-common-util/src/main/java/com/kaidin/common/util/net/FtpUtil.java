@@ -2,7 +2,7 @@
  * Kaidin.com Inc.
  * Copyright (c) 2008-2018 All Rights Reserved.
  */
-package com.kaidin.common.util;
+package com.kaidin.common.util.net;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +14,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
 import com.kaidin.common.constant.ConstType;
+import com.kaidin.common.util.CollectionUtil;
 
 /**
  * 一个连接ftp的工具类，需要导入commons-net-3.2.jar包 使用时请先打开服务openServer() 中间写你需要的代码
