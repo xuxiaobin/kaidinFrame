@@ -17,16 +17,6 @@ import java.util.Date;
 public abstract class DataTypeUtil {
 	private static final String NULL_STR = "null";
 
-	/**
-	 * 如果value不为null，返回value，否则返回defaultValue
-	 * @param value
-	 * @param defaultValue
-	 * @return
-	 */
-	public static <T> T asDefault(T value, T defaultValue) {
-		return null != value ? value : defaultValue;
-	}
-
 	public static Byte asByte(Object obj) {
 		if (null == obj) {
 			return null;
