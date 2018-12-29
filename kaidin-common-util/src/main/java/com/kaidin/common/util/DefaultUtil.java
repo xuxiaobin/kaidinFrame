@@ -14,7 +14,7 @@ public abstract class DefaultUtil {
 	/**
 	 * 如果为空返回默认值
 	 * @param obj
-	 * @param drfaultValue
+	 * @param defaultValue
 	 * @return
 	 */
 	public static <T> T ifNull(T obj, T defaultValue) {
