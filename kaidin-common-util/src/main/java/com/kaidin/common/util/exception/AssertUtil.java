@@ -96,6 +96,24 @@ public final class AssertUtil {
 	}
 
 	/**
+	 * 期待字符串相同，否则抛出异常
+	 */
+	public static final void isEquals(String str1, String str2, IExceptionCode errCode, String errMsg) {
+		if (!StringUtil.equals(str1, str2)) {
+			throw new BaseException(errCode, errMsg);
+		}
+	}
+
+	/**
+	 * 期待字符串不同，否则抛出异常
+	 */
+	public static final void isNotEquals(String str1, String str2, IExceptionCode errCode, String errMsg) {
+		if (StringUtil.equals(str1, str2)) {
+			throw new BaseException(errCode, errMsg);
+		}
+	}
+
+	/**
 	 * 期待集合为空，否则抛出异常
 	 */
 	public static final void isEmpty(Collection<?> collection, IExceptionCode errCode, String errMsg) {

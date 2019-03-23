@@ -37,32 +37,19 @@ public class ApiInvocation implements Invocation {
 		BaseResponseData responseData = api.execute();
 	}
 
-	/**
-	 * @return property value of api
-	 */
 	public OpenApi<? extends BaseResponseData, ? extends BaseRequestData> getApi() {
 		return api;
 	}
 
-	/**
-	 * @param api value to assigned to property api
-	 */
 	public void setApi(OpenApi<? extends BaseResponseData, ? extends BaseRequestData> api) {
 		this.api = api;
 	}
 
-	/**
-	 * @return property value of dispatchContext
-	 */
 	public DispatchContext getDispatchContext() {
 		return dispatchContext;
 	}
 
-	/**
-	 * @param dispatchContext value to assigned to property dispatchContext
-	 */
 	public void setDispatchContext(DispatchContext dispatchContext) {
 		this.dispatchContext = dispatchContext;
 	}
-
 }

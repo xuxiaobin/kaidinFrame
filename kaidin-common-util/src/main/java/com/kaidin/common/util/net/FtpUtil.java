@@ -27,7 +27,7 @@ import com.kaidin.common.util.CollectionUtil;
 public class FtpUtil {
 	/** ftp服务器地址 */
 	private String    hostname;
-	/** 默认端口 */
+	/** 默认端口21 */
 	private int       port             = 21;
 	/** 默认是匿名用户 */
 	private String    userName         = "anonymous";
