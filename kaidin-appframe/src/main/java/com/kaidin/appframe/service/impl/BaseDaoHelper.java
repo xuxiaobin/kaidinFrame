@@ -234,7 +234,8 @@ public class BaseDaoHelper {
 	}
 	/**
 	 * 将参数组成一个字符串，方便打印	
-	 * @param parameter
+	 * @param names
+	 * @param values
 	 * @return
 	 */
 	public static String getParamStr(String[] names, Object[] values) {

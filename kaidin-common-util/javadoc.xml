@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE project>
-<project default="javadoc">
-    <target name="javadoc">
-        <javadoc access="public" author="true" classpath="target/test-classes;E:\m\commons-logging\commons-logging\1.1.1\commons-logging-1.1.1.jar;E:\m\junit\junit\4.10\junit-4.10.jar;E:\m\commons-net\commons-net\3.2\commons-net-3.2.jar;E:\m\org\hamcrest\hamcrest-core\1.1\hamcrest-core-1.1.jar;E:\m\commons-beanutils\commons-beanutils-core\1.8.3\commons-beanutils-core-1.8.3.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.kaidin.common.util.web,test,com.kaidin.common.util.query,com.kaidin.common.constant,com.kaidin.common.util,com.kaidin.common.util.ftp" source="1.7" sourcepath="src/test/java;src/test/resources;src/main/java;src/main/resources" splitindex="true" use="true" version="true"/>
-    </target>
-</project>

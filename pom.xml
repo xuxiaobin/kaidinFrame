@@ -24,7 +24,6 @@
 	</properties>
 
 	<modules>
-		<module>kaidin-common-util</module>
 		<module>kaidin-appframe</module>
 		<module>kaidin-db-orm</module>
 		<module>kaidin-gui</module>
@@ -35,9 +34,9 @@
 		<dependencies>
 			<!-- 内部工程依赖 -->
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>com.kaidin</groupId>
 				<artifactId>kaidin-common-util</artifactId>
-				<version>${project.version}</version>
+				<version>1.1</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>

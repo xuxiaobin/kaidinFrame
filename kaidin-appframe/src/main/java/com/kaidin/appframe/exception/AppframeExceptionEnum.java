@@ -14,8 +14,8 @@ public enum AppframeExceptionEnum implements IExceptionCode {
 
 	/**
 	 * 构造函数不对外
-	 * @param errorCode
-	 * @param errorDesc
+	 * @param errCode
+	 * @param errMsg
 	 */
 	private AppframeExceptionEnum(String errCode, String errMsg) {
 		this.errCode = errCode;
