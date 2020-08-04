@@ -9,12 +9,12 @@ public class BatchSequenceGeneratorTest {
 
 	@Test
 	public void test() throws Exception {
-		InputStream is = BatchSequenceGenerator.class.getResourceAsStream("/cfg/sequence.properties");
-		if (is == null) {
+		InputStream input = BatchSequenceGenerator.class.getResourceAsStream("/cfg/sequence.properties");
+		if (null == input) {
 			throw new Exception("Can not find sequence.properties.");
 		}
 		Properties p = new Properties();
-		p.load(is);
+		p.load(input);
 		for (Object obj: p.keySet()) {
 			String sequence = String.valueOf(obj).toUpperCase();
 			System.out.println(sequence + ",");

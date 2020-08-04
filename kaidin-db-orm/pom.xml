@@ -2,16 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
 	<parent>
 		<groupId>com.kaidin</groupId>
-		<artifactId>kaidin-parent</artifactId>
-		<version>1.1</version>
+		<artifactId>kaidinFrame</artifactId>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>kaidin-db-orm</artifactId>
-	<name>db-orm v${project.version}</name>
+	<name>kaidin-db-orm</name>
 	<description>数据映射的实体类文件，不包含业务逻辑方法</description>
 	<packaging>jar</packaging>
 	
@@ -28,7 +27,7 @@
 		<!-- 内部工程依赖 -->
 		<dependency>
 			<groupId>com.kaidin</groupId>
-			<artifactId>appframe</artifactId>
+			<artifactId>kaidin-appframe</artifactId>
 		</dependency>
 		<!-- spring依赖 -->
 		<dependency>
@@ -78,6 +77,10 @@
 			<artifactId>freemarker</artifactId>
 			<version>2.3.27-incubating</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.kaidin</groupId>
+			<artifactId>kaidin-appframe</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -1,88 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
-	<modelVersion>4.0.0</modelVersion>
-	
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>com.kaidin</groupId>
-		<artifactId>kaidin-parent</artifactId>
-		<version>1.1.0</version>
+		<artifactId>kaidinFrame</artifactId>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
-	
-	<artifactId>kaidin-appframe</artifactId>
-	<name>appframe v${project.version}</name>
-	<packaging>jar</packaging>
-	
-	<dependencies>
-		<!-- 内部工程依赖 -->
-		<dependency>
-			<groupId>com.kaidin</groupId>
-			<artifactId>kaidin-common-util</artifactId>
-		</dependency>
-		<!-- spring依赖 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-tools</artifactId>
-			<version>3.6.0.CR1</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- mybatis依赖 -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-		<!-- 单元测试依赖 -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-	</dependencies>
-	
-	<build>
-		<defaultGoal>compile</defaultGoal>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.kaidin</groupId>
+    <artifactId>kaidin-appframe</artifactId>
+    <name>kaidin-appframe</name>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- 内部工程依赖 -->
+        <dependency>
+            <groupId>com.kaidin</groupId>
+            <artifactId>kaidin-common-util</artifactId>
+        </dependency>
+        <!-- spring依赖 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-tools</artifactId>
+            <version>3.6.0.CR1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- mybatis依赖 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <!-- 单元测试依赖 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>compile</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
