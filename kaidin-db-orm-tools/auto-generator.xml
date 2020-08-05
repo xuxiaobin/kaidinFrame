@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE project>
+<project name="autoGeneratorSources" default="default" basedir="../kaidin-db-orm-tools">
+	<!-- 变量定义start -->
+	<property name="needGenerate" value="true" />
+	<property name="isEjb3" value="false" description="是否支持ejb3"/>
+	<property name="javaPath" value="../kaidin-db-orm/src/main/java" description="java类文件根目录"/>
+	<property name="cfgPath" value="src/main/resources" description="配置文件根目录"/>
+	
+	<property name="entityPackage" value="com.kaidin.db.entity" description="生成实体的包名"/>
+	<property name="daoInterfacePackage" value="com.kaidin.db.dao.interfaces" description="生成dao接口的包名"/>
+	<property name="daoImplPackage" value="com.kaidin.db.dao.impl" description="生成dao实现的包名"/>
+	
+	<property name="templatePath" value="../kaidin-appframe/src/main/resources" description="生成实体的模板目录的路径"/>
+	<property name="templateDir" value="springTemplate" description="生成实体的模板目录，目前支持spring和ejb的两种模板"/>
+	<!-- 变量定义end -->
+
+	
+	<path id="toolsLib" description="依赖的包">
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<!--
+		<fileset dir="E:/study/lib/generateLib">
+			<include name="*.jar" />
+		</fileset>
+		-->
+		<!--
+		<fileset dir="${cfgPath}/template">
+			<include name="**/*.ftl" />
+		</fileset>
+		 -->
+	</path>
+
+	<!-- 定义任务 -->
+	<taskdef name="hibernateTool"
+		classname="org.hibernate.tool.ant.HibernateToolTask"
+		classpathref="toolsLib"
+	/>
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="lib/ant-contrib-1.0b3.jar"/>
+		</classpath>
+	</taskdef>
+
+	<target name="init" description="初始化 ">
+		<!--
+		<deltree dir="generated" />
+		<mkdir dir="generated" />
+		-->
+	</target>
+
+	<!--
+	<path id="ejb3toolslib">
+		<path refid="jpatoolslib" />
+		<path location="lib/hibernate-annotations.jar" />
+		<path location="lib/ejb3-persistence.jar" />
+		<path location="lib/hibernate-entitymanager.jar" />
+		<path location="lib/jboss-archive-browsing.jar" />
+		<path location="lib/javaassist.jar" />
+	</path>
+	-->
+
+
+	<condition property="isNeedGenerate">
+		<and>
+			<equals arg1="${needGenerate}" arg2="true" />
+		</and>
+	</condition>
+
+	<target name="antNotCall" unless="isNeedGenerate" depends="init">
+		<echo message="pass ant-autoGenerator-sources!" />
+	</target>
+	
+	<target name="antCall" if="isNeedGenerate" depends="init">
+		<echo message="ant-autoGenerator-sources" />
+		<antcall target="hbm2entity" />
+		<!-- xml映射文件，可以根据情况看是否要生成
+		<antcall target="hbm2entityXml" />
+		-->
+		<antcall target="hbm2daoInterface" />
+		<antcall target="hbm2daoImpl" />
+	</target>
+
+	<!-- ================================= 
+		target: clear
+		删除目录中的文件
+		================================= -->
+	<target name="clear" description="delete files">
+		<property name="path" value="test"/>
+		<property name="includeFile" value="*.java"/>
+		<echo message="delete:${path}/${includeFile}" />
+		<delete failonerror="false">
+			<fileset dir="auto-generator.xml" includes="${includeFile}" />
+		</delete>
+	</target>
+
+
+	<!-- 从DB导出Entity${tableName}.java文件 -->
+	<target name="hbm2entity" description="generator entity">
+		<echo message="delete:${entityPackage}.Entity*.java" />
+		<propertyregex property="entityPath" input="${entityPackage}" regexp='\.' replace="/"/>
+		<antcall target="clear">
+			<param name="path" value="${javaPath}/${entityPath}"/>
+			<param name="includeFile" value="Entity*.java"/>
+		</antcall>
+
+		<echo message="packages:${entityPackage}" />
+		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
+			<classpath/>
+			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+				revengfile="${cfgPath}/hibernate.reveng.xml"
+				detectmanytomany="true"
+				packagename="${entityPackage}">
+			</jdbcconfiguration>
+			<hbm2java jdk5="true" ejb3="${isEjb3}"/>
+			<hbmtemplate template="${templateDir}/Pojo.ftl"
+				filepattern="{package-name}/{class-name}.java"
+			/>
+		</hibernateTool>
+	</target>
+
+	<!-- 从DB导出Entity${tableName}.hbm.xml文件 -->
+	<target name="hbm2entityXml">
+		<echo message="delete:${entityPackage}.Entity*.hbm.xml" />
+		<propertyregex property="entityXmlPath" input="${entityPackage}" regexp='\.' replace="/"/>
+		<antcall target="clear">
+			<param name="path" value="${cfgPath}/${entityXmlPath}"/>
+			<param name="includeFile" value="Entity*.hbm.xml"/>
+		</antcall>
+
+		<echo message="packages:${entityPackage}" />
+		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
+			<classpath/>
+			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+				revengfile="${cfgPath}/hibernate.reveng.xml"
+				detectmanytomany="true"
+				packagename="${entityPackage}">
+			</jdbcconfiguration>
+			<hbm2hbmxml />
+		</hibernateTool>
+	</target>
+
+	<!--
+	<target name="hbm2javaInterface">
+		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
+			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+				revengfile="${cfgPath}/hibernate.reveng.xml"
+				detectmanytomany="true"
+				packagename="${daoInterfacePackage}">
+			</jdbcconfiguration>
+			<hbmtemplate template="${templateDir}/PojoInterface.ftl"
+				filepattern="{package-name}/I{class-name}Entity.java"
+			/>
+		</hibernateTool>
+	</target>
+	-->
+
+	<!-- 从DB导出IEntity*Dao.java文件 -->
+	<target name="hbm2daoInterface">
+		<echo message="delete:${daoInterfacePackage}.IEntity*Dao.java" />
+		<propertyregex property="daoInterfacePath" input="${daoInterfacePackage}" regexp='\.' replace="/"/>
+		<antcall target="clear">
+			<param name="path" value="${javaPath}/${daoInterfacePath}"/>
+			<param name="includeFile" value="IEntity*Dao.java"/>
+		</antcall>
+		<echo message="packages:${daoInterfacePackage}" />
+		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
+			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+				revengfile="${cfgPath}/hibernate.reveng.xml"
+				detectmanytomany="true"
+				packagename="${daoInterfacePackage}">
+			</jdbcconfiguration>
+			<!--
+			<hbm2dao jdk5="true" ejb3="${isEjb3}"/>
+			-->
+			<hbmtemplate template="${templateDir}/dao-interface.ftl"
+				filepattern="{package-name}/I{class-name}Dao.java"
+			/>
+		</hibernateTool>
+	</target>
+
+	<!-- 从DB导出Entity*DaoImpl.java文件 -->
+	<target name="hbm2daoImpl">
+		<echo message="delete:${daoImplPackage}.Entity*DaoImpl.java" />
+		<propertyregex property="daoImplPath" input="${daoImplPackage}" regexp='\.' replace="/"/>
+		<antcall target="clear">
+			<param name="path" value="${javaPath}/${daoImplPath}"/>
+			<param name="includeFile" value="Entity*DaoImpl.java"/>
+		</antcall>
+		<echo message="packages:${daoImplPackage}" />
+		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
+			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+				revengfile="${cfgPath}/hibernate.reveng.xml"
+				detectmanytomany="true"
+				packagename="${daoImplPackage}">
+			</jdbcconfiguration>
+			<hbmtemplate template="${templateDir}/dao.ftl"
+				filepattern="{package-name}/{class-name}DaoImpl.java"
+			/>
+		</hibernateTool>
+	</target>
+
+
+	<target name="default" depends="antCall, antNotCall" />
+</project>

@@ -27,7 +27,7 @@
         <module>kaidin-appframe</module>
         <module>kaidin-db-orm</module>
         <module>kaidin-gui</module>
-        <module>kaidin-tools</module>
+        <module>kaidin-db-orm-tools</module>
     </modules>
 
     <dependencyManagement>
