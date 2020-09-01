@@ -14,55 +14,11 @@
 	<description>数据映射的实体类文件，不包含业务逻辑方法</description>
 	<packaging>jar</packaging>
 	
-	<scm>
-		<developerConnection>徐小斌</developerConnection>
-	</scm>
-	
 	<dependencies>
 		<!-- 内部工程依赖 -->
 		<dependency>
 			<groupId>com.kaidin</groupId>
-			<artifactId>kaidin-common-util</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.kaidin</groupId>
 			<artifactId>kaidin-appframe</artifactId>
-		</dependency>
-		<!-- spring依赖 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-		</dependency>
-		<!-- orm依赖 -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-		</dependency>
-		<!-- 数据库驱动 -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<!-- 单元测试 -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
 </project>
