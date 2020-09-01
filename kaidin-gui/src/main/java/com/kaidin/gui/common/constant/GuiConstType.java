@@ -5,9 +5,6 @@ import java.io.Serializable;
 public class GuiConstType implements Serializable {
 	private static final long serialVersionUID = 4809630076137129264L;
 	
-	public static final String ERROR_MSG	= "errorMsg";	// 出错信息
-	public static final String DATA_CONTAINER	= "dataContainer";	// 数据容器
-	
 	/**
 	 * 保存session中数据的key
 	 */
@@ -37,24 +34,6 @@ public class GuiConstType implements Serializable {
 		public static final short DELETE	= -0x11;	// 逻辑删除标记
 		public static final short UNUSE	= DELETE;	// 逻辑删除标记
 	}
-	
-	/**
-	 * 错误编码
-	 */
-	public static class ErrorCode {
-		public static final short OK	= 0x00;	// 状态正常
-		public static final short NORMAL	= OK;	// 状态正常
-		public static final short REQ_PARAM_ERR	= -0x01;	// 请求参数错误
-		
-		public static final short DB_CONN_ERR	= -0x10;	// 数据库连接错误
-		public static final short DB_OPERATE_ERR	= -0x11;	// 数据库操作错误
-		public static final short SERVICE_ERR	= -0x12;	// 服务错误
-		
-		public static final short PASSWD_ERR	= -0x20;	// 登陆密码错误
-		public static final short USER_LOCKED = -0x21;	// 用户已被锁定
-		public static final short USER_NOT_EXIST	= -0x22;	// 用户不存在
-	}
-	
 	/**
 	 * 菜单等级
 	 */

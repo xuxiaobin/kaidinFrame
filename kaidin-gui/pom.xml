@@ -10,7 +10,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>kaidin-gui</artifactId>
-	<name>kaidin-gui v${project.version}</name>
+	<name>kaidin-gui</name>
 	<packaging>war</packaging>
 
 	<scm>
@@ -44,6 +44,10 @@
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
 		<!-- 日志打印依赖 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -57,49 +61,48 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>kaidin</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<useCache>false</useCache>
-					<!--<filters>
-						<filter>src/main/resources/IProject-test.properties</filter>
-					</filters>-->
-					
-					<!-- In version 2.1-alpha-1, this was incorrectly named warSourceExcludes -->
-					<packagingExcludes>WEB-INF/lib/spring-.*.jar,
-						%regex[WEB-INF/lib/(?!db-orm).*.jar]</packagingExcludes>
-					<!-- 打包之前过滤掉不想要被打进 .war包的jar,
-					注意：这个地方，本来路径应该是WEB-INF/lib/anaalyzer-2.0.4.jar,
-					是经过多次试验,不能这样，至于咋回事儿，搞不清楚，经多方查证均无结果
-					暂且这样吧，虽然显得很丑陋，但是总能解决问题吧 -->
-					<warSourceExcludes>*/lib/spring*.jar</warSourceExcludes>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-						</manifest>
-						<addMavenDescriptor>true</addMavenDescriptor>
-					</archive>
-					<webResources>
-						<resource>
-							<!-- 元配置文件的目录，相对于pom.xml文件的路径 -->
-							<directory>${basedir}/src/main/webapp/WEB-INF</directory>
-							<!-- 是否过滤文件，也就是是否启动auto-config的功能 -->
-							<filtering>true</filtering>
-							<targetPath>WEB-INF</targetPath>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
-		</plugins>
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-war-plugin</artifactId>-->
+<!--				<version>2.2</version>-->
+<!--				<configuration>-->
+<!--					<useCache>false</useCache>-->
+<!--					&lt;!&ndash;<filters>-->
+<!--						<filter>src/main/resources/IProject-test.properties</filter>-->
+<!--					</filters>&ndash;&gt;-->
+<!--					-->
+<!--					&lt;!&ndash; In version 2.1-alpha-1, this was incorrectly named warSourceExcludes &ndash;&gt;-->
+<!--					<packagingExcludes>WEB-INF/lib/spring-.*.jar,-->
+<!--						%regex[WEB-INF/lib/(?!db-orm).*.jar]</packagingExcludes>-->
+<!--					&lt;!&ndash; 打包之前过滤掉不想要被打进 .war包的jar,-->
+<!--					注意：这个地方，本来路径应该是WEB-INF/lib/anaalyzer-2.0.4.jar,-->
+<!--					是经过多次试验,不能这样，至于咋回事儿，搞不清楚，经多方查证均无结果-->
+<!--					暂且这样吧，虽然显得很丑陋，但是总能解决问题吧 &ndash;&gt;-->
+<!--					<warSourceExcludes>*/lib/spring*.jar</warSourceExcludes>-->
+<!--					<archive>-->
+<!--						<manifest>-->
+<!--							<addClasspath>true</addClasspath>-->
+<!--							<classpathPrefix>lib/</classpathPrefix>-->
+<!--						</manifest>-->
+<!--						<addMavenDescriptor>true</addMavenDescriptor>-->
+<!--					</archive>-->
+<!--					<webResources>-->
+<!--						<resource>-->
+<!--							&lt;!&ndash; 元配置文件的目录，相对于pom.xml文件的路径 &ndash;&gt;-->
+<!--							<directory>${basedir}/src/main/webapp/WEB-INF</directory>-->
+<!--							&lt;!&ndash; 是否过滤文件，也就是是否启动auto-config的功能 &ndash;&gt;-->
+<!--							<filtering>true</filtering>-->
+<!--							<targetPath>WEB-INF</targetPath>-->
+<!--						</resource>-->
+<!--					</webResources>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
 	</build>
 </project>

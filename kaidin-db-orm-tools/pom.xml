@@ -23,6 +23,12 @@
             <artifactId>kaidin-db-orm</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-tools</artifactId>
+            <version>3.6.0.CR1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>ant</groupId>
             <artifactId>ant</artifactId>
             <version>1.6.5</version>

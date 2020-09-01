@@ -4,15 +4,18 @@
 	<!-- 变量定义start -->
 	<property name="needGenerate" value="true" />
 	<property name="isEjb3" value="false" description="是否支持ejb3"/>
-	<property name="javaPath" value="../kaidin-db-orm/src/main/java" description="java类文件根目录"/>
+
+	<!-- 运行配置 -->
+	<property name="templatePath" value="src/main/resources" description="生成实体的模板目录的路径"/>
+	<property name="templateDir" value="hibernateTemplate" description="生成实体的模板目录，目前支持spring和ejb的两种模板"/>
+	<property name="hibCfgPath" value="src/main/resources" description="orm的hibernate配置"/>
 	<property name="cfgPath" value="src/main/resources" description="配置文件根目录"/>
-	
+	<!-- 生成的文件配置 -->
+	<property name="javaResPath" value="../kaidin-db-orm/src/main/resources" description="java类文件根目录"/>
+	<property name="javaPath" value="../kaidin-db-orm/src/main/java" description="java类文件根目录"/>
 	<property name="entityPackage" value="com.kaidin.db.entity" description="生成实体的包名"/>
-	<property name="daoInterfacePackage" value="com.kaidin.db.dao.interfaces" description="生成dao接口的包名"/>
+	<property name="daoInterfacePackage" value="com.kaidin.db.dao" description="生成dao接口的包名"/>
 	<property name="daoImplPackage" value="com.kaidin.db.dao.impl" description="生成dao实现的包名"/>
-	
-	<property name="templatePath" value="../kaidin-appframe/src/main/resources" description="生成实体的模板目录的路径"/>
-	<property name="templateDir" value="springTemplate" description="生成实体的模板目录，目前支持spring和ejb的两种模板"/>
 	<!-- 变量定义end -->
 
 	
@@ -91,7 +94,7 @@
 		<property name="includeFile" value="*.java"/>
 		<echo message="delete:${path}/${includeFile}" />
 		<delete failonerror="false">
-			<fileset dir="auto-generator.xml" includes="${includeFile}" />
+			<fileset dir="${path}" includes="${includeFile}" />
 		</delete>
 	</target>
 
@@ -108,7 +111,7 @@
 		<echo message="packages:${entityPackage}" />
 		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
 			<classpath/>
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+			<jdbcconfiguration configurationfile="${hibCfgPath}/hibernate.cfg.xml"
 				revengfile="${cfgPath}/hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${entityPackage}">
@@ -121,18 +124,17 @@
 	</target>
 
 	<!-- 从DB导出Entity${tableName}.hbm.xml文件 -->
-	<target name="hbm2entityXml">
-		<echo message="delete:${entityPackage}.Entity*.hbm.xml" />
+	<target name="hbm2entityXml" description="generator hbm.xml">
 		<propertyregex property="entityXmlPath" input="${entityPackage}" regexp='\.' replace="/"/>
+		<echo message="delete:${entityXmlPath}/Entity*.hbm.xml" />
 		<antcall target="clear">
-			<param name="path" value="${cfgPath}/${entityXmlPath}"/>
+			<param name="path" value="${javaResPath}/${entityXmlPath}"/>
 			<param name="includeFile" value="Entity*.hbm.xml"/>
 		</antcall>
-
-		<echo message="packages:${entityPackage}" />
-		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
+		<echo message="packages:${entityXmlPath}" />
+		<hibernateTool destdir="${javaResPath}" templatepath="${templatePath}">
 			<classpath/>
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+			<jdbcconfiguration configurationfile="${hibCfgPath}/hibernate.cfg.xml"
 				revengfile="${cfgPath}/hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${entityPackage}">
@@ -144,7 +146,7 @@
 	<!--
 	<target name="hbm2javaInterface">
 		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+			<jdbcconfiguration configurationfile="${hibCfgPath}/hibernate.cfg.xml"
 				revengfile="${cfgPath}/hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${daoInterfacePackage}">
@@ -166,7 +168,7 @@
 		</antcall>
 		<echo message="packages:${daoInterfacePackage}" />
 		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+			<jdbcconfiguration configurationfile="${hibCfgPath}/hibernate.cfg.xml"
 				revengfile="${cfgPath}/hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${daoInterfacePackage}">
@@ -190,7 +192,7 @@
 		</antcall>
 		<echo message="packages:${daoImplPackage}" />
 		<hibernateTool destdir="${javaPath}" templatepath="${templatePath}">
-			<jdbcconfiguration configurationfile="${cfgPath}/hibernate.jdbc.xml"
+			<jdbcconfiguration configurationfile="${hibCfgPath}/hibernate.cfg.xml"
 				revengfile="${cfgPath}/hibernate.reveng.xml"
 				detectmanytomany="true"
 				packagename="${daoImplPackage}">

@@ -18,13 +18,12 @@
 		<developerConnection>徐小斌</developerConnection>
 	</scm>
 	
-	<properties>
-		<hibernate.version>3.0</hibernate.version>
-		<spring.version>4.1.7.RELEASE</spring.version>
-	</properties>
-
 	<dependencies>
 		<!-- 内部工程依赖 -->
+		<dependency>
+			<groupId>com.kaidin</groupId>
+			<artifactId>kaidin-common-util</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.kaidin</groupId>
 			<artifactId>kaidin-appframe</artifactId>
@@ -45,42 +44,25 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- jsony解析依赖 -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-		</dependency>
-		<!-- mybatis依赖 -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
 		</dependency>
-		<!-- mysql驱动包 -->
+		<!-- orm依赖 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+		<!-- 数据库驱动 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		<!-- 单元测试依赖 -->
+		<!-- 单元测试 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.27-incubating</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.kaidin</groupId>
-			<artifactId>kaidin-appframe</artifactId>
 		</dependency>
 	</dependencies>
 </project>

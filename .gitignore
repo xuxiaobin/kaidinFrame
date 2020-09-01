@@ -13,3 +13,7 @@
 # generated files
 target/
 bin/
+
+/kaidin-db-orm/src/main/resources/com/kaidin/db/entity/
+/kaidin-db-orm/src/main/java/
+

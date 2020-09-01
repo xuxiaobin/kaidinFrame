@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	id="WebApp_ID" version="2.5">
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	 version="3.1">
 	
-	<display-name>xiaobin's web</display-name>
-	
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<!-- 默认是/WEB-INF/applicationConfig.xml -->
-		<param-value>
-			classpath:spring-mvc.xml
-			classpath:spring-mybatis.xml
-		</param-value>
-	</context-param>
-	
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+	<display-name>kaidin-gui</display-name>
+
+	<welcome-file-list>
+		<welcome-file>view/index.html</welcome-file>
+		<welcome-file>view/index.jsp</welcome-file>
+	</welcome-file-list>
+
 
 	<servlet>
-		<servlet-name>springMvc</servlet-name>
+		<servlet-name>springMvcDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<!-- spring-mvc具体的配置文件，默认是/WEB-INF/[servlet名字]-servlet.xml -->
-			<param-value>classpath:spring-mvc.xml</param-value>
+			<param-value>classpath:spring/spring-mvc.xml</param-value>
 		</init-param>
 		<!-- servlet加载的优先级，当值大于等于0时在应用启动时就加载这个servlet，值越小优先级越高。当值为负数或未指定时servlet被使用是才加载 -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+	<servlet-mapping>
+		<!-- 如果这里在配成spring,下边也要写一个名为spring-servlet.xml的文件，主要用来配置它的controller -->
+		<servlet-name>springMvcDispatcher</servlet-name>
+		<!-- spring-mvc能够处理的请求要匹配如下格式 -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- 默认是/WEB-INF/applicationConfig.xml -->
+		<param-value>classpath*:spring/spring-*.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
 	<!-- 静态资源过滤 -->
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
@@ -44,18 +52,6 @@
 		<url-pattern>*.jpg</url-pattern>
 		<url-pattern>*.gif</url-pattern>
 	</servlet-mapping>
-	
-	<servlet-mapping>
-		<!-- 这里在配成spring,下边也要写一个名为spring-servlet.xml的文件，主要用来配置它的controller -->
-		<servlet-name>springMvc</servlet-name>
-		<!-- spring-mvc能够处理的请求要匹配如下格式 -->
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-	
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>view/index.jsp</welcome-file>
-	</welcome-file-list>
 	
 	<!-- 配置加载log4j.xml文件路径 -->
 	<context-param>
@@ -71,9 +67,9 @@
 		<param-name>loggingLevel</param-name>
 		<param-value>INFO</param-value>
 	</context-param>
-	
+
 	<!-- 配置log4j.xml监听器 -->
-	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
+<!--	<listener>-->
+<!--		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->
+<!--	</listener>-->
 </web-app>
