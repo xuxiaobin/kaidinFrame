@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016-5-23 12:09:07 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 2020-9-1 16:31:34 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="com.kaidin.db.entity.EntityCfgRole" table="cfg_role" catalog="kaidin">
         <id name="id" type="long">
@@ -20,21 +20,19 @@
                 <comment>创建时间</comment>
             </column>
         </property>
-        <property name="status" type="short">
-            <column name="status" not-null="true">
+        <property name="status" type="string">
+            <column name="status" length="8">
                 <comment>状态</comment>
             </column>
         </property>
-        <property name="description" type="string">
-            <column name="description" length="128">
+        <property name="desc" type="string">
+            <column name="desc" length="128">
                 <comment>描述信息</comment>
             </column>
         </property>
         <set name="entityRltUserRoles" table="rlt_user_role" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="role_id" not-null="true">
-                    <comment>cfg_role.id</comment>
-                </column>
+                <column name="role_id" not-null="true" />
             </key>
             <one-to-many class="com.kaidin.db.entity.EntityRltUserRole" />
         </set>

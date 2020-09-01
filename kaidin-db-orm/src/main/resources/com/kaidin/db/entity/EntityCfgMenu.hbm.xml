@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016-5-23 12:09:07 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 2020-9-1 16:31:34 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="com.kaidin.db.entity.EntityCfgMenu" table="cfg_menu" catalog="kaidin">
         <id name="id" type="long">
@@ -10,37 +10,22 @@
                 <param name="sequence">cfg_menu$SEQ</param>
             </generator>
         </id>
-        <property name="href" type="string">
-            <column name="href" length="128" not-null="true">
-                <comment>菜单的连接地址</comment>
+        <property name="url" type="string">
+            <column name="url" length="128" not-null="true">
+                <comment>菜单访问路径</comment>
             </column>
         </property>
         <property name="name" type="string">
-            <column name="name" length="128" not-null="true">
+            <column name="name" length="64" not-null="true">
                 <comment>菜单名称</comment>
             </column>
         </property>
         <property name="alias" type="string">
-            <column name="alias" length="128">
+            <column name="alias" length="64">
                 <comment>菜单显示名称</comment>
             </column>
         </property>
-        <property name="cssClass" type="string">
-            <column name="css_class" length="128">
-                <comment>菜单的css样式类</comment>
-            </column>
-        </property>
-        <property name="cssStyle" type="string">
-            <column name="css_style" length="128">
-                <comment>另外添加的css样式</comment>
-            </column>
-        </property>
-        <property name="otherProperties" type="string">
-            <column name="other_properties" length="128">
-                <comment>其他属性</comment>
-            </column>
-        </property>
-        <property name="level" type="Short">
+        <property name="level" type="Integer">
             <column name="level">
                 <comment>菜单等级</comment>
             </column>
@@ -55,13 +40,13 @@
                 <comment>菜单编码</comment>
             </column>
         </property>
-        <property name="sort" type="Short">
+        <property name="sort" type="Integer">
             <column name="sort">
                 <comment>控制菜单从小到大显示顺序，</comment>
             </column>
         </property>
-        <property name="status" type="short">
-            <column name="status" not-null="true">
+        <property name="status" type="string">
+            <column name="status" length="8">
                 <comment>菜单状态</comment>
             </column>
         </property>

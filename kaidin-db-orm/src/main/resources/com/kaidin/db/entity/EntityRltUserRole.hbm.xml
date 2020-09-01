@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016-5-23 12:09:07 by Hibernate Tools 3.3.0.GA -->
+<!-- Generated 2020-9-1 16:31:34 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
     <class name="com.kaidin.db.entity.EntityRltUserRole" table="rlt_user_role" catalog="kaidin">
         <id name="id" type="long">
@@ -11,14 +11,10 @@
             </generator>
         </id>
         <many-to-one name="entityCfgUser" class="com.kaidin.db.entity.EntityCfgUser" fetch="select">
-            <column name="user_id" not-null="true">
-                <comment>cfg_user.id</comment>
-            </column>
+            <column name="user_id" not-null="true" />
         </many-to-one>
         <many-to-one name="entityCfgRole" class="com.kaidin.db.entity.EntityCfgRole" fetch="select">
-            <column name="role_id" not-null="true">
-                <comment>cfg_role.id</comment>
-            </column>
+            <column name="role_id" not-null="true" />
         </many-to-one>
     </class>
 </hibernate-mapping>
