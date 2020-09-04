@@ -21,6 +21,10 @@
 		<!-- 内部工程依赖 -->
 		<dependency>
 			<groupId>com.kaidin</groupId>
+			<artifactId>kaidin-common-util</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.kaidin</groupId>
 			<artifactId>kaidin-db-orm</artifactId>
 		</dependency>
 		<!-- spring依赖 -->
