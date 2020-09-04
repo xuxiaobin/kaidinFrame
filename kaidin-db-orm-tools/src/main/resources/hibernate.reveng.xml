@@ -6,20 +6,20 @@
 		<!-- mysql 字段映射 start... -->
 		<sql-type jdbc-type="TINYINT" not-null="false" hibernate-type="Byte" />
 		<sql-type jdbc-type="TINYINT" not-null="true" hibernate-type="byte" />
-		<sql-type jdbc-type="SMALLINT" not-null="false" hibernate-type="Short" />
+		<sql-type jdbc-type="SMALLINT" not-null="false" hibernate-type="short" />
 		<sql-type jdbc-type="SMALLINT" not-null="true" hibernate-type="short" />
-		<sql-type jdbc-type="INTEGER" not-null="false" hibernate-type="Integer" />
+		<sql-type jdbc-type="INTEGER" not-null="false" hibernate-type="integer" />
 		<sql-type jdbc-type="INTEGER" not-null="true" hibernate-type="int" />
-		<sql-type jdbc-type="BIGINT" not-null="false" hibernate-type="Long" />
+		<sql-type jdbc-type="BIGINT" not-null="false" hibernate-type="long" />
 		<sql-type jdbc-type="BIGINT" not-null="true" hibernate-type="long" />
 		
-		<sql-type jdbc-type="FLOAT" not-null="false" hibernate-type="Float" />
+		<sql-type jdbc-type="FLOAT" not-null="false" hibernate-type="float" />
 		<sql-type jdbc-type="FLOAT" not-null="true" hibernate-type="float" />
-		<sql-type jdbc-type="DOUBLE" not-null="false" hibernate-type="Double" />
+		<sql-type jdbc-type="DOUBLE" not-null="false" hibernate-type="double" />
 		<sql-type jdbc-type="DOUBLE" not-null="true" hibernate-type="double" />
 		
-		<sql-type jdbc-type="CHAR" not-null="false" hibernate-type="String" />
-		<sql-type jdbc-type="CHAR" not-null="true" hibernate-type="String" />
+		<sql-type jdbc-type="CHAR" not-null="false" hibernate-type="string" />
+		<sql-type jdbc-type="CHAR" not-null="true" hibernate-type="string" />
 		
 		<sql-type jdbc-type="DATE" hibernate-type="timestamp" />
 		<sql-type jdbc-type="TIME" hibernate-type="timestamp" />

@@ -8,6 +8,6 @@ import com.kaidin.db.entity.Entity${entityName ? cap_first};
  * @version ${.now ? string("yyyy-MM-dd HH:mm:ss")}
  */
 public interface IEntity${entityName ? cap_first}Dao extends IBaseMybatisDao<Entity${entityName ? cap_first}> {
-	public static final String FULL_RESOURCE_NAME = "${packageName}.IEntity${entityName ? cap_first}Dao";
-	public static fianl String RESOURCE_NAME	  = "IEntity${entityName ? cap_first}Dao";
+	String FULL_RESOURCE_NAME = "${packageName}.IEntity${entityName ? cap_first}Dao";
+	String RESOURCE_NAME	  = "IEntity${entityName ? cap_first}Dao";
 }
