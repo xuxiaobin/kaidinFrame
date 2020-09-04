@@ -17,7 +17,6 @@ public abstract class AbstractApi<Res extends BaseResponseData, Req extends Base
 	 */
 	@Override
 	public Res execute() {
-		runtimeco
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -7,7 +7,7 @@ import com.kaidin.common.util.exception.IExceptionCode;
  * @author kaidin@foxmail.com
  */
 public enum AppframeExceptionEnum implements IExceptionCode {
-	PARAMETER_ERROR("PARAMETER_ERROR", "参数错误");
+	PARAMETER_ILLEGAL("PARAMETER_ILLEGAL", "参数异常");
 
 	private String errCode;
 	private String errMsg;
