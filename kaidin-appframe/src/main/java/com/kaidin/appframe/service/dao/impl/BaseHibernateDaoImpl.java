@@ -242,8 +242,8 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageData<T> queryEntities(PageRequest pageReq) throws AppframeException {
-		PageData<T> result = new PageData<>(pageReq);
+	public PageData<List<T>> queryEntities(PageRequest pageReq) throws AppframeException {
+		PageData<List<T>> result = new PageData<>(pageReq);
 
 		int totalCount = countByFullHql("select count(1) " + fromTableWhere, null);
 		result.setTotalCount(totalCount);
@@ -256,16 +256,15 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 		}
 		String hql = fromTableWhere + where;
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<T> dataList = BaseDaoHelper.list(query, null, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, null, pageReq));
 
 		return result;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageData<T> queryEntities(String hqlWhere, PageRequest pageReq) throws AppframeException {
-		PageData<T> result = new PageData<>(pageReq);
+	public PageData<List<T>> queryEntities(String hqlWhere, PageRequest pageReq) throws AppframeException {
+		PageData<List<T>> result = new PageData<>(pageReq);
 
 		int totalCount = countEntityies(hqlWhere, null);
 		result.setTotalCount(totalCount);
@@ -278,16 +277,15 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 		}
 		String hql = fromTableWhere + hqlWhere;
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<T> dataList = BaseDaoHelper.list(query, null, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, null, pageReq));
 
 		return result;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageData<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageRequest pageReq) throws AppframeException {
-		PageData<T> result = new PageData<>(pageReq);
+	public PageData<List<T>> queryEntities(String hqlWhere, Map<String, Object> parameter, PageRequest pageReq) throws AppframeException {
+		PageData<List<T>> result = new PageData<>(pageReq);
 
 		int totalCount = countEntityies(hqlWhere, parameter);
 		result.setTotalCount(totalCount);
@@ -300,15 +298,14 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 		}
 		String hql = fromTableWhere + hqlWhere;
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<T> dataList = BaseDaoHelper.list(query, parameter, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, parameter, pageReq));
 
 		return result;
 	}
 	@Override
 	@SuppressWarnings("unchecked")
-	public PageData<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageRequest pageReq) throws AppframeException {
-		PageData<T> result = new PageData<>(pageReq);
+	public PageData<List<T>> queryEntities(String hqlWhere, String[] names, Object[] values, PageRequest pageReq) throws AppframeException {
+		PageData<List<T>> result = new PageData<>(pageReq);
 
 		int totalCount = countEntityies(hqlWhere, names, values);
 		result.setTotalCount(totalCount);
@@ -321,8 +318,7 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 		String hql = fromTableWhere + hqlWhere;
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		BaseDaoHelper.setNamedValue(query, names, values);
-		List<T> dataList = BaseDaoHelper.list(query, null, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, null, pageReq));
 
 		return result;
 	}
@@ -399,8 +395,8 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 	@SuppressWarnings("unchecked")
 	public List queryByFullHqlNoLimit(String hql, Map<String, Object> parameter, int rowIndex, int rowNum) throws AppframeException {
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		query = BaseDaoHelper.setNamedValue(query, parameter);
-		query = BaseDaoHelper.setRowsLimit(query, rowIndex, rowNum);
+		BaseDaoHelper.setNamedValue(query, parameter);
+		BaseDaoHelper.setRowsLimit(query, rowIndex, rowNum);
 		query.setMaxResults(rowNum);
 
 		return query.list();
@@ -409,8 +405,8 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 	@SuppressWarnings("unchecked")
 	public List queryByFullHqlNoLimit(String hql, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException {
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		query = BaseDaoHelper.setNamedValue(query, names, values);
-		query = BaseDaoHelper.setRowsLimit(query, rowIndex, rowNum);
+		BaseDaoHelper.setNamedValue(query, names, values);
+		BaseDaoHelper.setRowsLimit(query, rowIndex, rowNum);
 		query.setMaxResults(rowNum);
 
 		return query.list();
@@ -430,8 +426,7 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 			hql += pageReq.toSortSql();
 		}
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List dataList = BaseDaoHelper.list(query, null, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, null, pageReq));
 
 		return result;
 	}
@@ -450,8 +445,7 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 			hql += pageReq.toSortSql();
 		}
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List dataList = BaseDaoHelper.list(query, parameter, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, parameter, pageReq));
 
 		return result;
 	}
@@ -470,8 +464,7 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 		}
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query = BaseDaoHelper.setNamedValue(query, names, values);
-		List dataList = BaseDaoHelper.list(query, null, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, null, pageReq));
 
 		return result;
 	}
@@ -490,8 +483,7 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 			sql += pageReq.toSortSql();
 		}
 		Query query = sessionFactory.getCurrentSession().createQuery(sql);
-		List dataList = BaseDaoHelper.list(query, parameter, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, parameter, pageReq));
 
 		return result;
 	}
@@ -510,8 +502,7 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 		}
 		Query query = sessionFactory.getCurrentSession().createQuery(sql);
 		query = BaseDaoHelper.setNamedValue(query, names, values);
-		List dataList = BaseDaoHelper.list(query, null, pageReq);
-		result.setDataList(dataList);
+		result.setData(BaseDaoHelper.list(query, null, pageReq));
 
 		return result;
 	}

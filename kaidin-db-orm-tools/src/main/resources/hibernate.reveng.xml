@@ -18,8 +18,8 @@
 		<sql-type jdbc-type="DOUBLE" not-null="false" hibernate-type="double" />
 		<sql-type jdbc-type="DOUBLE" not-null="true" hibernate-type="double" />
 		
-		<sql-type jdbc-type="CHAR" not-null="false" hibernate-type="string" />
-		<sql-type jdbc-type="CHAR" not-null="true" hibernate-type="string" />
+		<sql-type jdbc-type="CHAR" not-null="false" hibernate-type="char" />
+		<sql-type jdbc-type="CHAR" not-null="true" hibernate-type="char" />
 		
 		<sql-type jdbc-type="DATE" hibernate-type="timestamp" />
 		<sql-type jdbc-type="TIME" hibernate-type="timestamp" />

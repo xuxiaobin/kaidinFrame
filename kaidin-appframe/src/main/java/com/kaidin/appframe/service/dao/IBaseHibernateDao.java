@@ -73,13 +73,13 @@ public interface IBaseHibernateDao<T> extends IBaseDao<T> {
 
 	List<T> queryEntities(String hqlWhere, String[] names, Object[] values, int rowIndex, int rowNum) throws AppframeException;
 
-	PageData<T> queryEntities(PageRequest pageLoadCfg) throws AppframeException;
+	PageData<List<T>> queryEntities(PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<T> queryEntities(String hqlWhere, PageRequest pageLoadCfg) throws AppframeException;
+	PageData<List<T>> queryEntities(String hqlWhere, PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<T> queryEntities(String hqlWhere, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException;
+	PageData<List<T>> queryEntities(String hqlWhere, Map<String, Object> parameter, PageRequest pageLoadCfg) throws AppframeException;
 
-	PageData<T> queryEntities(String hqlWhere, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException;
+	PageData<List<T>> queryEntities(String hqlWhere, String[] names, Object[] values, PageRequest pageLoadCfg) throws AppframeException;
 
 	List queryByFullHql(String hql) throws AppframeException;
 
