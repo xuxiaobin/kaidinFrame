@@ -161,6 +161,20 @@ public class BaseHibernateDaoImpl<T extends BaseEntity> extends BaseDaoHibernate
 
 	@Override
 	@SuppressWarnings("unchecked")
+	public T queryEntity(String hqlWhere, String name, Object value) throws AppframeException {
+		String hql = fromTableWhere + hqlWhere;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		BaseDaoHelper.setNamedValue(query, new String[]{name}, new Object[]{value});
+		List<T> list = BaseDaoHelper.list(query, null, null);
+		if (CollectionUtil.isNotEmpty(list)) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
 	public T queryEntity(String hqlWhere, Map<String, Object> parameter) throws AppframeException {
 		String hql = fromTableWhere + hqlWhere;
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);

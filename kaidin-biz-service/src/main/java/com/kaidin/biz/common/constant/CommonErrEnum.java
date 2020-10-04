@@ -3,7 +3,7 @@ package com.kaidin.biz.common.constant;
 import com.kaidin.common.util.exception.IExceptionCode;
 
 /**
- * 异常状态码
+ * 通用异常状态码
  * @author xiaobin
  * @date 2020-09-06 22:03
  */
@@ -21,6 +21,15 @@ public enum CommonErrEnum implements IExceptionCode {
     private CommonErrEnum(String errCode, String errMsg){
         this.errCode = errCode;
         this.errMsg = errMsg;
+    }
+
+    public static CommonErrEnum codeOf(String errCode) {
+        for (CommonErrEnum tmp : CommonErrEnum.values()) {
+            if (tmp.errCode.equals(errCode)) {
+                return tmp;
+            }
+        }
+        return null;
     }
 
     @Override

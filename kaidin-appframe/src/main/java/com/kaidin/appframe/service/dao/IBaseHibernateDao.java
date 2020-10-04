@@ -55,6 +55,8 @@ public interface IBaseHibernateDao<T> extends IBaseDao<T> {
 
 	T queryEntity(String hqlWhere) throws AppframeException;
 
+	T queryEntity(String hqlWhere, String name, Object value) throws AppframeException;
+
 	T queryEntity(String hqlWhere, Map<String, Object> parameter) throws AppframeException;
 
 	T queryEntity(String hqlWhere, String[] names, Object[] values) throws AppframeException;
