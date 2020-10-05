@@ -12,13 +12,14 @@
 	</welcome-file-list>
 
 
+	<!-- 配置spring mvc的前端控制器 -->
 	<servlet>
 		<servlet-name>springMvcDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<!-- spring-mvc具体的配置文件，默认是/WEB-INF/[servlet名字]-servlet.xml -->
-			<param-value>classpath:spring/spring-mvc.xml</param-value>
+			<param-value>classpath:spring/spring-*.xml</param-value>
 		</init-param>
 		<!-- servlet加载的优先级，当值大于等于0时在应用启动时就加载这个servlet，值越小优先级越高。当值为负数或未指定时servlet被使用是才加载 -->
 		<load-on-startup>1</load-on-startup>
@@ -31,6 +32,7 @@
 	</servlet-mapping>
 
 
+	<!-- 配置spring IOC容器的启动监听器 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<!-- 默认是/WEB-INF/applicationConfig.xml -->
@@ -52,24 +54,24 @@
 		<url-pattern>*.jpg</url-pattern>
 		<url-pattern>*.gif</url-pattern>
 	</servlet-mapping>
-	
-	<!-- 配置加载log4j.xml文件路径 -->
-	<context-param>
-		<param-name>log4jConfigLocation</param-name>
-		<param-value>classpath:log4j.xml</param-value>
-	</context-param>
-	<!-- 配置log4j.xml变量 -->
-	<context-param>
-		<param-name>rootLevel</param-name>
-		<param-value>DEBUG</param-value>
-	</context-param>
-	<context-param>
-		<param-name>loggingLevel</param-name>
-		<param-value>INFO</param-value>
-	</context-param>
 
-	<!-- 配置log4j.xml监听器 -->
+	<!-- 配置加载log4j.xml文件路径 -->
+<!--	<context-param>-->
+<!--		<param-name>log4jConfigLocation</param-name>-->
+<!--		<param-value>classpath:log4j.properties</param-value>-->
+<!--	</context-param>-->
+<!--	&lt;!&ndash; 配置log4j.xml变量 &ndash;&gt;-->
+<!--	<context-param>-->
+<!--		<param-name>rootLevel</param-name>-->
+<!--		<param-value>DEBUG</param-value>-->
+<!--	</context-param>-->
+<!--	<context-param>-->
+<!--		<param-name>loggingLevel</param-name>-->
+<!--		<param-value>INFO</param-value>-->
+<!--	</context-param>-->
+<!--	&lt;!&ndash; 配置log4j.xml监听器 &ndash;&gt;-->
 <!--	<listener>-->
 <!--		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->
 <!--	</listener>-->
+
 </web-app>

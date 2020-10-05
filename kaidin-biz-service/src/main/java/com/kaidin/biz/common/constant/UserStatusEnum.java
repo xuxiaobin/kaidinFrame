@@ -6,9 +6,10 @@ package com.kaidin.biz.common.constant;
  * @date 2020-09-06 22:32
  */
 public enum UserStatusEnum {
-    INIT("INIT", "初始化"),
-    LOCKED("LOCKED", "用户被锁定"),
-    NORMAL("NORMAL", "用户状态正常");
+    INIT("INIT", "初始状态"),
+    ENABLE("ENABLE", "正常状态"),
+    LOCKED("LOCKED", "锁定状态");
+
 
     /** 状态 */
     private String code;
@@ -21,9 +22,9 @@ public enum UserStatusEnum {
     }
 
     public static UserStatusEnum codeOf(String code) {
-        for (UserStatusEnum statusEnum : UserStatusEnum.values()) {
-            if (statusEnum.getCode().equals(code)) {
-                return statusEnum;
+        for (UserStatusEnum tmp : UserStatusEnum.values()) {
+            if (tmp.code.equals(code)) {
+                return tmp;
             }
         }
         return null;

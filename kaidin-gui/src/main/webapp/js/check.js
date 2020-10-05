@@ -25,11 +25,25 @@ function isEmpty(inputId, errorId) {
 
 
 function changeImg(codeimgId, url) {
-	$("#" + codeimgId).attr("src", url + '&time=' + new Date().getTime());
+	$("#" + codeimgId).attr("src", url);
 }
 
-function showError(errorMsg) {
-	if ("undefined" != typeof(errorMsg) && '' != errorMsg) {
-		alert(errorMsg)
+function showError(errCode, errMsg) {
+	if ("undefined" == typeof(errMsg) && '' == errMsg) {
+		return;
 	}
+	var errContent = '';
+	if ("undefined" != typeof(errCode) && '' != errCode) {
+		errContent = "errCode:" + errCode;
+		if(!document.all) {
+			// FF谷歌浏览器用这个
+			errContent += '\n';
+		} else {
+			// IE系列用这个
+			errContent += '\r\n';
+		}
+	}
+
+	errContent += 'errMsg:' + errMsg;
+	alert(errContent)
 }

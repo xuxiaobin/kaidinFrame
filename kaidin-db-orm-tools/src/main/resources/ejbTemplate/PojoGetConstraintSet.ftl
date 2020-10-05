@@ -11,7 +11,7 @@
 		
 <#foreach property2 in pojo.getPropertiesForFullConstructor()>
 	<#if !property2.getValue().isSimpleValue()>
-		result.addAll(this.${property2.getName()});
+		result.addAll(${property2.getName()});
 	</#if>
 </#foreach>
 		

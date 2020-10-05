@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<configuration>
+    <!-- 定义日志的根目录 -->
+    <property name="logName" value="/Users/xiaobin/program/tomcat/apache-tomcat-8.5.57/logs" />
+    <!-- 定义日志文件名称 -->
+    <property name="appName" value="kaidin"></property>
+
+    <!-- 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] [%thread] %logger{36} %line: %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 文件日志输出 -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logName}/${appName}.log</File>
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger{36}: %msg %n</Pattern>
+            <charset>UTF-8</charset>  <!--解决中文乱码问题-->
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logName}/${appName}-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <!--
+              当日志文件超过maxFileSize指定的大小是，根据上面提到的%i进行日志文件滚动
+               注意此处配置SizeBasedTriggeringPolicy是无法实现按文件大小进行滚动的，
+               必须配置timeBasedFileNamingAndTriggeringPolicy
+            -->
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 将上面两个 appender 关联到我们的项目 -->
+    <logger name="com" level="DEBUG" additivity="false">
+        <!-- name 是项目包名，为了方便调试，输出 DEBUG 级别及其以上的log -->
+        <appender-ref ref="console"/>
+        <appender-ref ref="file" />
+    </logger>
+
+    <!--
+       root与logger是父子关系，没有特别定义则默认为root，任何一个类只会和一个logger对应，
+       要么是定义的logger，要么是root，判断的关键在于找到这个logger，然后判断这个logger的appender和level。
+   -->
+    <!-- 日志级别 -->
+    <root>
+        <!-- 定义了ERROR和INFO级别的日志，分别在FILE文件和控制台输出 -->
+        <level value="error" />
+        <level value="info" />
+        <appender-ref ref="file" />
+        <appender-ref ref="console" />
+    </root>
+</configuration>

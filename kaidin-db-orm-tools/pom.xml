@@ -10,11 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>kaidin-tools</artifactId>
     <name>kaidin-tools</name>
-    <url>www.zjkaidin.com</url>
+    <packaging>jar</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>数据映射的实体类文件自动生成工具，不包含业务逻辑</description>
+    <url>www.zjkaidin.com</url>
 
     <dependencies>
         <!-- 内部工程依赖 -->
@@ -32,12 +31,13 @@
             <groupId>ant</groupId>
             <artifactId>ant</artifactId>
             <version>1.6.5</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.27-incubating</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

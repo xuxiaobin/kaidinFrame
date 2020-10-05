@@ -9,10 +9,9 @@
      expression 表达式：*任意返回值 包名 类名 方法名 参数
      execution(* com.gyf.service.*.*(..))
 	-->
-	<bean id="pageDataLogImpl" class="com.kaidin.appframe.service.interceptor.impl.PageDataLogImpl"/>
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="pageDataLog" expression="execution(public * com.kaidin.biz.service.*.*(..))"/>
+		<aop:pointcut id="controllerException" expression="execution(public * com.kaidin.gui.controller..*Controller.*(..))"/>
 		<!-- 通知 关联 切入点-->
-		<aop:advisor advice-ref="pageDataLogImpl" pointcut-ref="pageDataLog"/>
+		<aop:advisor advice-ref="controllerExceptionAop" pointcut-ref="controllerException"/>
 	</aop:config>
 </beans>

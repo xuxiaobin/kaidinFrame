@@ -78,9 +78,8 @@
 	<target name="antCall" if="isNeedGenerate" depends="init">
 		<echo message="ant-autoGenerator-sources" />
 		<antcall target="hbm2entity" />
-		<!-- xml映射文件，可以根据情况看是否要生成
+		<!-- xml映射文件，可以根据情况看是否要生成 -->
 		<antcall target="hbm2entityXml" />
-		-->
 		<antcall target="hbm2daoInterface" />
 		<antcall target="hbm2daoImpl" />
 	</target>
@@ -202,7 +201,6 @@
 			/>
 		</hibernateTool>
 	</target>
-
 
 	<target name="default" depends="antCall, antNotCall" />
 </project>
