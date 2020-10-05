@@ -38,7 +38,7 @@
 	</style>
 </head>
 
-<body onload="showError('<c:out value="${errorMsg}"/>')">
+<body onload="showError('<c:out value="${errCode}"/>', '<c:out value="${errMsg}"/>')">
 <div class="container">
 	<%@ include file="/include/autoShow.jsp"%>
 	<div class="topOfMainContent"></div>
@@ -55,7 +55,7 @@
 				<p>欢迎管理员登录！</p>
 				<br />
 				<br />
-				<form name="login" action="login.html?method=login" method="post" onSubmit="check();">
+				<form name="login" action="login?method=login" method="post" onSubmit="check();">
 					<table border="1">
 						<tr>
 							<td height="5">账 号：</td>
@@ -69,12 +69,12 @@
 						</tr>
 						<tr>
 							<td>验证码：</td>
-							<td><input type="text" id="captcha" name="captcha" style="font-size:12px" onblur="javascript:isEmpty('captcha', 'codeError')"></td>
+							<td><input type="text" id="captchaCode" name="captchaCode" style="font-size:12px" onblur="javascript:isEmpty('captchaCode', 'codeError')"></td>
 							<td><p id="codeError" class="error">验证码不能为空</p></td>
 						</tr>
 						<tr>
-							<td colspan="2" rowspan="2"><img id="codeimg" src="captcha.html?method=getCaptchaImage" onClick="javascript:changeImg('codeimg', 'captcha.html?method=getCaptchaImage')"></td>
-							<td ><a href="javascript:changeImg('codeimg', 'captcha.html?method=getCaptchaImage')">看不清楚?</a></td>
+							<td colspan="2" rowspan="2"><img id="codeimg" src="captcha/getCaptchaImage" onClick="javascript:changeImg('codeimg', 'captcha/getCaptchaImage')"></td>
+							<td ><a href="javascript:changeImg('codeimg', 'captcha/getCaptchaImage')">看不清楚?</a></td>
 						</tr>
 					</table>
 				<p>
