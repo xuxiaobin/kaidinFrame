@@ -27,7 +27,7 @@
 		<param name="movie" value="swf/dewplayer.swf?mp3=music/background.mp3&autostart=1&bgcolor=ffffff" />
 		<param name="quality" value="high" />
 		<param value="transparent" name="wmode" />
-		<embed src="swf/dewplayer.swf?mp3=music/background.mp3&autostart=1&bgcolor=ffffff" width="1" height="1" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>
+		<embed src="swf/dewplayer.swf?mp3=music/background.mp3&autostart=1&bgcolor=ffffff" width="1" height="1" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"/>
 	</object>
 	<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=3&amp;fs=4&amp;textcolor=#000&amp;bgcolor=#DDD&amp;text=分享到"></script>
 	<%@ include file="/include/foot.jsp"%>

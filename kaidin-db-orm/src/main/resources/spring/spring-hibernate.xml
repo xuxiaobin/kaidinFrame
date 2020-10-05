@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -19,15 +19,15 @@
 	</bean>
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<!-- ÊôÐÔdataSource ,ÒýÓÃÉÏÃæµÄdataSource Bean ÓÃ»§»ñÈ¡ÓëÊý¾Ý¿âµÄÁ¬½ÓÐÅÏ¢ -->
+		<!-- å±žæ€§dataSource ,å¼•ç”¨ä¸Šé¢çš„dataSource Bean ç”¨æˆ·èŽ·å–ä¸Žæ•°æ®åº“çš„è¿žæŽ¥ä¿¡æ¯ -->
 		<property name="dataSource" ref="dataSource"/>
-		<!-- Ö¸¶¨hibernateºËÐÄÅäÖÃÎÄ¼þµÄÂ·¾¶ -->
+		<!-- æŒ‡å®šhibernateæ ¸å¿ƒé…ç½®æ–‡ä»¶çš„è·¯å¾„ -->
 		<!--
 		<property name="configLocations">
 			<value>classpath:spring/hibernate.cfg.xml</value>
 		</property>
 		-->
-		<!-- ÓÃÓÚÅäÖÃhibernateÀïµÄÒ»Ð©¹¦ÄÜÊôÐÔ -->
+		<!-- ç”¨äºŽé…ç½®hibernateé‡Œçš„ä¸€äº›åŠŸèƒ½å±žæ€§ -->
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -40,18 +40,18 @@
 		</property>
 		<property name="mappingLocations">
 			<list>
-				<!-- É¨ÃèÊµÌåÀà£¬Ò²¾ÍÊÇÆ½Ê±ËùËµµÄmodel -->
+				<!-- æ‰«æå®žä½“ç±»ï¼Œä¹Ÿå°±æ˜¯å¹³æ—¶æ‰€è¯´çš„model -->
 				<value>classpath:com/kaidin/db/entity/Entity*.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
 
-	<!-- ÉùÃ÷Ê½ÊÂÎñÅäÖÃ£¬ÅäÖÃÊÂÎñ¹ÜÀíÆ÷ Ö¸¶¨Æä×÷ÓÃµÄsessionFactory°ÑÊÂÎñ½»¸øSpringÈ¥´¦Àí -->
+	<!-- å£°æ˜Žå¼äº‹åŠ¡é…ç½®ï¼Œé…ç½®äº‹åŠ¡ç®¡ç†å™¨ æŒ‡å®šå…¶ä½œç”¨çš„sessionFactoryæŠŠäº‹åŠ¡äº¤ç»™SpringåŽ»å¤„ç† -->
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<!-- ÅäÖÃÊÂÎñµÄ´«²¥ÌØÐÔ -->
+	<!-- é…ç½®äº‹åŠ¡çš„ä¼ æ’­ç‰¹æ€§ -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="save*" propagation="REQUIRED" />

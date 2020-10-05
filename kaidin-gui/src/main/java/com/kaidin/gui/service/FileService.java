@@ -1,19 +1,18 @@
 package com.kaidin.gui.service;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.kaidin.common.util.NumberUtil;
+import com.kaidin.common.util.StringUtil;
+import com.kaidin.common.util.query.PageData;
+import com.kaidin.common.util.query.PageRequest;
+import com.kaidin.gui.controller.model.BoDownloadFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.kaidin.common.util.NumberUtil;
-import com.kaidin.common.util.StringUtil;
-import com.kaidin.common.util.query.PageData;
-import com.kaidin.common.util.query.PageLoadConfig;
-import com.kaidin.gui.model.BoDownloadFile;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 /**
  * 
  * @author xuxiaobin	kaidin@foxmail.com
@@ -25,17 +24,17 @@ public class FileService {
 	private static List<String> EXCLUDE_EXTNAME_LIST = new ArrayList<>();
 	
 	
-	public static PageData<BoDownloadFile> getDirFiles(File dirFile, PageLoadConfig pageLoadCfg) {
-		PageData<BoDownloadFile> result = new PageData<>();
+	public static PageData<List<BoDownloadFile>> getDirFiles(File dirFile, PageRequest pageReq) {
+		PageData<List<BoDownloadFile>> result = new PageData<>();
 		
 		List<BoDownloadFile> dataList = listDir(dirFile);
-		if (null != pageLoadCfg) {
-			dataList = dataList.subList(pageLoadCfg.getOffset(), pageLoadCfg.getLimit());
+		if (null != pageReq) {
+			dataList = dataList.subList(pageReq.getOffset(), pageReq.getLimit());
 		}
 		for (BoDownloadFile file: dataList) {
 			logger.info("{}\t{}", file.getName(), file.getDownloadPath());
 		}
-		result.setDataList(dataList);
+		result.setData(dataList);
 		
 		return result;
 	}

@@ -1,27 +1,24 @@
 package com.kaidin.gui.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.kaidin.common.util.query.PageData;
+import com.kaidin.common.util.query.PageRequest;
+import com.kaidin.db.entity.EntityCfgRole;
+import com.kaidin.gui.service.impl.IRoleManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kaidin.common.util.query.PageData;
-import com.kaidin.common.util.query.PageLoadConfig;
-import com.kaidin.db.entity.EntityCfgRole;
-import com.kaidin.gui.common.constant.GuiConstType;
-import com.kaidin.gui.service.interfaces.IRoleManageService;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/roleManage.html")
 public class RoleManageController {
 	private static final transient Logger logger = LoggerFactory.getLogger(RoleManageController.class);
 	
-	@Autowired
+//	@Autowired
 	private IRoleManageService roleManageService;
 	
 	
@@ -32,9 +29,9 @@ public class RoleManageController {
 	public ModelAndView load(ModelMap modelMap) {
 		ModelAndView result = new ModelAndView("roleManage");
 		
-		PageLoadConfig pageConfig = new PageLoadConfig();
-		PageData<EntityCfgRole> dataContainer = roleManageService.queryRole(pageConfig);
-		result.addObject(GuiConstType.DATA_CONTAINER, dataContainer);
+		PageRequest pageReq = new PageRequest();
+		PageData<EntityCfgRole> dataContainer = roleManageService.queryRole(pageReq);
+		result.addObject("123", dataContainer);
 		
 		return result;
 	}

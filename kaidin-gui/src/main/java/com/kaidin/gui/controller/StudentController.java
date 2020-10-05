@@ -1,38 +1,36 @@
 package com.kaidin.gui.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kaidin.db.dao.IEntityStudentDao;
+import com.kaidin.db.entity.EntityStudent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.kaidin.db.dao.interfaces.IEntityStudentDao;
-import com.kaidin.db.entity.EntityStudent;
 
 @Controller
 @RequestMapping("/student.html")
 public class StudentController {
 	private static final transient Logger logger = LoggerFactory.getLogger(StudentController.class);
 	
-	@Resource(name = IEntityStudentDao.RESOURCE_NAME)
+	@Resource
 	private IEntityStudentDao studentDao;
 	
-	
-	public StudentController() {
-	}
-	
 	@RequestMapping
+	@Transactional
 	public String load(ModelMap modelMap){
-		List<EntityStudent> list = studentDao.queryEntities();
+		List<EntityStudent> list = Arrays.asList(studentDao.queryEntity(1));
 		modelMap.put("list", list);
-		
+
 		return "student";
 	}
 	
@@ -61,13 +59,13 @@ public class StudentController {
 	
 	@RequestMapping(params = "method=del")
 	public void del(@RequestParam("id") String id, HttpServletResponse response){
-		try {
-			EntityStudent st = new EntityStudent();
-			st.setId(Long.valueOf(id));
-			studentDao.delete(st);
-			response.getWriter().print("{\"del\":\"true\"}");
-		} catch(Exception e){
-			logger.error(e.getMessage(), e);
-		}
+//		try {
+//			EntityStudent st = new EntityStudent();
+//			st.setId(Long.valueOf(id));
+//			studentDao.delete(st);
+//			response.getWriter().print("{\"del\":\"true\"}");
+//		} catch(Exception e){
+//			logger.error(e.getMessage(), e);
+//		}
 	}
 }

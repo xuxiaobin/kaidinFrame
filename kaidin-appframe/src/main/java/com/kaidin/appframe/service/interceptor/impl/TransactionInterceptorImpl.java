@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kaidin.appframe.service.interceptor.interfaces.AroundMethodInterceptor;
+import com.kaidin.appframe.service.interceptor.AroundMethodInterceptor;
 
 /**
  * <p>
